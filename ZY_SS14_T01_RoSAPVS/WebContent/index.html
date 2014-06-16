@@ -38,6 +38,31 @@
 		viewName : "zy_ss14_t01_rosapvs.Hosts",
 		type : sap.ui.core.mvc.ViewType.HTML
 	});
+	var platformsView = sap.ui.view({
+		id : "idPlatforms1",
+		viewName : "zy_ss14_t01_rosapvs.Platforms",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var applicationsView = sap.ui.view({
+		id : "idApplications1",
+		viewName : "zy_ss14_t01_rosapvs.Applications",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var logicalUnitsView = sap.ui.view({
+		id : "idLogicalUnits1",
+		viewName : "zy_ss14_t01_rosapvs.LogicalUnits",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var overviewView = sap.ui.view({
+		id : "idOverview1",
+		viewName : "zy_ss14_t01_rosapvs.Overview",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	var usersView = sap.ui.view({
+		id : "idUsers1",
+		viewName : "zy_ss14_t01_rosapvs.Users",
+		type : sap.ui.core.mvc.ViewType.HS
+	});
 </script>
 
 <!-- Initialize the shell  -->
@@ -81,6 +106,22 @@
 						break;
 					case "WI_Hosts":
 						oShell.setContent(hostsView);
+						break;
+					case "WI_Platforms":
+						oShell.setContent(platformsView);
+						break;
+					case "WI_Applications":
+						oShell.setContent(applicationsView);
+						break;
+					case "WI_LogicalUnits":
+						oShell.setContent(logicalUnitsView);
+						break;
+					case "WI_Overview":
+						oShell.setContent(overviewView);
+						break;
+					case "WI_Users":
+						oShell.setContent(usersView);
+						break;
 					default:
 						break;
 					}
