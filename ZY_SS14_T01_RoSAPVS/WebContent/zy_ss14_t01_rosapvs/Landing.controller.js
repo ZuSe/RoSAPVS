@@ -5,9 +5,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Landing", {
 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 * @memberOf zy_ss14_t01_rosapvs.Landing
 */
-//	onInit: function() {
-//
-//	},
+	onInit: function() {
+		var modCM = new sap.ui.model.odata.ODataModel(  
+                "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/",  
+                                    true,  
+                                    "ABAP-12",  
+                                    "star4896niefern");
+		sap.ui.getCore().setModel(modCM);
+	},
 
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

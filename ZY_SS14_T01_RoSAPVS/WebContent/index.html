@@ -20,7 +20,8 @@
 
 <script src="resources/sap-ui-core.js" id="sap-ui-bootstrap"
 		data-sap-ui-libs="sap.ui.ux3, sap.ui.commons, sap.ui.table"
-		data-sap-ui-theme="sap_goldreflection"></script>
+		data-sap-ui-theme="sap_goldreflection"
+		data-sap-ui-modules="sap.ui.core.plugin.DeclarativeSupport"></script>
 	
 
 <!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
@@ -61,7 +62,7 @@
 	var usersView = sap.ui.view({
 		id : "idUsers1",
 		viewName : "zy_ss14_t01_rosapvs.Users",
-		type : sap.ui.core.mvc.ViewType.HS
+		type : sap.ui.core.mvc.ViewType.JS
 	});
 </script>
 
