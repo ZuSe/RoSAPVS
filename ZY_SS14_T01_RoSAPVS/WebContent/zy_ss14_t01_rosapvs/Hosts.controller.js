@@ -1,89 +1,129 @@
-
 sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
-/**
-* Called when a controller is instantiated and its View controls (if available) are already created.
-* Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-* @memberOf zy_ss14_t01_rosapvs.Hosts
-*/
-	onInit: function() {
-		var tblHostsOverview = new sap.ui.table.Table("tblHostsOverview",
-				{ 
-			visibleRowCount : 10,  
-			ExpandedVisibleRowCount : 20,  
-			selectionMode : sap.ui.table.SelectionMode.Single,
-			toolbar: new sap.ui.commons.Toolbar({
-				items: [
-				        new sap.ui.commons.Button({
-				        	text: "Create",
-				        	press: function() {
-				        		oController.Create();
-				        	}
-				        }),
-				        new sap.ui.commons.Button({
-				        	text: "Update",
-				        	press: function() {
-				        		oController.Update();
-				        	}
-				        }),
-				        new sap.ui.commons.Button({
-				        	text: "Delete",
-				        	press: function() {
-				        		oController.Delete();
-				        	}
-				        }),
-				        ]
-			}),
-			editable : false  
-		});
-		tblHostsOverview.addColumn(  
-		         new sap.ui.table.Column({  
-		              label: new sap.ui.commons.Label({text: "Id"}),  
-		              template: new sap.ui.commons.TextField().bindProperty("value", "Id"),  
-		              sortProperty: "Id"  
-		    }));  
-		    tblHostsOverview.addColumn(  
-		         new sap.ui.table.Column({  
-		              label: new sap.ui.commons.Label({text: "Name"}),  
-		              template: new sap.ui.commons.TextField().bindProperty("value", "Name"),  
-		              sortProperty: "Name"  
-		    }));  
-		    tblHostsOverview.addColumn(  
-		         new sap.ui.table.Column({  
-		              label: new sap.ui.commons.Label({text: "Active"}),  
-		              template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),  
-		              sortProperty: "IsActive"  
-		    }));	   
-		tblHostsOverview.bindRows("/HostCollection");	
-		this.getView().addContent(tblHostsOverview);
-	
-	},
+  /**
+   * Called when a controller is instantiated and its View controls (if
+   * available) are already created. Can be used to modify the View before it is
+   * displayed, to bind event handlers and do other one-time initialization.
+   * 
+   * @memberOf zy_ss14_t01_rosapvs.Hosts
+   */
 
-/**
-* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-* (NOT before the first rendering! onInit() is used for that one!).
-* @memberOf zy_ss14_t01_rosapvs.Hosts
-*/
-	onBeforeRendering: function() {
-		
-        
-	},
-	/**
-	 * Called when the View has been rendered (so its HTML is part of the
-	 * document). Post-rendering manipulations of the HTML could be done here.
-	 * This hook is the same one that SAPUI5 controls get after being rendered.
-	 * 
-	 * @memberOf zy_ss14_t01_rosapvs.Hosts
-	 */
-	onAfterRendering: function(e) {
-		
-		
-	},
+  properties: {
+    keys: ["Id"],
+    textFields: ["Name", "Cpu", "Hdd", "Ram", "IsActive"],
+    dropDownBoxes: ["Person"],
+  },
+  onInit: function() {
 
-/**
-* Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-* @memberOf zy_ss14_t01_rosapvs.Hosts
-*/
-	onExit: function() {
+  },
 
-	},
+  /**
+   * Similar to onAfterRendering, but this hook is invoked before the
+   * controller's View is re-rendered (NOT before the first rendering! onInit()
+   * is used for that one!).
+   * 
+   * @memberOf zy_ss14_t01_rosapvs.Hosts
+   */
+  onBeforeRendering: function() {
+
+  },
+  /**
+   * Called when the View has been rendered (so its HTML is part of the
+   * document). Post-rendering manipulations of the HTML could be done here.
+   * This hook is the same one that SAPUI5 controls get after being rendered.
+   * 
+   * @memberOf zy_ss14_t01_rosapvs.Hosts
+   */
+  onAfterRendering: function(e) {
+
+  },
+
+  /**
+   * Called when the Controller is destroyed. Use this one to free resources and
+   * finalize activities.
+   * 
+   * @memberOf zy_ss14_t01_rosapvs.Hosts
+   */
+  onExit: function() {
+
+  },
+  
+  lockInput: function() {    
+    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.keys).each(function(index, element) {
+      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(false);
+    });
+    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.textFields).each(function(index, element) {
+      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(false);
+    });
+    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.dropDownBoxes).each(function(index, element) {
+      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(false);
+    });
+  },
+  
+  getDetails: function() {
+    var tblHosts = sap.ui.getCore().byId('tblHosts');
+    var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
+    if (null != context) {
+      sap.ui.getCore().getModel().read(context.sPath, 0, 0, false, function(success) {
+        console.log(success);
+        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.keys).each(function(index, element) {
+          sap.ui.getCore().byId("tF_Hosts" + element).setValue(success[element]);
+        });
+        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.textFields).each(function(index, element) {
+          sap.ui.getCore().byId("tF_Hosts" + element).setValue(success[element]);
+        });
+        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.dropDownBoxes).each(function(index, element) {
+          sap.ui.getCore().byId("dB_Hosts" + element).setValue(success[element]);
+        });
+      }, function(error) {
+        console.log(error);
+        alert(error);
+      });
+    }
+  },
+  
+  createHost: function() {
+    $(this.properties.keys).each(function(index, element) {
+      sap.ui.getCore().byId("tF_Hosts" + element).setValue("To be calculated");
+    });
+    $(this.properties.textFields).each(function(index, element) {
+      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(true).setValue("");
+    });
+    $(this.properties.dropDownBoxes).each(function(index, element) {
+      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(true).setValue("");
+    });
+
+    var submitButton = new sap.ui.commons.Button({
+      text: "Add",
+      tooltip: "Submit Data",
+      visible: true,
+      width: "4em"
+
+    });
+    var fnPressHandler = null;
+    fnPressHandler = function(oEvent) {
+      var entry = {       
+        Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
+        Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
+        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
+        Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
+        IsActive: sap.ui.getCore().byId("tF_HostsIsActive").getValue(),
+        Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
+      };
+
+      console.log(entry);
+      var response = sap.ui.getCore().getModel().create('/HostCollection', entry);
+      console.log(response);
+      alert("New Host was added successfully");
+      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
+        oEvent.getSource().detachPress(fnPressHandler);
+        submitButton.destroy();
+      }
+      ;
+    };
+
+    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
+      fields: [submitButton.attachPress(this.lockInput).attachPress(fnPressHandler), ]
+    }));
+
+  },
 });

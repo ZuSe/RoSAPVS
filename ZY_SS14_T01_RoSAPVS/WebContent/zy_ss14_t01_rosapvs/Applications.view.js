@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     var layoutApplications = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutApplications',
       columns: 3,
-      widths: ['10em', '5em', '15em']
+      widths: ['30%', '5%', '65%']
     });
     layoutApplications.setWidth('100%');
 
