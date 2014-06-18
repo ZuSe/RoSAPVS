@@ -149,10 +149,19 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           label: new sap.ui.commons.Label({
             text: "Software Type"
           }),
-          fields: [new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType", {
-            value: "",
+          fields: [new sap.ui.commons.TextField("tF_ApplicationSoftwareType", {
+              value: "",
+              editable: false,
+              layoutData: new sap.ui.layout.form.GridElementData({
+                hCells: "3"
+              })
+            }),    
+                   
+            new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType", {
+            value: 0,
             editable: false,
             displaySecondaryValues: true,
+            visible: false,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
             })
@@ -163,9 +172,17 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           label: new sap.ui.commons.Label({
             text: "Platform"
           }),
-          fields: [new sap.ui.commons.DropdownBox("dB_ApplicationPlatform", {
-            value: "",
+          fields: [
+                   new sap.ui.commons.TextField("tF_ApplicationPlatform", {
+              value: "",
+              editable: false,
+              layoutData: new sap.ui.layout.form.GridElementData({
+                hCells: "3"
+              })
+            }),    new sap.ui.commons.DropdownBox("dB_ApplicationPlatform", {
+            value: "None",
             editable: false,
+            visible: false,
             displaySecondaryValues: true,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
@@ -177,9 +194,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           label: new sap.ui.commons.Label({
             text: "Person"
           }),
-          fields: [new sap.ui.commons.DropdownBox("dB_ApplicationPerson", {
-            value: "",
+          fields: [new sap.ui.commons.TextField("tF_ApplicationPerson", {
+              value: "",
+              editable: false,
+              layoutData: new sap.ui.layout.form.GridElementData({
+                hCells: "3"
+              })
+            }),    new sap.ui.commons.DropdownBox("dB_ApplicationPerson", {
+            value: "None",
             editable: false,
+            visible: false,
             displaySecondaryValues: true,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
@@ -200,8 +224,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     
     var templateApplicationSoftwareType = new sap.ui.core.ListItem();
     templateApplicationSoftwareType.bindProperty("text", "Id");
-    templateApplicationPlatform.bindProperty("additionalText", "Name");
-
+    templateApplicationSoftwareType.bindProperty("additionalText", "Name");
     sap.ui.getCore().byId('dB_ApplicationSoftwareType').bindItems("/SoftwareTypeCollection", templateApplicationSoftwareType);
 
     layoutApplications.createRow(tblApplications, null, formApplicationDetails);
