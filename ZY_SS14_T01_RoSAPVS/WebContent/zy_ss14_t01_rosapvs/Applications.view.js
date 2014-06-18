@@ -152,6 +152,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType", {
             value: "",
             editable: false,
+            displaySecondaryValues: true,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
             })
@@ -165,13 +166,28 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.DropdownBox("dB_ApplicationPlatform", {
             value: "",
             editable: false,
+            displaySecondaryValues: true,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
             })
           }),
 
           ]
-        }), ]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "Person"
+          }),
+          fields: [new sap.ui.commons.DropdownBox("dB_ApplicationPerson", {
+            value: "",
+            editable: false,
+            displaySecondaryValues: true,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "3"
+            })
+          }),
+
+          ]
+        }),]
       })],
     });
 
@@ -179,7 +195,14 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
 
     var templateApplicationPlatform = new sap.ui.core.ListItem();
     templateApplicationPlatform.bindProperty("text", "Id");
+    templateApplicationPlatform.bindProperty("additionalText", "Name");
     sap.ui.getCore().byId('dB_ApplicationPlatform').bindItems("/PlatformCollection", templateApplicationPlatform);
+    
+    var templateApplicationSoftwareType = new sap.ui.core.ListItem();
+    templateApplicationSoftwareType.bindProperty("text", "Id");
+    emplateApplicationPlatform.bindProperty("additionalText", "Name");
+
+    sap.ui.getCore().byId('dB_ApplicationSoftwareType').bindItems("/SoftwareTypeCollection", templateApplicationSoftwareType);
 
     layoutApplications.createRow(tblApplications, null, formApplicationDetails);
     this.addContent(layoutApplications);
