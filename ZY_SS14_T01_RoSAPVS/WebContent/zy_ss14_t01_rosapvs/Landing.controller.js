@@ -10,7 +10,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Landing", {
                 "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/",  
                                     true,  
                                     "ABAP-12",  
-                                    "star4896niefern");
+                                    "p4ssw0rd");
 		sap.ui.getCore().setModel(modCM);
 	},
 
