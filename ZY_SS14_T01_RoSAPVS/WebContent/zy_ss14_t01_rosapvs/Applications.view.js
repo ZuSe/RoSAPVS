@@ -200,7 +200,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     
     var templateApplicationSoftwareType = new sap.ui.core.ListItem();
     templateApplicationSoftwareType.bindProperty("text", "Id");
-    emplateApplicationPlatform.bindProperty("additionalText", "Name");
+    templateApplicationPlatform.bindProperty("additionalText", "Name");
 
     sap.ui.getCore().byId('dB_ApplicationSoftwareType').bindItems("/SoftwareTypeCollection", templateApplicationSoftwareType);
 
