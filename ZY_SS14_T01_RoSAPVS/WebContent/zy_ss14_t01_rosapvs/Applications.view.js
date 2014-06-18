@@ -192,7 +192,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Person"
+            text: "Employee Responsible"
           }),
           fields: [new sap.ui.commons.TextField("tF_ApplicationPerson", {
               value: "",
@@ -227,6 +227,11 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     templateApplicationSoftwareType.bindProperty("additionalText", "Name");
     sap.ui.getCore().byId('dB_ApplicationSoftwareType').bindItems("/SoftwareTypeCollection", templateApplicationSoftwareType);
 
+    var templateApplicationPerson = new sap.ui.core.ListItem();
+    templateApplicationPerson.bindProperty("text", "SapUser");
+    templateApplicationPerson.bindProperty("additionalText", "Role");
+    sap.ui.getCore().byId('dB_ApplicationPerson').bindItems("/PrivilegeCollection", templateApplicationPerson);
+    
     layoutApplications.createRow(tblApplications, null, formApplicationDetails);
     this.addContent(layoutApplications);
   }
