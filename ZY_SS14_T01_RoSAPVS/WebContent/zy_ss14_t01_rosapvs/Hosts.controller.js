@@ -126,4 +126,54 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     }));
 
   },
+  deleteHost: function() {
+    var tblHosts = sap.ui.getCore().byId('tblHosts');
+    var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
+    sap.ui.getCore().getModel().remove(context.sPath);
+    alert("Host was deleted");
+  },
+  updateHost: function() {    
+    $(this.properties.textFields).each(function(index, element) {
+      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(true);
+    });
+    $(this.properties.dropDownBoxes).each(function(index, element) {
+      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(true);
+    });
+    var submitButton = new sap.ui.commons.Button({
+      text: "Update",
+      tooltip: "Submit Data",
+      visible: true,
+      layoutData: new sap.ui.layout.form.GridElementData({
+        hCells: "2"
+      })
+    });
+    var fnPressHandler = null;
+    fnPressHandler = function(oEvenet) {      
+      var entry = {
+        Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
+        Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
+        Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
+        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),        
+        IsActive: sap.ui.getCore().byId("tF_HostsIsActive").getValue(),
+        Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
+      };
+      console.log(entry);
+      var tblHosts = sap.ui.getCore().byId('tblHosts');
+      var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
+      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
+      console.log(response);
+      alert("Host was updated successfully");
+      if (oEvenet.getSource() instanceof sap.ui.commons.Button) {
+        oEvenet.getSource().detachPress(fnPressHandler);
+        submitButton.destroy();
+      };
+    };
+
+    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
+      fields: [submitButton.attachPress(this.lockInput).attachPress(fnPressHandler), ]
+    }));
+
+  },
+
+  
 });

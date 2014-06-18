@@ -69,7 +69,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
 		}
 	},
 
-	createHost : function () {
+	createPlatform : function () {
 		$(this.properties.keys).each(function (index, element) {
 			sap.ui.getCore().byId("tF_Platforms" + element).setValue("To be calculated");
 		});
