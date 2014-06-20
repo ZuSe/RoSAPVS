@@ -31,8 +31,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
 * @memberOf zy_ss14_t01_rosapvs.LogicalUnits
 */
-//	onExit: function() {
-//
-//	}
+	onExit: function() {
 
+	}
+    ,
+    	
 });

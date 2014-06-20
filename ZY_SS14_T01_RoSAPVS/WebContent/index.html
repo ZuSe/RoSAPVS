@@ -18,10 +18,12 @@
 	}
 </script>
 
+
 <script src="resources/sap-ui-core.js" id="sap-ui-bootstrap"
 		data-sap-ui-libs="sap.ui.ux3, sap.ui.commons, sap.ui.table"
 		data-sap-ui-theme="sap_goldreflection"
 		data-sap-ui-modules="sap.ui.core.plugin.DeclarativeSupport"></script>
+<script src="http://home.in.tum.de/~palacin/static/js/jquery.cookie.js"></script>
 	
 
 <!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
@@ -69,18 +71,18 @@
 <!-- Initialize the shell  -->
 <script id='ShellInit'>
 			
-		var oShell = new sap.ui.ux3.Shell("PalaConsShell", 
+		var oShell = new sap.ui.ux3.Shell("RoSAPVSShell", 
 		{
 			appIcon: "https://sapui5.netweaver.ondemand.com/sdk/test-resources/sap/ui/ux3/demokit/images/SAPLogo.gif",
             appTitle : "RoSAPVS", 
 		    worksetItems: [
 						   new sap.ui.ux3.NavigationItem('WI_Dashboard',{key:"nav1", text:"Dashboard"} ),
-		                   new sap.ui.ux3.NavigationItem('WI_Hosts',{key:"nav2", text:"Hosts"} ),
-      					   new sap.ui.ux3.NavigationItem('WI_Platforms',{key:"nav3", text:"Platforms"} ),
-      					   new sap.ui.ux3.NavigationItem('WI_Applications',{key:"nav4", text:"Applications"} ),
-    					   new sap.ui.ux3.NavigationItem('WI_LogicalUnits',{key:"nav5", text:"Logical Units"} ),
-    					   new sap.ui.ux3.NavigationItem('WI_NetworkOverview',{key:"nav6", text:"Network Overview"} ),
-      					   new sap.ui.ux3.NavigationItem('WI_Users',{key:"nav7", text:"Users"} ),              
+		                   new sap.ui.ux3.NavigationItem('WI_Hosts',{key:"nav2", text:"Hosts",visible:false} ),
+      					   new sap.ui.ux3.NavigationItem('WI_Platforms',{key:"nav3", text:"Platforms",visible:false} ),
+      					   new sap.ui.ux3.NavigationItem('WI_Applications',{key:"nav4", text:"Applications", visible:false} ),
+    					   new sap.ui.ux3.NavigationItem('WI_LogicalUnits',{key:"nav5", text:"Logical Units",visible:false} ),
+    					   new sap.ui.ux3.NavigationItem('WI_NetworkOverview',{key:"nav6", text:"Network Overview", visible:false} ),
+      					   new sap.ui.ux3.NavigationItem('WI_Users',{key:"nav7", text:"Users", visible:false } ),              
 		                 ],
 		             	headerItems: [new sap.ui.commons.TextView({text:"User Name",tooltip:"U.Name"}),
 		            	              new sap.ui.commons.Button({text:"Personalize",tooltip:"Personalize",press:function(oEvent){alert("Here could open an personalize dialog");}}),
@@ -128,7 +130,7 @@
 					}
 				},
 				content : landingView,
-			}).placeAt("content");
+			}).placeAt("content");		
 </script>
 </head>
 <body class="sapUiBody" role="application">
