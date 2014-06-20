@@ -17,10 +17,10 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
 		var layoutPlatforms = new sap.ui.commons.layout.MatrixLayout({
 				id : 'layoutPlatforms',
 				columns : 3,
-				widths : ['10em', '5em', '15em']
+				widths: ['30%', '5%', '65%']
 			});
 		layoutPlatforms.setWidth('100%');
-
+		
 		var tblPlatforms = new sap.ui.table.DataTable("tblPlatforms", {
 				visibleRowCount : 25,
 				ExpandedVisibleRowCount : 30,
@@ -131,7 +131,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
 
 		// *** Data Binding and Listeners *** //
 
-		layoutPlatforms.createRow(tblPlatforms, null, formPlatformDetails);
+		layoutPlatforms.createRow(tblPlatforms, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formPlatformDetails}).setVAlign("Top"));
 		this.addContent(layoutPlatforms);
 	}
 

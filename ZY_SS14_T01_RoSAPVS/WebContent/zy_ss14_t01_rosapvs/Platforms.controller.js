@@ -115,4 +115,53 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
 			}));
 
 	},
+	  deletePlatform: function() {
+		    var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
+		    var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
+		    sap.ui.getCore().getModel().remove(context.sPath);
+		    alert("Platform was deleted");
+		  },
+	  updatePlatform: function() {    
+		    $(this.properties.textFields).each(function(index, element) {
+		      sap.ui.getCore().byId("tF_Platforms" + element).setEditable(true);
+		    });
+		    $(this.properties.dropDownBoxes).each(function(index, element) {
+		      sap.ui.getCore().byId("dB_Platforms" + element).setEditable(true);
+		    });
+		    var submitButton = new sap.ui.commons.Button({
+		      text: "Update",
+		      tooltip: "Submit Data",
+		      visible: true,
+		      layoutData: new sap.ui.layout.form.GridElementData({
+		        hCells: "2"
+		      })
+		    });
+		    var fnPressHandler = null;
+		    fnPressHandler = function(oEvenet) {      
+		      var entry = {
+		        Name: sap.ui.getCore().byId("tF_PlatformsName").getValue(),
+		        ReqCpu: 1 * sap.ui.getCore().byId("tF_PlatformsReqCpu").getValue(),
+		        ReqRam: sap.ui.getCore().byId("tF_PlatformsReqRam").getValue(),
+		        ReqHdd: sap.ui.getCore().byId("tF_PlatformsReqHdd").getValue(),        
+		        IsActive: sap.ui.getCore().byId("tF_PlatformsIsActive").getValue(),
+		        Host: sap.ui.getCore().byId("dB_PlatformsHost").getValue(),
+		        Person: sap.ui.getCore().byId("dB_PlatformsPerson").getValue(),
+		      };
+		      console.log(entry);
+		      var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
+		      var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
+		      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
+		      console.log(response);
+		      alert("Platform was updated successfully");
+		      if (oEvenet.getSource() instanceof sap.ui.commons.Button) {
+		        oEvenet.getSource().detachPress(fnPressHandler);
+		        submitButton.destroy();
+		      };
+		    };
+
+		    sap.ui.getCore().byId("formContainerPlatformDetails").addFormElement(new sap.ui.layout.form.FormElement({
+		      fields: [submitButton.attachPress(this.lockInput).attachPress(fnPressHandler), ]
+		    }));
+
+		  },
 });
