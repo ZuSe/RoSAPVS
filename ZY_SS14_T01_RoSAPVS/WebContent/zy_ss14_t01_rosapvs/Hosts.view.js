@@ -25,7 +25,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     var layoutHosts = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutHosts',
       columns: 3,
-      widths: ['10em', '5em', '15em']
+      widths: ['30%', '5%', '65%']
     });
     layoutHosts.setWidth('100%');
 
