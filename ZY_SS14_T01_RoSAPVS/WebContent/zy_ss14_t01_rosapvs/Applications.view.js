@@ -232,7 +232,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     templateApplicationPerson.bindProperty("additionalText", "Role");
     sap.ui.getCore().byId('dB_ApplicationPerson').bindItems("/PrivilegeCollection", templateApplicationPerson);
     
-    layoutApplications.createRow(tblApplications, null, formApplicationDetails);
+    layoutApplications.createRow(tblApplications, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formApplicationDetails}).setVAlign("Top"));
     this.addContent(layoutApplications);
   }
 

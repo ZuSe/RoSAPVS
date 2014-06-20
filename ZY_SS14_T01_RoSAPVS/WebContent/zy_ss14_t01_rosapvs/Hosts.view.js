@@ -108,7 +108,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
 
     // *** Data Binding and Listeners *** //
 
-    layoutHosts.createRow(tblHosts, null, formHostDetails);
+    layoutHosts.createRow(tblHosts, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formHostDetails}).setVAlign("Top"));
     this.addContent(layoutHosts);
   }
 
