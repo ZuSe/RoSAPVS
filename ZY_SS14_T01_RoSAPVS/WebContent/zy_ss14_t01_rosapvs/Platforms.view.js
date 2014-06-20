@@ -17,7 +17,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
 		var layoutPlatforms = new sap.ui.commons.layout.MatrixLayout({
 				id : 'layoutPlatforms',
 				columns : 3,
-				widths: ['30%', '5%', '65%']
+				widths: ['35%', '5%', '60%']
 			});
 		layoutPlatforms.setWidth('100%');
 		
@@ -29,18 +29,21 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
 					items : [
 						new sap.ui.commons.Button({
 							text : "Create",
+							icon: sap.ui.core.IconPool.getIconURI("create"),
 							press : function () {
 								oController.createPlatform();
 							}
 						}),
 						new sap.ui.commons.Button({
 							text : "Update",
+							icon: sap.ui.core.IconPool.getIconURI("refresh"),
 							press : function () {
 								oController.updatePlatform();
 							}
 						}),
 						new sap.ui.commons.Button({
 							text : "Delete",
+							icon: sap.ui.core.IconPool.getIconURI("delete"),
 							press : function () {
 								oController.deletePlatform();
 							}

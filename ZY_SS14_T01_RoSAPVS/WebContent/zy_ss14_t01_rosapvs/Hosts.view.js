@@ -25,7 +25,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     var layoutHosts = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutHosts',
       columns: 3,
-      widths: ['30%', '5%', '65%']
+      widths: ['35%', '5%', '65%']
     });
     layoutHosts.setWidth('100%');
 
@@ -34,22 +34,26 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       ExpandedVisibleRowCount: 30,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
-        items: [new sap.ui.commons.Button({
-          text: "Create",
-          press: function() {
-            oController.createHost();
-          }
-        }), new sap.ui.commons.Button({
-          text: "Update",
-          press: function() {
-            oController.updateHost();
-          }
-        }), new sap.ui.commons.Button({
-          text: "Delete",
-          press: function() {
-            oController.deleteHost();
-          }
-        }), ]
+        items: [
+	        new sap.ui.commons.Button({
+	          text: "Create",
+	          press: function() {
+	            oController.createHost();
+	          }
+	        }), new sap.ui.commons.Button({
+	          text: "Update",
+	          icon: sap.ui.core.IconPool.getIconURI("refresh"),
+	          press: function() {
+	            oController.updateHost();
+	          }
+	        }), new sap.ui.commons.Button({
+	          text: "Delete",
+	          icon: sap.ui.core.IconPool.getIconURI("delete"),
+	          press: function() {
+	            oController.deleteHost();
+	          }
+	        }), 
+       ]
       }),
       editable: false
     });

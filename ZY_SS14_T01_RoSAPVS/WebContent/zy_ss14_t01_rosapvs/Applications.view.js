@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     var layoutApplications = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutApplications',
       columns: 3,
-      widths: ['30%', '5%', '65%']
+      widths: ['35%', '5%', '60%']
     });
     layoutApplications.setWidth('100%');
 
@@ -37,16 +37,19 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
       toolbar: new sap.ui.commons.Toolbar({
         items: [new sap.ui.commons.Button({
           text: "Create",
+          icon: sap.ui.core.IconPool.getIconURI("create"),
           press: function() {
             oController.createApplication();
           }
         }), new sap.ui.commons.Button({
           text: "Update",
+          icon: sap.ui.core.IconPool.getIconURI("refresh"),
           press: function() {
             oController.updateApplication();
           }
         }), new sap.ui.commons.Button({
           text: "Delete",
+          icon: sap.ui.core.IconPool.getIconURI("delete"),
           press: function() {
             oController.deleteApplication();
           }
