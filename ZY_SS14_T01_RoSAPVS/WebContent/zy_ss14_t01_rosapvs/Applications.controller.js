@@ -88,6 +88,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("dB_ApplicationPerson").setValue("").setEditable(true).setVisible(true);
     var submitButton = new sap.ui.commons.Button({
       text: "Add",
+      icon: sap.ui.core.IconPool.getIconURI("create"),
       tooltip: "Submit Data",
       visible: true,
       layoutData: new sap.ui.layout.form.GridElementData({

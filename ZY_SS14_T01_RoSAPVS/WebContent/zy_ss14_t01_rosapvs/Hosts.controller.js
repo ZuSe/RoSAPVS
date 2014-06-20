@@ -94,6 +94,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
 
     var submitButton = new sap.ui.commons.Button({
       text: "Add",
+      icon: sap.ui.core.IconPool.getIconURI("create"),
       tooltip: "Submit Data",
       visible: true,
       width: "4em"
