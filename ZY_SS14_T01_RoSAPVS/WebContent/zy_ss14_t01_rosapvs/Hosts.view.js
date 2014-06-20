@@ -37,6 +37,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
         items: [
 	        new sap.ui.commons.Button({
 	          text: "Create",
+	          icon: sap.ui.core.IconPool.getIconURI("create"),
 	          press: function() {
 	            oController.createHost();
 	          }
