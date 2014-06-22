@@ -70,13 +70,28 @@
 
 <!-- Initialize the shell  -->
 <script id='ShellInit'>
+
+		function setCurrentWorksetItem(workItemSID)
+		{
+			$.cookie("workItemSelected",workItemSID,{ expires: 7, path: '/' });
+		};
+
+		function logOut(oEvent)
+		{
+		  $.removeCookie('currentView', { path: '/' });
+		  $.removeCookie('workItemSelected', { path: '/' });
+		  $.removeCookie('Account', { path: '/' });		
+		  sap.ui.getCore().byId("WI_Landing").setVisible(true);
+		  oShell.setContent(landingView);
+		};
+				
 			
 		var oShell = new sap.ui.ux3.Shell("RoSAPVSShell", 
 		{
 			appIcon: "https://sapui5.netweaver.ondemand.com/sdk/test-resources/sap/ui/ux3/demokit/images/SAPLogo.gif",
             appTitle : "RoSAPVS", 
 		    worksetItems: [
-						   new sap.ui.ux3.NavigationItem('WI_Dashboard',{key:"nav1", text:"Dashboard"} ),
+						   new sap.ui.ux3.NavigationItem('WI_Landing',{key:"nav1", text:"Login"} ),
 		                   new sap.ui.ux3.NavigationItem('WI_Hosts',{key:"nav2", text:"Hosts",visible:false} ),
       					   new sap.ui.ux3.NavigationItem('WI_Platforms',{key:"nav3", text:"Platforms",visible:false} ),
       					   new sap.ui.ux3.NavigationItem('WI_Applications',{key:"nav4", text:"Applications", visible:false} ),
@@ -84,7 +99,7 @@
     					   new sap.ui.ux3.NavigationItem('WI_NetworkOverview',{key:"nav6", text:"Network Overview", visible:false} ),
       					   new sap.ui.ux3.NavigationItem('WI_Users',{key:"nav7", text:"Users", visible:false } ),              
 		                 ],
-		             	headerItems: [new sap.ui.commons.TextView({text:"User Name",tooltip:"U.Name"}),
+		             	headerItems: [new sap.ui.commons.TextView('tV_UserName',{text:"User Name",tooltip:"U.Name"}),
 		            	              new sap.ui.commons.Button({text:"Personalize",tooltip:"Personalize",press:function(oEvent){alert("Here could open an personalize dialog");}}),
 		            	
 	new sap.ui.commons.MenuButton({
@@ -100,37 +115,47 @@
 						}) ]
 					})
 				}) ],
+				
 				worksetItemSelected : function(oEvent) {
 					var sId = oEvent.getParameter("id");
 					var oShell = oEvent.oSource;
+					setCurrentWorksetItem(sId);
 					switch (sId) {
-					case "WI_Dashboard":
+					case "WI_Login":
 						oShell.setContent(landingView);
+						$.cookie("currentView",landingView.getId());			
 						break;
 					case "WI_Hosts":
-						oShell.setContent(hostsView);
+						oShell.setContent(hostsView);					
+						$.cookie("currentView",hostsView.getId());	
 						break;
 					case "WI_Platforms":
 						oShell.setContent(platformsView);
+						$.cookie("currentView",platformsView.getId());	
 						break;
 					case "WI_Applications":
 						oShell.setContent(applicationsView);
+						$.cookie("currentView",applicationsView.getId());	
 						break;
 					case "WI_LogicalUnits":
 						oShell.setContent(logicalUnitsView);
+						$.cookie("currentView",logicalUnitsView.getId());	
 						break;
 					case "WI_Overview":
 						oShell.setContent(overviewView);
+						$.cookie("currentView",overviewView.getId());	
 						break;
 					case "WI_Users":
 						oShell.setContent(usersView);
+						$.cookie("currentView",usersView.getId());	
 						break;
 					default:
 						break;
 					}
 				},
+				logout: function(oEvent){ logOut(oEvent);} ,
 				content : landingView,
-			}).placeAt("content");		
+			}).placeAt("content");
 </script>
 </head>
 <body class="sapUiBody" role="application">
