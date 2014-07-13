@@ -13,14 +13,19 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Landing", {
 	* @memberOf zy_ss14_t01_rosapvs.Landing
 	*/ 
 	createContent : function(oController) {
+		var simpleForm = new sap.ui.layout.form.SimpleForm;
 	    var matLayout = new sap.ui.commons.layout.MatrixLayout({
 		width: "30em",
 		widths: ["5em","25em"],
 	    });
 	    matLayout.createRow(new sap.ui.commons.Label({text:"User"}),new sap.ui.commons.TextField("tF_LoginUsername",{placeholder: "SAP-User"}));
 	    matLayout.createRow(new sap.ui.commons.Label({text:"Password"}),new sap.ui.commons.PasswordField("tF_LoginPassword",{placeholder:"Password"}));
+	    matLayout.createRow(new sap.ui.commons.HorizontalDivider("a", {visible: true}));
 	    matLayout.createRow(new sap.ui.commons.Button("btn_LoginSubmit", {text: "Sign In", press: function(){oController.signInButtonListener(); }} ));
-	    this.addContent(matLayout);
+	    simpleForm.addStyleClass("dialog");
+	    simpleForm.addContent(matLayout);
+	    simpleForm.setTitle('Login');
+	    this.addContent(simpleForm);
 	}
 
 });

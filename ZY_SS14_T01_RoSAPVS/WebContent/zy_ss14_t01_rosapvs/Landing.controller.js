@@ -127,5 +127,7 @@ sap.ui
                     // Set cookie
                     $.cookie("Account",username,{ expires: 7, path: '/' });
                     sap.ui.getCore().byId("WI_Landing").setVisible(false);
+                    // TODO Set content to initial view
+                    oShell.setContent(hostsView);
                   },
                 });
