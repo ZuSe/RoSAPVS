@@ -123,11 +123,15 @@ sap.ui
                     });
                     // Show username and role
                     console.log(sap.ui.getCore().byId("tV_UserName"));
+                    window.role = role;
                     sap.ui.getCore().byId("tV_UserName").setText(username + " ("+ this.roles[role] +")");
                     // Set cookie
                     $.cookie("Account",username,{ expires: 7, path: '/' });
                     sap.ui.getCore().byId("WI_Landing").setVisible(false);
-                    // TODO Set content to initial view
-                    oShell.setContent(hostsView);
+                    
+                    // End of login, render id dependent dashboard elements and show it !
+                    oShell.setSelectedWorksetItem("WI_Dashboard");
+                    dashboardView.oController.addPanels();
+                    oShell.setContent(dashboardView);                    
                   },
                 });

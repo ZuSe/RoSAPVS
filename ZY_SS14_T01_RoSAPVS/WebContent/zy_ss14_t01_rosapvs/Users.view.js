@@ -13,7 +13,24 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Users", {
 	* @memberOf zy_ss14_t01_rosapvs.Users
 	*/ 
 	createContent : function(oController) {
-
+	  var tableUsers = new sap.ui.table.Table({
+	    title: "Registered Users",
+	    visibleRowCount: 10,
+	    firstVisibleRow: 3,
+	    selectionMode: sap.ui.table.SelectionMode.Single,	    
+	  });
+	
+	var columnName = new sap.ui.table.Column({
+	  label: new sap.ui.commons.Label({text: "User Name"}),
+	  template: new sap.ui.commons.TextView().bindProperty("text", "SapUser"),
+	});
+	var columnRole = new sap.ui.table.Column({
+	  label: new sap.ui.commons.Label({text: "Role"}),
+	  template: new sap.ui.commons.TextView().bindProperty("text", "Role"),	  
+	});
+	
+	tableUsers.addColumn(columnName).addColumn(columnRole);
+	tableUsers.bindRows("/PrivilegeCollection");
+	this.addContent(tableUsers);
 	}
-
 });
