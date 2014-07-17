@@ -96,7 +96,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       })
     });
     var fnPressHandler = null;
-    fnPressHandler = function(oEvenet) {      
+    fnPressHandler = function(oEvent) {      
       var entry = {
         Name: sap.ui.getCore().byId("tF_ApplicationName").getValue(),
         ReqCpu: 1 * sap.ui.getCore().byId("tF_ApplicationReqCPU").getValue(),
@@ -115,8 +115,8 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry);
       console.log(response);
       alert("New Application was added successfully");
-      if (oEvenet.getSource() instanceof sap.ui.commons.Button) {
-        oEvenet.getSource().detachPress(fnPressHandler);
+      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
+        oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
       };
     };
