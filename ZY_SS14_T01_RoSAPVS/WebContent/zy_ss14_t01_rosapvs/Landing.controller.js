@@ -119,7 +119,22 @@ sap.ui
                   postLogin: function(username, role) {
                     console.log(role);
                     $(sap.ui.getCore().byId("RoSAPVSShell").getWorksetItems()).each(function(index, element) {
-                      element.setVisible(true);
+                    	
+                    	// Rights Management
+                    	if (role == 1 || role == 2)
+                    	{
+                    		element.setVisible(true);
+                    	}
+                    	else if (role == 3) {
+                    		if (element.sId == "WI_Dashboard" || element.sId == "WI_LogicalUnits" || element.sId == "WI_Overview" || element.sId == "WI_Users") {
+                    			element.setVisible(true);
+                    		}
+                    	}
+                    	else {
+                    		if (element.sId == "WI_LogicalUnits" || element.sId == "WI_Users") {
+                    			element.setVisible(true);
+                    		}
+                    	}
                     });
                     // Show username and role
                     console.log(sap.ui.getCore().byId("tV_UserName"));
