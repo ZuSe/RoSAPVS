@@ -13,19 +13,29 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Landing", {
 	* @memberOf zy_ss14_t01_rosapvs.Landing
 	*/ 
 	createContent : function(oController) {
-		var simpleForm = new sap.ui.layout.form.SimpleForm;
+		jQuery.sap.require("sap.ui.core.IconPool");
+	    var loginPanel = new sap.ui.commons.Panel({
+	        title: new sap.ui.core.Title({
+	          text: "Login",
+	          icon: sap.ui.core.IconPool.getIconURI("log")
+	        }),
+	        applyContentPadding: true,
+	        showCollapseIcon: false,
+	      });
+		
 	    var matLayout = new sap.ui.commons.layout.MatrixLayout({
-		width: "30em",
-		widths: ["5em","25em"],
+		width: "22em",
+		widths: ["7em","15em"],
 	    });
+	    matLayout.createRow(null, null);
 	    matLayout.createRow(new sap.ui.commons.Label({text:"User"}),new sap.ui.commons.TextField("tF_LoginUsername",{placeholder: "SAP-User"}));
 	    matLayout.createRow(new sap.ui.commons.Label({text:"Password"}),new sap.ui.commons.PasswordField("tF_LoginPassword",{placeholder:"Password"}));
-	    matLayout.createRow(new sap.ui.commons.HorizontalDivider("a", {visible: true}));
-	    matLayout.createRow(new sap.ui.commons.Button("btn_LoginSubmit", {text: "Sign In", press: function(){oController.signInButtonListener(); }} ));
-	    simpleForm.addStyleClass("dialog");
-	    simpleForm.addContent(matLayout);
-	    simpleForm.setTitle('Login');
-	    this.addContent(simpleForm);
+	    matLayout.createRow(null, null);
+	    
+	    matLayout.createRow(null, new sap.ui.commons.Button("btn_LoginSubmit", {text: "Sign In", icon: sap.ui.core.IconPool.getIconURI("locked"), press: function(){oController.signInButtonListener(); }} ));
+	    
+	    loginPanel.addContent(matLayout);
+	    this.addContent(loginPanel);
 	}
 
 });
