@@ -42,16 +42,16 @@ sap.ui
                    * @memberOf zy_ss14_t01_rosapvs.Landing
                    */
                    onAfterRendering: function() {
-                     if($.cookie("Account") != undefined)
+                     if(jQuery.cookie("Account") != undefined)
                      {
-                       this.performLogin($.cookie("Account"));
+                       this.performLogin(jQuery.cookie("Account"));
                      
-                     if($.cookie("workItemSelected") != undefined)
+                     if(jQuery.cookie("workItemSelected") != undefined)
                      {
                        var oShell = sap.ui.getCore().byId("RoSAPVSShell");
                        sap.ui.getCore().byId("WI_Landing").setVisible(false);
-                       oShell.setSelectedWorksetItem($.cookie("workItemSelected"));
-                       oShell.setContent(sap.ui.getCore().byId($.cookie("currentView")));
+                       oShell.setSelectedWorksetItem(jQuery.cookie("workItemSelected"));
+                       oShell.setContent(sap.ui.getCore().byId(jQuery.cookie("currentView")));
                        
                      }
                      }
@@ -141,7 +141,7 @@ sap.ui
                     window.role = role;
                     sap.ui.getCore().byId("tV_UserName").setText(username + " ("+ this.roles[role] +")");
                     // Set cookie
-                    $.cookie("Account",username,{ expires: 7, path: '/' });
+                    jQuery.cookie("Account",username,{ expires: 7, path: '/' });
                     sap.ui.getCore().byId("WI_Landing").setVisible(false);
                     
                     // End of login, render id dependent dashboard elements and show it !
