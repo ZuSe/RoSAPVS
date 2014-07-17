@@ -58,7 +58,51 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	        sap.ui.getCore().byId("tF_LogicalUnitId").setValue(success.Id);
 	        sap.ui.getCore().byId("tF_LogicalUnitName").setValue(success.Name);
 	        sap.ui.getCore().byId("tF_LogicalUnitPerson").setValue(success.Person);
-	      }, function(error) {
+	        //success.AplList, success.HstList, success.PltList
+	        
+	       var hostTable = sap.ui.getCore().byId('tblHostsDetail');
+	       var platformTable = sap.ui.getCore().byId('tblPlatformsDetail');
+	       var applicationTable = sap.ui.getCore().byId('tblApplicationsDetail');
+	       
+	       if (typeof success.HstList == 'string') {
+	    	   hostTable.setSelectedIndex(0);
+	       }
+	       else {
+	    	   hostTable.setSelectedIndex(success.HstList);
+	       }
+	       
+	       if (typeof success.PltList == 'string') {
+	    	   platformTable.setSelectedIndex(0);
+	       }
+	       else {
+	    	   platformTable.setSelectedIndex(success.PltList);
+	       }
+	       
+	       if (typeof success.AplList == 'string') {
+	    	   applicationTable.setSelectedIndex(0);
+	       }
+	       else {
+	    	   applicationTable.setSelectedIndex(success.AplList);
+	       }
+	       
+	       // TODO Error handling, when context is null, Optimize
+	       var indicesHost = hostTable.getSelectedIndices();
+	       
+	       while (indicesHost.length > 0) {
+		       var contextHosts = hostTable.getContextByIndex(indicesHost.pop());
+		       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
+		    	   console.log(successHosts.Name);
+		       });
+	       }
+
+		    	  //var selected = tblHostsDetail.getSelectedIndices();
+		    	  //var rowIndices = e.getParameter('rowIndices');
+		            for (var i = 0; i < hostTable.length; i++) {
+		             if (true) {
+		            	hostTable.setSelectedIndex(i);
+		            }
+		            
+	      }}, function(error) {
 	        console.log(error);
 	        alert(error);
 	      });
@@ -69,6 +113,28 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    sap.ui.getCore().byId("tF_LogicalUnitName").setValue("").setEditable(true);
 	    sap.ui.getCore().byId("tF_LogicalUnitPerson").setValue("Please select");
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setValue("").setEditable(true).setVisible(true);
+	    
+	    // given: oTable.attachRowSelectionChange(function(oEvent) {
+	    // get selected tata: var currentRowContext = oEvent.getParameter("rowContext"); 
+	       var hostTable = sap.ui.getCore().byId("tblHostsDetail");
+	       hostTable.setSelectedIndex(-1);
+
+	    	  //var selected = tblHostsDetail.getSelectedIndices();
+	    	  //var rowIndices = e.getParameter('rowIndices');
+	            for (var i = 0; i < hostTable.length; i++) {
+	             if (true) {
+	            	hostTable.setSelectedIndex(i);
+	            }
+	            
+   }
+	            
+	 	var platformTable = sap.ui.getCore().byId("tblPlatformsDetail");
+		platformTable.setSelectedIndex(-1);
+		
+	 	var applicationTable = sap.ui.getCore().byId("tblApplicationsDetail");
+		applicationTable.setSelectedIndex(-1);
+		
+		
 	    var submitButton = new sap.ui.commons.Button({
 	      text: "Add",
 	      icon: sap.ui.core.IconPool.getIconURI("create"),
@@ -83,6 +149,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      var entry = {
 	        Name: sap.ui.getCore().byId("tF_LogicalUnitName").getValue(),
 	        Person: sap.ui.getCore().byId("dB_LogicalUnitPerson").getValue(),
+	        AplList: "17",
+	        HstList: "3",
+	        PltList: "8"
 	      };
 	      console.log(entry);
 	      var response = sap.ui.getCore().getModel().create('/LogicalUnitCollection', entry);
@@ -105,6 +174,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    sap.ui.getCore().getModel().remove(context.sPath);
 	    alert("LogicalUnit was deleted");
 	  },
+	  
+	    // given: oTable.attachRowSelectionChange(function(oEvent) {
+	    // get selected tata: var currentRowContext = oEvent.getParameter("rowContext"); 
+	  
 	  updateLogicalUnit: function() {
 	    sap.ui.getCore().byId("tF_LogicalUnitName").setEditable(true);
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setEditable(true).setVisible(true);

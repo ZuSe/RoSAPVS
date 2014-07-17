@@ -90,7 +90,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    
 	    var formLogicalUnitDetails = new sap.ui.commons.form.Form('formLogicalUnitDetails', {
 	      title: new sap.ui.core.Title({
-	        text: "LogicalUnit Details",
+	        text: "Logical Unit Details",
 	        tooltip: "Todo"
 	      }),
 	      layout: oLayoutfmLogicalUnitDetails,
@@ -155,8 +155,34 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		      visibleRowCount: 10,
 		      ExpandedVisibleRowCount: 20,
 		      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+		      rowSelectionChange: function(e) {
+			       var indicesHost = tblHostsDetail.getSelectedIndices();
+			       
+			       var hostArray = [];
+			       while (indicesHost.length > 0) {
+				       var contextHosts = tblHostsDetail.getContextByIndex(indicesHost.pop());
+				       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
+				    	   console.log(successHosts.Name);
+				    	   hostArray.push(successHosts);
+				       });
+			       }
+			       console.log(hostArray);
+			       console.log(hostArray.pop());
+		    	  var selected = tblHostsDetail.getSelectedIndices();
+		    	  var rowIndices = e.getParameter('rowIndices');
+		    	  // Rowindices describes selected group
+		            for (var i = 0; i < rowIndices.length; i++) {
+		                var rowIndex = rowIndices[i];
+		                //var sel = tblHostsDetail.isIndexSelected(rowIndex);
+		                //var model = tblHostsDetail.getModel();
+		                //model.getData()['modelData'][rowIndex]['checked'] = sel;
+		                //tblHostsDetail.invalidate();
+		                console.log(selected, rowIndex, rowIndices.length, 'AAAA');
+		            }
+		      },
 		      editable: false
 		    });
+	    
 		    tblHostsDetail.addColumn(new sap.ui.table.Column({
 		      label: new sap.ui.commons.Label({
 		        text: "Id"
