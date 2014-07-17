@@ -1,4 +1,5 @@
 sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
+
   /**
    * Called when a controller is instantiated and its View controls (if
    * available) are already created. Can be used to modify the View before it is
@@ -6,12 +7,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
    * 
    * @memberOf zy_ss14_t01_rosapvs.Hosts
    */
-
-  properties: {
-    keys: ["Id"],
-    textFields: ["Name", "Cpu", "Hdd", "Ram", "IsActive"],
-    dropDownBoxes: ["Person"],
-  },
   onInit: function() {
 
   },
@@ -26,6 +21,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
   onBeforeRendering: function() {
 
   },
+
   /**
    * Called when the View has been rendered (so its HTML is part of the
    * document). Post-rendering manipulations of the HTML could be done here.
@@ -33,7 +29,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
    * 
    * @memberOf zy_ss14_t01_rosapvs.Hosts
    */
-  onAfterRendering: function(e) {
+  onAfterRendering: function() {
 
   },
 
@@ -46,71 +42,60 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
   onExit: function() {
 
   },
-  
-  lockInput: function() {    
-    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.keys).each(function(index, element) {
-      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(false);
-    });
-    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.textFields).each(function(index, element) {
-      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(false);
-    });
-    $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.dropDownBoxes).each(function(index, element) {
-      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(false);
-    });
+  lockInput: function() {
+    sap.ui.getCore().byId("tF_HostsId").setEditable(false);
+    sap.ui.getCore().byId("tF_HostsName").setEditable(false);
+    sap.ui.getCore().byId("tF_HostsCpu").setEditable(false);
+    sap.ui.getCore().byId("tF_HostsRam").setEditable(false);
+    sap.ui.getCore().byId("tF_HostsHdd").setEditable(false);
+    sap.ui.getCore().byId("dB_HostsPerson").setEditable(false).setVisible(false);
+    sap.ui.getCore().byId("formContainerHostDetails").rerender();
   },
-  
   getDetails: function() {
     var tblHosts = sap.ui.getCore().byId('tblHosts');
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
     if (null != context) {
+
       sap.ui.getCore().getModel().read(context.sPath, 0, 0, false, function(success) {
         console.log(success);
-        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.keys).each(function(index, element) {
-          sap.ui.getCore().byId("tF_Hosts" + element).setValue(success[element]);
-        });
-        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.textFields).each(function(index, element) {
-          sap.ui.getCore().byId("tF_Hosts" + element).setValue(success[element]);
-        });
-        $(sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").properties.dropDownBoxes).each(function(index, element) {
-          sap.ui.getCore().byId("dB_Hosts" + element).setValue(success[element]);
-        });
+        sap.ui.getCore().byId("tF_HostsId").setValue(success.Id);
+        sap.ui.getCore().byId("tF_HostsName").setValue(success.Name);
+        sap.ui.getCore().byId("tF_HostsCpu").setValue(success.Cpu);
+        sap.ui.getCore().byId("tF_HostsRam").setValue(success.Ram);
+        sap.ui.getCore().byId("tF_HostsHdd").setValue(success.Hdd);       
+        sap.ui.getCore().byId("tF_HostsPerson").setValue(success.Person);
       }, function(error) {
         console.log(error);
         alert(error);
       });
     }
   },
-  
   createHost: function() {
-    $(this.properties.keys).each(function(index, element) {
-      sap.ui.getCore().byId("tF_Hosts" + element).setValue("To be calculated");
-    });
-    $(this.properties.textFields).each(function(index, element) {
-      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(true).setValue("");
-    });
-    $(this.properties.dropDownBoxes).each(function(index, element) {
-      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(true).setValue("");
-    });
-
+    sap.ui.getCore().byId("tF_HostsId").setValue("Will be calculated");
+    sap.ui.getCore().byId("tF_HostsName").setValue("").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsCpu").setValue("").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsRam").setValue("").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsHdd").setValue("").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsPerson").setValue("Please select");
+    sap.ui.getCore().byId("dB_HostsPerson").setValue("").setEditable(true).setVisible(true);
     var submitButton = new sap.ui.commons.Button({
       text: "Add",
       icon: sap.ui.core.IconPool.getIconURI("create"),
       tooltip: "Submit Data",
       visible: true,
-      width: "4em"
-
+      layoutData: new sap.ui.layout.form.GridElementData({
+        hCells: "2"
+      })
     });
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {
-      var entry = {       
+    fnPressHandler = function(oEvent) {      
+      var entry = {
         Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
         Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
-        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
         Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
-        IsActive: sap.ui.getCore().byId("tF_HostsIsActive").getValue(),
+        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
         Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
       };
-
       console.log(entry);
       var response = sap.ui.getCore().getModel().create('/HostCollection', entry);
       console.log(response);
@@ -118,8 +103,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
-      }
-      ;
+      };
     };
 
     sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
@@ -133,13 +117,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     sap.ui.getCore().getModel().remove(context.sPath);
     alert("Host was deleted");
   },
-  updateHost: function() {    
-    $(this.properties.textFields).each(function(index, element) {
-      sap.ui.getCore().byId("tF_Hosts" + element).setEditable(true);
-    });
-    $(this.properties.dropDownBoxes).each(function(index, element) {
-      sap.ui.getCore().byId("dB_Hosts" + element).setEditable(true);
-    });
+  updateHost: function() {
+    sap.ui.getCore().byId("tF_HostsName").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsCpu").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsRam").setEditable(true);
+    sap.ui.getCore().byId("tF_HostsHdd").setEditable(true);
+    sap.ui.getCore().byId("dB_HostsPerson").setEditable(true).setVisible(true);
     var submitButton = new sap.ui.commons.Button({
       text: "Update",
       tooltip: "Submit Data",
@@ -149,14 +132,13 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       })
     });
     var fnPressHandler = null;
-    fnPressHandler = function(oEvenet) {      
+    fnPressHandler = function(oEvent) {      
       var entry = {
         Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
         Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
         Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
-        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),        
-        IsActive: sap.ui.getCore().byId("tF_HostsIsActive").getValue(),
-        Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
+        Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
+        Person:  sap.ui.getCore().byId("dB_HostsPerson").getValue(),
       };
       console.log(entry);
       var tblHosts = sap.ui.getCore().byId('tblHosts');
@@ -164,10 +146,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
       console.log(response);
       alert("Host was updated successfully");
-      if (oEvenet.getSource() instanceof sap.ui.commons.Button) {
-        oEvenet.getSource().detachPress(fnPressHandler);
+      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
+        oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
-      };
+      };      
     };
 
     sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
@@ -176,5 +158,5 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
 
   },
 
-  
+
 });

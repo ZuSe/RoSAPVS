@@ -19,13 +19,14 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
    * @memberOf zy_ss14_t01_rosapvs.Hosts
    */
   createContent: function(oController) {
+
     // *** Declaration of important style variables *** //
 
     // Create a new Matrix Layout for the View
     var layoutHosts = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutHosts',
       columns: 3,
-      widths: ['35%', '5%', '65%']
+      widths: ['35%', '5%', '60%']
     });
     layoutHosts.setWidth('100%');
 
@@ -34,27 +35,25 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       ExpandedVisibleRowCount: 30,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
-        items: [
-	        new sap.ui.commons.Button({
-	          text: "Create",
-	          icon: sap.ui.core.IconPool.getIconURI("create"),
-	          press: function() {
-	            oController.createHost();
-	          }
-	        }), new sap.ui.commons.Button({
-	          text: "Update",
-	          icon: sap.ui.core.IconPool.getIconURI("refresh"),
-	          press: function() {
-	            oController.updateHost();
-	          }
-	        }), new sap.ui.commons.Button({
-	          text: "Delete",
-	          icon: sap.ui.core.IconPool.getIconURI("delete"),
-	          press: function() {
-	            oController.deleteHost();
-	          }
-	        }), 
-       ]
+        items: [new sap.ui.commons.Button({
+          text: "Create",
+          icon: sap.ui.core.IconPool.getIconURI("create"),
+          press: function() {
+            oController.createHost();
+          }
+        }), new sap.ui.commons.Button({
+          text: "Update",
+          icon: sap.ui.core.IconPool.getIconURI("refresh"),
+          press: function() {
+            oController.updateHost();
+          }
+        }), new sap.ui.commons.Button({
+          text: "Delete",
+          icon: sap.ui.core.IconPool.getIconURI("delete"),
+          press: function() {
+            oController.deleteHost();
+          }
+        }), ]
       }),
       editable: false
     });
@@ -85,34 +84,102 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       oController.getDetails();
     });
 
-    var oLayoutfmHostDetails = new sap.ui.layout.form.ResponsiveGridLayout();
-    var formContainerHostDetails = new sap.ui.layout.form.FormContainer("formContainerHostDetails");
-    
+    var oLayoutfmHostDetails = new sap.ui.layout.form.GridLayout();
     var formHostDetails = new sap.ui.commons.form.Form('formHostDetails', {
       title: new sap.ui.core.Title({
         text: "Host Details",
-        tooltip: "Todo",
+        tooltip: "Todo"
       }),
       layout: oLayoutfmHostDetails,
-      formContainers: [formContainerHostDetails]});
+      formContainers: [new sap.ui.layout.form.FormContainer('formContainerHostDetails',{
+        formElements: [new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "ID"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsId", {
+            editable: false,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "auto"
+            })
+          }), ]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "Name"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsName", {
+            value: "",
+            editable: false,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "auto"
+            })
+          }), ]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "CPU"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsCpu", {
+            value: "",
+            editable: false,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "auto"
+            })
+          })]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "RAM"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsRam", {
+            value: "",
+            editable: false,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "3"
+            }),
+          })]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "HDD"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsHdd", {
+            value: "",
+            editable: false,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "3"
+            })
+          }),
 
-    $(oController.properties.keys).each(function(index, element) {
-      formContainerHostDetails.addFormElement(new sap.ui.layout.form.FormElement({label:new sap.ui.commons.Label({
-        text: element}), fields: [new sap.ui.commons.TextField("tF_Hosts" + element, {editable: false,required: true,width: "12em"}),]}));
+          ]
+        }), new sap.ui.layout.form.FormElement({
+          label: new sap.ui.commons.Label({
+            text: "Employee Responsible"
+          }),
+          fields: [new sap.ui.commons.TextField("tF_HostsPerson", {
+              value: "",
+              editable: false,
+              layoutData: new sap.ui.layout.form.GridElementData({
+                hCells: "3"
+              })
+            }),    new sap.ui.commons.DropdownBox("dB_HostsPerson", {
+            value: "None",
+            editable: false,
+            visible: false,
+            displaySecondaryValues: true,
+            layoutData: new sap.ui.layout.form.GridElementData({
+              hCells: "3"
+            })
+          }),
+
+          ]
+        }),]
+      })],
     });
-    $(oController.properties.textFields).each(function(index, element) {
-      formContainerHostDetails.addFormElement(new sap.ui.layout.form.FormElement({ label: new sap.ui.commons.Label({
-        text: element}), fields: [new sap.ui.commons.TextField("tF_Hosts" + element, {editable: false,required: false, width: "12em",
-        })]}));
-    });
-    $(oController.properties.dropDownBoxes).each(function(index, element) {
-      formContainerHostDetails.addFormElement(new sap.ui.layout.form.FormElement({ label: new sap.ui.commons.Label({
-        text: element}), fields: [new sap.ui.commons.DropdownBox("dB_Hosts" + element, {editable: false,required: false, width: "12em",
-        })]}));
-    });   
 
     // *** Data Binding and Listeners *** //
 
+    var templateHostPerson = new sap.ui.core.ListItem();
+    templateHostPerson.bindProperty("text", "SapUser");
+    templateHostPerson.bindProperty("additionalText", "Role");
+    sap.ui.getCore().byId('dB_HostsPerson').bindItems("/PrivilegeCollection", templateHostPerson);
+    
     layoutHosts.createRow(tblHosts, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formHostDetails}).setVAlign("Top"));
     this.addContent(layoutHosts);
   }
