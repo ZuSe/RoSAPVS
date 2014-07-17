@@ -131,7 +131,7 @@ sap.ui
                     		}
                     	}
                     	else {
-                    		if (element.sId == "WI_LogicalUnits" || element.sId == "WI_Users") {
+                    		if (element.sId == "WI_Dashboard" || element.sId == "WI_Users") {
                     			element.setVisible(true);
                     		}
                     	}
