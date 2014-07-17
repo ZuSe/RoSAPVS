@@ -78,6 +78,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    });
 
 	    var oLayoutfmLogicalUnitDetails = new sap.ui.layout.form.GridLayout();
+	    
+	    // Create a new Matrix Layout for detail pane
+	    var layoutLogicalUnitsDetails = new sap.ui.commons.layout.MatrixLayout({
+	      id: 'layoutLogicalUnitsDetails',
+	      columns: 1,
+	      widths: ['100%']
+	    });
+	    
+	    layoutLogicalUnitsDetails.setWidth('100%');
+	    
 	    var formLogicalUnitDetails = new sap.ui.commons.form.Form('formLogicalUnitDetails', {
 	      title: new sap.ui.core.Title({
 	        text: "LogicalUnit Details",
@@ -130,7 +140,106 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	        }),]
 	      })],
 	    });
+	    
+	    layoutLogicalUnitsDetails.createRow(formLogicalUnitDetails);
+	    
+	    // Layout for Detail Tables
+	    var layoutDetailsTables = new sap.ui.commons.layout.MatrixLayout({
+		      id: 'layoutDetailsTables',
+		      columns: 3,
+		      widths: ['25%', '25%', '25%']
+		    });
+		layoutDetailsTables.setWidth('100%');
+	    
+	    var tblHostsDetail = new sap.ui.table.DataTable("tblHostsDetail", {
+		      visibleRowCount: 10,
+		      ExpandedVisibleRowCount: 20,
+		      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+		      editable: false
+		    });
+		    tblHostsDetail.addColumn(new sap.ui.table.Column({
+		      label: new sap.ui.commons.Label({
+		        text: "Id"
+		      }),
+		      template: new sap.ui.commons.TextField().bindProperty("value", "Id"),
+		      sortProperty: "Id"
+		    }));
+		    tblHostsDetail.addColumn(new sap.ui.table.Column({
+		      label: new sap.ui.commons.Label({
+		        text: "Name"
+		      }),
+		      template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
+		      sortProperty: "Name"
+		    }));
 
+		    tblHostsDetail.bindRows("/HostCollection");
+		    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
+		    //  oController.getDetails();
+		    //});
+	
+		    tblHostsDetail.setTitle("Hosts");
+		    
+		    var tblPlatformsDetail = new sap.ui.table.DataTable("tblPlatformsDetail", {
+			      visibleRowCount: 10,
+			      ExpandedVisibleRowCount: 20,
+			      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+			      editable: false
+			    });
+			    tblPlatformsDetail.addColumn(new sap.ui.table.Column({
+			      label: new sap.ui.commons.Label({
+			        text: "Id"
+			      }),
+			      template: new sap.ui.commons.TextField().bindProperty("value", "Id"),
+			      sortProperty: "Id"
+			    }));
+			    tblPlatformsDetail.addColumn(new sap.ui.table.Column({
+			      label: new sap.ui.commons.Label({
+			        text: "Name"
+			      }),
+			      template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
+			      sortProperty: "Name"
+			    }));
+
+			    tblPlatformsDetail.bindRows("/PlatformCollection");
+			    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
+			    //  oController.getDetails();
+			    //});
+		
+			    tblPlatformsDetail.setTitle("Platforms");
+		    
+			    var tblApplicationsDetail = new sap.ui.table.DataTable("tblApplicationsDetail", {
+				      visibleRowCount: 10,
+				      ExpandedVisibleRowCount: 20,
+				      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+				      editable: false
+				    });
+				    tblApplicationsDetail.addColumn(new sap.ui.table.Column({
+				      label: new sap.ui.commons.Label({
+				        text: "Id"
+				      }),
+				      template: new sap.ui.commons.TextField().bindProperty("value", "Id"),
+				      sortProperty: "Id"
+				    }));
+				    tblApplicationsDetail.addColumn(new sap.ui.table.Column({
+				      label: new sap.ui.commons.Label({
+				        text: "Name"
+				      }),
+				      template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
+				      sortProperty: "Name"
+				    }));
+
+				    tblApplicationsDetail.bindRows("/ApplicationCollection");
+				    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
+				    //  oController.getDetails();
+				    //});
+			
+				    tblApplicationsDetail.setTitle("Applications");			    
+		    
+		    layoutDetailsTables.createRow(tblHostsDetail, tblPlatformsDetail, tblApplicationsDetail);   
+		
+		    layoutLogicalUnitsDetails.createRow(new sap.ui.commons.HorizontalDivider("divider", {visible: true}));
+		    layoutLogicalUnitsDetails.createRow(layoutDetailsTables);
+		    
 	    // *** Data Binding and Listeners *** //
 
 //	    var templateLogicalUnitPlatform = new sap.ui.core.ListItem();
@@ -148,7 +257,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    templateLogicalUnitPerson.bindProperty("additionalText", "Role");
 	    sap.ui.getCore().byId('dB_LogicalUnitPerson').bindItems("/PrivilegeCollection", templateLogicalUnitPerson);
 	    
-	    layoutLogicalUnits.createRow(tblLogicalUnits, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formLogicalUnitDetails}).setVAlign("Top"));
+	    layoutLogicalUnits.createRow(tblLogicalUnits, null, new sap.ui.commons.layout.MatrixLayoutCell({content: layoutLogicalUnitsDetails}).setVAlign("Top"));
 	    this.addContent(layoutLogicalUnits);
 	  }
 
