@@ -65,24 +65,35 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var applicationTable = sap.ui.getCore().byId('tblApplicationsDetail');
 	       
 	       if (typeof success.HstList == 'string') {
-	    	   hostTable.setSelectedIndex(0);
+	    	   //hostTable.setSelectedIndex(0);
+	    	   // Empty?
+	    	   if (success.HstList) {
+	    		   //var jsonHst = JSON.parse(success.HstList);
+	    		   //code.log(jsonHst);
+	    	   }
 	       }
 	       else {
-	    	   hostTable.setSelectedIndex(success.HstList);
+	    	   //hostTable.setSelectedIndex(success.HstList);
 	       }
 	       
 	       if (typeof success.PltList == 'string') {
-	    	   platformTable.setSelectedIndex(0);
+	    	   if (success) {
+	    		   var jsonPlt = JSON.parse(success);
+	    		   code.log(jsonPlt);
+	    	   }
 	       }
 	       else {
-	    	   platformTable.setSelectedIndex(success.PltList);
+	    	   //platformTable.setSelectedIndex(success.PltList);
 	       }
 	       
 	       if (typeof success.AplList == 'string') {
-	    	   applicationTable.setSelectedIndex(0);
+	    	   if (success.AplList) {
+	    		   //var jsonApl = JSON.parse(success.AplList);
+	    		   //code.log(jsonApl);
+	    	   }
 	       }
 	       else {
-	    	   applicationTable.setSelectedIndex(success.AplList);
+	    	   //applicationTable.setSelectedIndex(success.AplList);
 	       }
 	       
 	       // TODO Error handling, when context is null, Optimize
@@ -94,7 +105,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    	   console.log(successHosts.Name);
 		       });
 	       }
-
 		    	  //var selected = tblHostsDetail.getSelectedIndices();
 		    	  //var rowIndices = e.getParameter('rowIndices');
 		            for (var i = 0; i < hostTable.length; i++) {
@@ -115,7 +125,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setValue("").setEditable(true).setVisible(true);
 	    
 	    // given: oTable.attachRowSelectionChange(function(oEvent) {
-	    // get selected tata: var currentRowContext = oEvent.getParameter("rowContext"); 
+	    // get selected data: var currentRowContext = oEvent.getParameter("rowContext"); 
 	       var hostTable = sap.ui.getCore().byId("tblHostsDetail");
 	       hostTable.setSelectedIndex(-1);
 
