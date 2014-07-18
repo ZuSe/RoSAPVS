@@ -63,10 +63,11 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var hostTable = sap.ui.getCore().byId('tblHostsDetail');
 	       var platformTable = sap.ui.getCore().byId('tblPlatformsDetail');
 	       var applicationTable = sap.ui.getCore().byId('tblApplicationsDetail');
+	       hostTable.setSelectedIndex(-1);
+	       platformTable.setSelectedIndex(-1);
+	       applicationTable.setSelectedIndex(-1);
 	       
 	       if (typeof success.HstList == 'string') {
-	    	   //hostTable.setSelectedIndex(0);
-	    	   // Empty?
 	    	   if (success.HstList) {
 	    		   //var jsonHst = JSON.parse(success.HstList);
 	    		   //code.log(jsonHst);
@@ -78,8 +79,8 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	       if (typeof success.PltList == 'string') {
 	    	   if (success) {
-	    		   var jsonPlt = JSON.parse(success);
-	    		   code.log(jsonPlt);
+	    		   //var jsonPlt = JSON.parse(success);
+	    		   //code.log(jsonPlt);
 	    	   }
 	       }
 	       else {
@@ -97,22 +98,53 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       }
 	       
 	       // TODO Error handling, when context is null, Optimize
-	       var indicesHost = hostTable.getSelectedIndices();
 	       
-	       while (indicesHost.length > 0) {
-		       var contextHosts = hostTable.getContextByIndex(indicesHost.pop());
+	       // Select hosts
+	       var hostId = parseInt(success.HstList);
+	       console.log('hostID', hostId);
+	       var lengthHostTable = hostTable.getBinding("rows").iLength;
+	       console.log('HostLength', lengthHostTable);
+	       
+	       for (var i = 0; i < lengthHostTable; i++) {
+		       var contextHosts = hostTable.getContextByIndex(i);
 		       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-		    	   console.log(successHosts.Name);
+			       if (successHosts.Id == hostId) {
+			    	   hostTable.setSelectedIndex(i);
+			       }
 		       });
 	       }
-		    	  //var selected = tblHostsDetail.getSelectedIndices();
-		    	  //var rowIndices = e.getParameter('rowIndices');
-		            for (var i = 0; i < hostTable.length; i++) {
-		             if (true) {
-		            	hostTable.setSelectedIndex(i);
-		            }
-		            
-	      }}, function(error) {
+	       
+	       // Select platforms
+	       var platformId = parseInt(success.PltList);
+	       console.log('platformID', platformId);
+	       var lengthPlatformTable = platformTable.getBinding("rows").iLength;
+	       console.log('PlatformLength', lengthPlatformTable);
+	       
+	       for (var i = 0; i < lengthPlatformTable; i++) {
+		       var contextPlatforms = platformTable.getContextByIndex(i);
+		       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
+			       if (successPlatforms.Id == platformId) {
+			    	   platformTable.setSelectedIndex(i);
+			       }
+		       });
+	       }
+	       
+	       // Select applications
+	       var applicationId = parseInt(success.AplList);
+	       console.log('applicationID', applicationId);
+	       var lengthApplicationTable = applicationTable.getBinding("rows").iLength;
+	       console.log('ApplicationLength', lengthApplicationTable);
+	       
+	       for (var i = 0; i < lengthApplicationTable; i++) {
+		       var contextApplications = applicationTable.getContextByIndex(i);
+		       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
+			       if (successApplications.Id == applicationId) {
+			    	   applicationTable.setSelectedIndex(i);
+			       }
+		       });
+	       }
+	       
+	      }, function(error) {
 	        console.log(error);
 	        alert(error);
 	      });
@@ -134,8 +166,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	            for (var i = 0; i < hostTable.length; i++) {
 	             if (true) {
 	            	hostTable.setSelectedIndex(i);
-	            }
-	            
+	            } 
    }
 	            
 	 	var platformTable = sap.ui.getCore().byId("tblPlatformsDetail");
