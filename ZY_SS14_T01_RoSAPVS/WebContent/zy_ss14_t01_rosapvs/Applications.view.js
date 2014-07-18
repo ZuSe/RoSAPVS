@@ -115,7 +115,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           }), ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required CPU"
+            text: "Required CPU (Cores)"
           }),
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqCPU", {
             value: "",
@@ -126,7 +126,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required RAM"
+            text: "Required RAM (GB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqRAM", {
             value: "",
@@ -137,7 +137,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required HDD"
+            text: "Required HDD (TB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqHDD", {
             value: "",
@@ -173,7 +173,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Platform"
+            text: "Assigned Platform"
           }),
           fields: [
                    new sap.ui.commons.TextField("tF_ApplicationPlatform", {

@@ -115,7 +115,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
           }), ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required CPU"
+            text: "Required CPU (Cores)"
           }),
           fields: [new sap.ui.commons.TextField("tF_PlatformsReqCPU", {
             value: "",
@@ -126,7 +126,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required RAM"
+            text: "Required RAM (GB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_PlatformsReqRAM", {
             value: "",
@@ -137,7 +137,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Required HDD"
+            text: "Required HDD (TB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_PlatformsReqHDD", {
             value: "",
@@ -150,7 +150,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
           ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "Host"
+            text: "Assigned Host"
           }),
           fields: [
                    new sap.ui.commons.TextField("tF_PlatformsHost", {

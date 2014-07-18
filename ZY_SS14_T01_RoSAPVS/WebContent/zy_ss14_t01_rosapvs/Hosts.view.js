@@ -115,7 +115,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
           }), ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "CPU"
+            text: "CPU (Cores)"
           }),
           fields: [new sap.ui.commons.TextField("tF_HostsCpu", {
             value: "",
@@ -126,7 +126,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "RAM"
+            text: "RAM (GB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_HostsRam", {
             value: "",
@@ -137,7 +137,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
-            text: "HDD"
+            text: "HDD (TB)"
           }),
           fields: [new sap.ui.commons.TextField("tF_HostsHdd", {
             value: "",
