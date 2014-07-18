@@ -154,31 +154,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    var tblHostsDetail = new sap.ui.table.DataTable("tblHostsDetail", {
 		      visibleRowCount: 10,
 		      ExpandedVisibleRowCount: 20,
-		      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+		      selectionMode: sap.ui.table.SelectionMode.None,
 		      rowSelectionChange: function(e) {
-			       var indicesHost = tblHostsDetail.getSelectedIndices();
-			       
-			       var hostArray = [];
-			       while (indicesHost.length > 0) {
-				       var contextHosts = tblHostsDetail.getContextByIndex(indicesHost.pop());
-				       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-				    	   console.log(successHosts.Name);
-				    	   hostArray.push(successHosts);
-				       });
-			       }
-			       console.log(hostArray);
-			       console.log(hostArray.pop());
-		    	  var selected = tblHostsDetail.getSelectedIndices();
-		    	  var rowIndices = e.getParameter('rowIndices');
-		    	  // Rowindices describes selected group
-		            for (var i = 0; i < rowIndices.length; i++) {
-		                var rowIndex = rowIndices[i];
-		                //var sel = tblHostsDetail.isIndexSelected(rowIndex);
-		                //var model = tblHostsDetail.getModel();
-		                //model.getData()['modelData'][rowIndex]['checked'] = sel;
-		                //tblHostsDetail.invalidate();
-		                console.log(selected, rowIndex, rowIndices.length, 'AAAA');
-		            }
 		      },
 		      editable: false
 		    });
@@ -208,7 +185,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    var tblPlatformsDetail = new sap.ui.table.DataTable("tblPlatformsDetail", {
 			      visibleRowCount: 10,
 			      ExpandedVisibleRowCount: 20,
-			      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+			      selectionMode: sap.ui.table.SelectionMode.None,
 			      editable: false
 			    });
 			    tblPlatformsDetail.addColumn(new sap.ui.table.Column({
@@ -236,7 +213,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 			    var tblApplicationsDetail = new sap.ui.table.DataTable("tblApplicationsDetail", {
 				      visibleRowCount: 10,
 				      ExpandedVisibleRowCount: 20,
-				      selectionMode: sap.ui.table.SelectionMode.MultiToggle,
+				      selectionMode: sap.ui.table.SelectionMode.None,
 				      editable: false
 				    });
 				    tblApplicationsDetail.addColumn(new sap.ui.table.Column({

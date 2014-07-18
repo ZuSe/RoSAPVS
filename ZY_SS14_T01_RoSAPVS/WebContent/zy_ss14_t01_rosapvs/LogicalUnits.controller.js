@@ -64,8 +64,11 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var platformTable = sap.ui.getCore().byId('tblPlatformsDetail');
 	       var applicationTable = sap.ui.getCore().byId('tblApplicationsDetail');
 	       hostTable.setSelectedIndex(-1);
+	       hostTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 	       platformTable.setSelectedIndex(-1);
+	       platformTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 	       applicationTable.setSelectedIndex(-1);
+	       applicationTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 	       
 	       if (typeof success.HstList == 'string') {
 	    	   if (success.HstList) {
@@ -103,7 +106,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var hostId = parseInt(success.HstList);
 	       console.log('hostID', hostId);
 	       var lengthHostTable = hostTable.getBinding("rows").iLength;
-	       console.log('HostLength', lengthHostTable);
 	       
 	       for (var i = 0; i < lengthHostTable; i++) {
 		       var contextHosts = hostTable.getContextByIndex(i);
@@ -118,13 +120,16 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var platformId = parseInt(success.PltList);
 	       console.log('platformID', platformId);
 	       var lengthPlatformTable = platformTable.getBinding("rows").iLength;
-	       console.log('PlatformLength', lengthPlatformTable);
 	       
 	       for (var i = 0; i < lengthPlatformTable; i++) {
 		       var contextPlatforms = platformTable.getContextByIndex(i);
 		       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
 			       if (successPlatforms.Id == platformId) {
 			    	   platformTable.setSelectedIndex(i);
+			       }
+			       else {
+			    	   var el = $(this);
+			    	   el.toggleClass("coloredrow");
 			       }
 		       });
 	       }
@@ -133,7 +138,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       var applicationId = parseInt(success.AplList);
 	       console.log('applicationID', applicationId);
 	       var lengthApplicationTable = applicationTable.getBinding("rows").iLength;
-	       console.log('ApplicationLength', lengthApplicationTable);
 	       
 	       for (var i = 0; i < lengthApplicationTable; i++) {
 		       var contextApplications = applicationTable.getContextByIndex(i);
