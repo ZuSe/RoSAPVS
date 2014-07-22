@@ -19,8 +19,8 @@ sap.ui
                    */
                   onInit: function() {
                     var modCM = new sap.ui.model.odata.ODataModel(
-                            "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/", true, "ABAP-12",
-                            "p4ssw0rd");
+                            "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/", true, null,
+                            null);
                     sap.ui.getCore().setModel(modCM);                    
                   },
 
