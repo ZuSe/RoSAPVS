@@ -80,8 +80,6 @@ sap.ui
                       requestUri: "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/UserCheckLoginCollection(User='"
                               + myUser + "',Password='" + myPassword + "')",
                       method: "GET",
-                      User: "ABAP-12",
-                      Password: "p4ssw0rd",
                     };
 
                     OData.request(request, function(data, success) {
@@ -89,19 +87,18 @@ sap.ui
                         console.log("Perfom Login");
                         sap.ui.controller("zy_ss14_t01_rosapvs.Landing").performLogin(data.User.toUpperCase());
                       } else {
-
+                    	  sap.ui.commons.MessageBox.alert("Incorrect Login",'',"Error");
                       }
                     }, function(error) {
+                        console.log(error);
+                        sap.ui.commons.MessageBox.alert("Not allowed",'',"Error");
                     }
-
                     );
-
                   },
 
                   signInButtonListener: function() {
                     var user = sap.ui.getCore().byId("tF_LoginUsername").getValue().toUpperCase();
                     var password = sap.ui.getCore().byId("tF_LoginPassword").getValue();
-                    // TODO implement validator for user and password
                     this.signIn(user, password);
                   },
 
