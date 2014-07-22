@@ -132,9 +132,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   deletePlatform: function() {
     var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
     var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
+    var nameDeleted = sap.ui.getCore().byId("tF_PlatformsName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
 	var oMessage = new sap.ui.core.Message({
-		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was deleted successfully.',
+		text : 'Platform ' + nameDeleted + ' was deleted successfully.',
 		timestamp : (new Date()).toUTCString()
 	});
 	oMessage.setLevel(sap.ui.core.MessageType.Success);

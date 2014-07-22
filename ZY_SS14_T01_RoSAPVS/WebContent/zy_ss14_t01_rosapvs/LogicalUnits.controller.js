@@ -229,9 +229,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	  deleteLogicalUnit: function() {
 	    var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	    var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
+	    var nameDeleted = sap.ui.getCore().byId("tF_LogicalUnitName").getValue();
 	    sap.ui.getCore().getModel().remove(context.sPath);
 		var oMessage = new sap.ui.core.Message({
-			text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was deleted successfully.',
+			text : 'Logical Unit ' + nameDeleted + ' was deleted successfully.',
 			timestamp : (new Date()).toUTCString()
 		});
 		oMessage.setLevel(sap.ui.core.MessageType.Success);

@@ -127,9 +127,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
   deleteHost: function() {
     var tblHosts = sap.ui.getCore().byId('tblHosts');
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
+    var nameDeleted = sap.ui.getCore().byId("tF_HostsName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
 	var oMessage = new sap.ui.core.Message({
-		text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was deleted successfully.',
+		text : 'Host ' + nameDeleted + ' was deleted successfully.',
 		timestamp : (new Date()).toUTCString()
 	});
 	oMessage.setLevel(sap.ui.core.MessageType.Success);

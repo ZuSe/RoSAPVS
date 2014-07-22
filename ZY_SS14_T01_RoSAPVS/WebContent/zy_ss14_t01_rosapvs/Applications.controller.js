@@ -143,9 +143,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
   deleteApplication: function() {
     var tblApplications = sap.ui.getCore().byId('tblApplications');
     var context = tblApplications.getContextByIndex(tblApplications.getSelectedIndex());
+    var nameDeleted = sap.ui.getCore().byId("tF_ApplicationName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
 	var oMessage = new sap.ui.core.Message({
-		text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was deleted successfully.',
+		text : 'Application ' + nameDeleted + ' was deleted successfully.',
 		timestamp : (new Date()).toUTCString()
 	});
 	oMessage.setLevel(sap.ui.core.MessageType.Success);
