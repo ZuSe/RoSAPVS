@@ -150,7 +150,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	      }, function(error) {
 	        console.log(error);
-	        alert(error);
+	        sap.ui.commons.MessageBox.alert("Unable to retrieve data.",'',"Error");
 	      });
 	    }
 	  },
@@ -201,7 +201,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      console.log(entry);
 	      var response = sap.ui.getCore().getModel().create('/LogicalUnitCollection', entry);
 	      console.log(response);
-	      alert("New LogicalUnit was added successfully");
+	      var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
+	      tblLogicalUnits.getModel().refresh(true);
+	      tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
+	      sap.ui.commons.MessageBox.alert("New Logical Unit was created successfully.",'',"Notification");
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
@@ -217,7 +220,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	    var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	    sap.ui.getCore().getModel().remove(context.sPath);
-	    alert("LogicalUnit was deleted");
+	    sap.ui.commons.MessageBox.alert("Logical Unit was deleted.",'',"Notification");
 	  },
 	  
 	    // given: oTable.attachRowSelectionChange(function(oEvent) {
@@ -245,7 +248,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
 	      console.log(response);
-	      alert("LogicalUnit was updated successfully");
+	      sap.ui.commons.MessageBox.alert("Logical Unit was updated successfully.",'',"Notification");
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
