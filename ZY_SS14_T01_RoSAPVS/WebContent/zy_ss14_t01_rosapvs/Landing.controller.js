@@ -33,6 +33,20 @@ sap.ui
                    */
                   onBeforeRendering: function() {                    
                    },
+                   displayListener : function (oEvent) {
+                	 var bShow = oEvent.getParameter("show");
+
+               		if (bShow) {
+               			/*
+               			 * Now the application can decide how to display the bar. It can be maximized, default, minimized (please see NotificationBarStatus) 
+               			 */
+               			var sStatus = sap.ui.ux3.NotificationBarStatus.Default;
+               			oNotiBar2.setVisibleStatus(sStatus);
+               		} else {
+               			var sStatus = sap.ui.ux3.NotificationBarStatus.None;
+               			oNotiBar2.setVisibleStatus(sStatus);
+               		}
+               	},
                   /**
                    * Called when the View has been rendered (so its HTML is part
                    * of the document). Post-rendering manipulations of the HTML
@@ -87,11 +101,22 @@ sap.ui
                         console.log("Perfom Login");
                         sap.ui.controller("zy_ss14_t01_rosapvs.Landing").performLogin(data.User.toUpperCase());
                       } else {
-                    	  sap.ui.commons.MessageBox.alert("Incorrect Login",'',"Error");
+                  		var oMessage = new sap.ui.core.Message({
+                			text : 'Incorrect Login',
+                			timestamp : (new Date()).toUTCString()
+                		});
+                		oMessage.setLevel(sap.ui.core.MessageType.Error);
+                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+                      //sap.ui.commons.MessageBox.alert("Incorrect Login",'',"Error");
                       }
                     }, function(error) {
                         console.log(error);
-                        sap.ui.commons.MessageBox.alert("Not allowed",'',"Error");
+                  		var oMessage = new sap.ui.core.Message({
+                			text : 'Not allowed',
+                			timestamp : (new Date()).toUTCString()
+                		});
+                		oMessage.setLevel(sap.ui.core.MessageType.Error);
+                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
                     }
                     );
                   },
@@ -105,6 +130,12 @@ sap.ui
                   performLogin: function(username) {
                     sap.ui.getCore().getModel().read("/PrivilegeCollection(SapUser='" + username + "')", 0, 0, false, function(success) {
                       console.log(success);
+                		var oMessage = new sap.ui.core.Message({
+                			text : 'Login successful.',
+                			timestamp : (new Date()).toUTCString()
+                		});
+                		oMessage.setLevel(sap.ui.core.MessageType.Success);
+                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
                       sap.ui.controller("zy_ss14_t01_rosapvs.Landing").postLogin(success.SapUser, success.Role);
                     }, function(error) {
 
@@ -146,4 +177,5 @@ sap.ui
                     dashboardView.oController.addPanels();
                     oShell.setContent(dashboardView);                    
                   },
+                  
                 });

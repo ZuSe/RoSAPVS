@@ -68,7 +68,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         sap.ui.getCore().byId("tF_PlatformsHost").setValue(success.Host);
       }, function(error) {
         console.log(error);
-        sap.ui.commons.MessageBox.alert("Unable to retrieve data.",'',"Error");
+      	var oMessage = new sap.ui.core.Message({
+      		text : 'Unable to retrieve data.',
+    		timestamp : (new Date()).toUTCString()
+    	});
+    	oMessage.setLevel(sap.ui.core.MessageType.Error);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       });
     }
   },
@@ -107,7 +112,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       var tblPlatforms = sap.ui.getCore().byId("tblPlatforms");
       tblPlatforms.getModel().refresh(true);
       tblPlatforms.setSelectedIndex(tblPlatforms.getBinding("rows").iLength-1);
-      sap.ui.commons.MessageBox.alert("New Platform was created successfully.",'',"Notification");
+  	var oMessage = new sap.ui.core.Message({
+  		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was created successfully.',
+		timestamp : (new Date()).toUTCString()
+	});
+	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
@@ -123,9 +133,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
     var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
     sap.ui.getCore().getModel().remove(context.sPath);
-    console.log(tblPlatforms.getSelectedIndex());
-    tblPlatforms.setSelectedIndex(-1);
-    sap.ui.commons.MessageBox.alert("Platform was deleted.",'',"Notification");
+	var oMessage = new sap.ui.core.Message({
+		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was deleted successfully.',
+		timestamp : (new Date()).toUTCString()
+	});
+	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updatePlatform: function() {
     sap.ui.getCore().byId("tF_PlatformsName").setEditable(true);
@@ -157,7 +170,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
       var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
       console.log(response);
-      sap.ui.commons.MessageBox.alert("Platform was updated successfully.",'',"Notification");
+  	var oMessage = new sap.ui.core.Message({
+  		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was updated successfully.',
+		timestamp : (new Date()).toUTCString()
+	});
+	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();

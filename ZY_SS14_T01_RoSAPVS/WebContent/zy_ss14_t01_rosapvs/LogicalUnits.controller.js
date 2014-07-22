@@ -150,7 +150,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	      }, function(error) {
 	        console.log(error);
-	        sap.ui.commons.MessageBox.alert("Unable to retrieve data.",'',"Error");
+	      	var oMessage = new sap.ui.core.Message({
+	      		text : 'Unable to retrieve data.',
+	    		timestamp : (new Date()).toUTCString()
+	    	});
+	    	oMessage.setLevel(sap.ui.core.MessageType.Error);
+	      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	      });
 	    }
 	  },
@@ -204,7 +209,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	      tblLogicalUnits.getModel().refresh(true);
 	      tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
-	      sap.ui.commons.MessageBox.alert("New Logical Unit was created successfully.",'',"Notification");
+	  	var oMessage = new sap.ui.core.Message({
+	  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was created successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
@@ -220,7 +230,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	    var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	    sap.ui.getCore().getModel().remove(context.sPath);
-	    sap.ui.commons.MessageBox.alert("Logical Unit was deleted.",'',"Notification");
+		var oMessage = new sap.ui.core.Message({
+			text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was deleted successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	  },
 	  
 	    // given: oTable.attachRowSelectionChange(function(oEvent) {
@@ -248,7 +263,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
 	      console.log(response);
-	      sap.ui.commons.MessageBox.alert("Logical Unit was updated successfully.",'',"Notification");
+	  	var oMessage = new sap.ui.core.Message({
+	  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was updated successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
