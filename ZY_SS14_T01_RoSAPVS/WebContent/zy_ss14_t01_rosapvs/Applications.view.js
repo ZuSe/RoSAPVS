@@ -83,14 +83,13 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     tblApplications.attachRowSelect(function(oEvent) {
       oController.getDetails();
     });
-
-    var oLayoutfmApplicationDetails = new sap.ui.layout.form.GridLayout();
-    var formApplicationDetails = new sap.ui.commons.form.Form('formApplicationDetails', {
+    
+    var formApplicationDetails = new sap.ui.layout.form.Form('formApplicationDetails', {
       title: new sap.ui.core.Title({
         text: "Application Details",
         tooltip: "Shows the application details"
       }),
-      layout: oLayoutfmApplicationDetails,
+      layout: new sap.ui.layout.form.GridLayout(),
       formContainers: [new sap.ui.layout.form.FormContainer('formContainerApplicationDetails',{
         formElements: [new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -185,9 +184,9 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
       })],
     });
 
+    formApplicationDetails.addStyleClass('fancyBox');
+    
     // *** Data Binding and Listeners *** //
-
-    oLayoutfmApplicationDetails.addStyleClass('fancyBox');
     
     var templateApplicationPlatform = new sap.ui.core.ListItem();
     templateApplicationPlatform.bindProperty("text", "Id");

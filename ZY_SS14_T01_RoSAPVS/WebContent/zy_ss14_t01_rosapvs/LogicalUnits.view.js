@@ -77,9 +77,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      oController.getDetails();
 	    });
 
-	    var oLayoutfmLogicalUnitDetails = new sap.ui.layout.form.GridLayout();
-	    
-	    // Create a new Matrix Layout for detail pane
 	    var layoutLogicalUnitsDetails = new sap.ui.commons.layout.MatrixLayout({
 	      id: 'layoutLogicalUnitsDetails',
 	      columns: 1,
@@ -88,12 +85,12 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    
 	    layoutLogicalUnitsDetails.setWidth('100%');
 	    
-	    var formLogicalUnitDetails = new sap.ui.commons.form.Form('formLogicalUnitDetails', {
+	    var formLogicalUnitDetails = new sap.ui.layout.form.Form('formLogicalUnitDetails', {
 	      title: new sap.ui.core.Title({
 	        text: "Logical Unit Details",
-	        tooltip: "Todo"
+	        tooltip: "Shows the logical unit details"
 	      }),
-	      layout: oLayoutfmLogicalUnitDetails,
+	      layout: new sap.ui.layout.form.GridLayout(),
 	      formContainers: [new sap.ui.layout.form.FormContainer('formContainerLogicalUnitDetails',{
 	        formElements: [new sap.ui.layout.form.FormElement({
 	          label: new sap.ui.commons.Label({
@@ -140,6 +137,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	        }),]
 	      })],
 	    });
+	    
+	    formLogicalUnitDetails.addStyleClass('fancyBox');
 	    
 	    layoutLogicalUnitsDetails.createRow(formLogicalUnitDetails);
 	    

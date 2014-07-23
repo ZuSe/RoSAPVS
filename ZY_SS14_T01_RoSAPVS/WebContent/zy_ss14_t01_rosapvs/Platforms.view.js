@@ -84,13 +84,12 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
       oController.getDetails();
     });
 
-    var oLayoutfmPlatformDetails = new sap.ui.layout.form.GridLayout();
-    var formPlatformDetails = new sap.ui.commons.form.Form('formPlatformDetails', {
+    var formPlatformDetails = new sap.ui.layout.form.Form('formPlatformDetails', {
       title: new sap.ui.core.Title({
         text: "Platform Details",
-        tooltip: "Todo"
+        tooltip: "Shows the platform details"
       }),
-      layout: oLayoutfmPlatformDetails,
+      layout: new sap.ui.layout.form.GridLayout(),
       formContainers: [new sap.ui.layout.form.FormContainer('formContainerPlatformDetails',{
         formElements: [new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -195,6 +194,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
       })],
     });
 
+    formPlatformDetails.addStyleClass('fancyBox');
+    
     // *** Data Binding and Listeners *** //
 
     var templatePlatformHost = new sap.ui.core.ListItem();
