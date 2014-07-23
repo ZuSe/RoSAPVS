@@ -103,47 +103,41 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       // TODO Error handling, when context is null, Optimize
 	       
 	       // Select hosts
-	       var hostId = parseInt(success.HstList);
-	       console.log('hostID', hostId);
+	       
+	       var hostIds = JSON.parse("[" + success.HstList + "]");
 	       var lengthHostTable = hostTable.getBinding("rows").iLength;
 	       
 	       for (var i = 0; i < lengthHostTable; i++) {
 		       var contextHosts = hostTable.getContextByIndex(i);
 		       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-			       if (successHosts.Id == hostId) {
-			    	   hostTable.setSelectedIndex(i);
+			       if (($.inArray(successHosts.Id, hostIds)) != -1) {
+			    	   hostTable.addSelectionInterval(i,i);
 			       }
 		       });
 	       }
 	       
 	       // Select platforms
-	       var platformId = parseInt(success.PltList);
-	       console.log('platformID', platformId);
+	       var platformIds = JSON.parse("[" + success.PltList + "]");
 	       var lengthPlatformTable = platformTable.getBinding("rows").iLength;
 	       
 	       for (var i = 0; i < lengthPlatformTable; i++) {
 		       var contextPlatforms = platformTable.getContextByIndex(i);
 		       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
-			       if (successPlatforms.Id == platformId) {
-			    	   platformTable.setSelectedIndex(i);
-			       }
-			       else {
-			    	   var el = $(this);
-			    	   el.toggleClass("coloredrow");
+			       if (($.inArray(successPlatforms.Id, platformIds)) != -1) {
+			    	   platformTable.addSelectionInterval(i,i);
 			       }
 		       });
 	       }
 	       
 	       // Select applications
-	       var applicationId = parseInt(success.AplList);
-	       console.log('applicationID', applicationId);
+	       var applicationIds = JSON.parse("[" + success.AplList + "]");
 	       var lengthApplicationTable = applicationTable.getBinding("rows").iLength;
 	       
 	       for (var i = 0; i < lengthApplicationTable; i++) {
 		       var contextApplications = applicationTable.getContextByIndex(i);
 		       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
-			       if (successApplications.Id == applicationId) {
-			    	   applicationTable.setSelectedIndex(i);
+			       if (($.inArray(successApplications.Id, applicationIds)) != -1) {
+			    	   applicationTable.addSelectionInterval(i,i);
 			       }
 		       });
 	       }
