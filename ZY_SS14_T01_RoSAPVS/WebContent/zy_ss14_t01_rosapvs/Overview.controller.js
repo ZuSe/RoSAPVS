@@ -23,8 +23,7 @@ sap.ui
 		     * 
 		     * @memberOf zy_ss14_t01_rosapvs.Overview
 		     */
-		    onBeforeRendering : function() {
-			this.buildNetworkModel();
+		    onBeforeRendering : function() {		       
 		    },
 
 		    /**
@@ -36,7 +35,8 @@ sap.ui
 		     * @memberOf zy_ss14_t01_rosapvs.Overview
 		     */
 		    onAfterRendering : function() {	      	      
-		        
+		      sap.ui.core.BusyIndicator.show();
+		      this.buildNetworkModel();
 		    },
 
 		    /**
@@ -225,7 +225,7 @@ sap.ui
     var network = null;
 
     var DIR = 'http://home.in.tum.de/~palacin/static/images/';
-    var LENGTH_HOST = 300;
+    var LENGTH_HOST = 200;
     var LENGTH_PLT = 150;
     var LENGTH_APP = 100;
 
@@ -260,11 +260,32 @@ sap.ui
       };
       console.log(data);
       var options = {
+        physics: {barnesHut: {gravitationalConstant: -4400, centralGravity: 0.5, springConstant: 0.046, damping: 0.07}}, 
+        smoothCurves: true,
         stabilize: false, // stabilize positions before displaying
         clustering: true,
-        hierarchicalLayout: false
+        navigation: true,
+        hierarchicalLayout: 
+        {
+          enabled:false,          
+          nodeSpacing: 200,
+          direction: "UD"
+        },
+        tooltip: {
+          delay: 300,
+          fontColor: "black",
+          fontSize: 14, // px
+          fontFace: "verdana",
+          color: {
+            border: "#666",
+            background: "#FFFFC6"
+          },
+        },
+
+
 
       };
+      sap.ui.core.BusyIndicator.hide();
       network = new vis.Network(container, data, options);
   }
 
