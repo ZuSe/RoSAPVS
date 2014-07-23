@@ -58,7 +58,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	        sap.ui.getCore().byId("tF_LogicalUnitId").setValue(success.Id);
 	        sap.ui.getCore().byId("tF_LogicalUnitName").setValue(success.Name);
 	        sap.ui.getCore().byId("tF_LogicalUnitPerson").setValue(success.Person);
-	        //success.AplList, success.HstList, success.PltList
 	        
 	       var hostTable = sap.ui.getCore().byId('tblHostsDetail');
 	       var platformTable = sap.ui.getCore().byId('tblPlatformsDetail');
@@ -70,40 +69,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       applicationTable.setSelectedIndex(-1);
 	       applicationTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 	       
-	       if (typeof success.HstList == 'string') {
-	    	   if (success.HstList) {
-	    		   //var jsonHst = JSON.parse(success.HstList);
-	    		   //code.log(jsonHst);
-	    	   }
-	       }
-	       else {
-	    	   //hostTable.setSelectedIndex(success.HstList);
-	       }
-	       
-	       if (typeof success.PltList == 'string') {
-	    	   if (success) {
-	    		   //var jsonPlt = JSON.parse(success);
-	    		   //code.log(jsonPlt);
-	    	   }
-	       }
-	       else {
-	    	   //platformTable.setSelectedIndex(success.PltList);
-	       }
-	       
-	       if (typeof success.AplList == 'string') {
-	    	   if (success.AplList) {
-	    		   //var jsonApl = JSON.parse(success.AplList);
-	    		   //code.log(jsonApl);
-	    	   }
-	       }
-	       else {
-	    	   //applicationTable.setSelectedIndex(success.AplList);
-	       }
-	       
-	       // TODO Error handling, when context is null, Optimize
-	       
 	       // Select hosts
-	       
 	       var hostIds = JSON.parse("[" + success.HstList + "]");
 	       var lengthHostTable = hostTable.getBinding("rows").iLength;
 	       
@@ -115,7 +81,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 			       }
 		       });
 	       }
-	       
 	       
 	       // Select platforms
 	       var platformIds = JSON.parse("[" + success.PltList + "]");
@@ -160,25 +125,17 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    sap.ui.getCore().byId("tF_LogicalUnitPerson").setValue("Please select");
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setValue("").setEditable(true).setVisible(true);
 	    
-	    // given: oTable.attachRowSelectionChange(function(oEvent) {
-	    // get selected data: var currentRowContext = oEvent.getParameter("rowContext"); 
-	       var hostTable = sap.ui.getCore().byId("tblHostsDetail");
-	       hostTable.setSelectedIndex(-1);
-
-	    	  //var selected = tblHostsDetail.getSelectedIndices();
-	    	  //var rowIndices = e.getParameter('rowIndices');
-	            for (var i = 0; i < hostTable.length; i++) {
-	             if (true) {
-	            	hostTable.setSelectedIndex(i);
-	            } 
-   }
-	            
+	    var hostTable = sap.ui.getCore().byId("tblHostsDetail");
+	    hostTable.setSelectedIndex(-1);
+	    hostTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+	    
 	 	var platformTable = sap.ui.getCore().byId("tblPlatformsDetail");
 		platformTable.setSelectedIndex(-1);
+		platformTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 		
 	 	var applicationTable = sap.ui.getCore().byId("tblApplicationsDetail");
 		applicationTable.setSelectedIndex(-1);
-		
+		applicationTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 		
 	    var submitButton = new sap.ui.commons.Button({
 	      text: "Add",
@@ -190,13 +147,47 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      })
 	    });
 	    var fnPressHandler = null;
-	    fnPressHandler = function(oEvent) {      
+	    fnPressHandler = function(oEvent) {    
+	    
+	    	var selectedIndicesHosts = hostTable.getSelectedIndices();
+	    	var selectedIndicesPlatforms = platformTable.getSelectedIndices();
+	    	var selectedIndicesApplications = applicationTable.getSelectedIndices();
+	    	
+	    	var selectedHosts = new Array();
+	    	var selectedPlatforms = new Array();
+	    	var selectedApplications = new Array();
+	    	
+	    	for (var i = 0; i < selectedIndicesHosts.length; i++) {
+	    		var contextHosts = hostTable.getContextByIndex(selectedIndicesHosts[i]);
+			       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
+			    	   selectedHosts.push(successHosts.Id);
+			       });
+	    	}
+	    	
+	    	for (var i = 0; i < selectedIndicesPlatforms.length; i++) {
+	    		var contextPlatforms = platformTable.getContextByIndex(selectedIndicesPlatforms[i]);
+			       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
+			    	   selectedPlatforms.push(successPlatforms.Id);
+			       });
+	    	}
+	    	
+	    	for (var i = 0; i < selectedIndicesApplications.length; i++) {
+	    		var contextApplications = applicationTable.getContextByIndex(selectedIndicesApplications[i]);
+			       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
+			    	   selectedApplications.push(successApplications.Id);
+			       });
+	    	}
+	    	
+	    	console.log(selectedHosts);
+	    	console.log(selectedPlatforms);
+	    	console.log(selectedApplications);
+	            
 	      var entry = {
 	        Name: sap.ui.getCore().byId("tF_LogicalUnitName").getValue(),
 	        Person: sap.ui.getCore().byId("dB_LogicalUnitPerson").getValue(),
-	        AplList: "17",
-	        HstList: "3",
-	        PltList: "8"
+	        AplList: selectedApplications.toString(),
+	        HstList: selectedHosts.toString(),
+	        PltList: selectedPlatforms.toString()
 	      };
 	      console.log(entry);
 	      var response = sap.ui.getCore().getModel().create('/LogicalUnitCollection', entry);
@@ -234,12 +225,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	  },
 	  
-	    // given: oTable.attachRowSelectionChange(function(oEvent) {
-	    // get selected tata: var currentRowContext = oEvent.getParameter("rowContext"); 
-	  
 	  updateLogicalUnit: function() {
 	    sap.ui.getCore().byId("tF_LogicalUnitName").setEditable(true);
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setEditable(true).setVisible(true);
+	    
+	    var hostTable = sap.ui.getCore().byId("tblHostsDetail"); 
+	 	var platformTable = sap.ui.getCore().byId("tblPlatformsDetail");
+	 	var applicationTable = sap.ui.getCore().byId("tblApplicationsDetail");
+	    
 	    var submitButton = new sap.ui.commons.Button({
 	      text: "Update",
 	      tooltip: "Submit Data",
@@ -249,10 +242,47 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      })
 	    });
 	    var fnPressHandler = null;
+	    
 	    fnPressHandler = function(oEvent) {      
+	    	var selectedIndicesHosts = hostTable.getSelectedIndices();
+	    	var selectedIndicesPlatforms = platformTable.getSelectedIndices();
+	    	var selectedIndicesApplications = applicationTable.getSelectedIndices();
+	    	
+	    	var selectedHosts = new Array();
+	    	var selectedPlatforms = new Array();
+	    	var selectedApplications = new Array();
+	    	
+	    	for (var i = 0; i < selectedIndicesHosts.length; i++) {
+	    		var contextHosts = hostTable.getContextByIndex(selectedIndicesHosts[i]);
+			       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
+			    	   selectedHosts.push(successHosts.Id);
+			       });
+	    	}
+	    	
+	    	for (var i = 0; i < selectedIndicesPlatforms.length; i++) {
+	    		var contextPlatforms = platformTable.getContextByIndex(selectedIndicesPlatforms[i]);
+			       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
+			    	   selectedPlatforms.push(successPlatforms.Id);
+			       });
+	    	}
+	    	
+	    	for (var i = 0; i < selectedIndicesApplications.length; i++) {
+	    		var contextApplications = applicationTable.getContextByIndex(selectedIndicesApplications[i]);
+			       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
+			    	   selectedApplications.push(successApplications.Id);
+			       });
+	    	}
+	    	
+	    	console.log(selectedHosts);
+	    	console.log(selectedPlatforms);
+	    	console.log(selectedApplications);
+	            
 	      var entry = {
 	        Name: sap.ui.getCore().byId("tF_LogicalUnitName").getValue(),
-	        Person:  sap.ui.getCore().byId("dB_LogicalUnitPerson").getValue(),
+	        Person: sap.ui.getCore().byId("dB_LogicalUnitPerson").getValue(),
+	        AplList: selectedApplications.toString(),
+	        HstList: selectedHosts.toString(),
+	        PltList: selectedPlatforms.toString()
 	      };
 	      console.log(entry);
 	      var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');

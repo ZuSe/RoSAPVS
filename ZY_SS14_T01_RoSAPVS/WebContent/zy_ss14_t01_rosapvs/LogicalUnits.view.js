@@ -175,10 +175,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    }));
 
 		    tblHostsDetail.bindRows("/HostCollection");
-		    tblHostsDetail.attachRowSelect(function(oEvent) {
-		      //oController.getDetails();
-		    });
-	
 		    tblHostsDetail.setTitle("Hosts");
 		    
 		    var tblPlatformsDetail = new sap.ui.table.DataTable("tblPlatformsDetail", {
@@ -203,10 +199,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 			    }));
 
 			    tblPlatformsDetail.bindRows("/PlatformCollection");
-			    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-			    //  oController.getDetails();
-			    //});
-		
 			    tblPlatformsDetail.setTitle("Platforms");
 		    
 			    var tblApplicationsDetail = new sap.ui.table.DataTable("tblApplicationsDetail", {
@@ -231,10 +223,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 				    }));
 
 				    tblApplicationsDetail.bindRows("/ApplicationCollection");
-				    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-				    //  oController.getDetails();
-				    //});
-			
 				    tblApplicationsDetail.setTitle("Applications");			    
 		    
 		    layoutDetailsTables.createRow(tblHostsDetail, tblPlatformsDetail, tblApplicationsDetail);   
@@ -244,16 +232,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    
 	    // *** Data Binding and Listeners *** //
 
-//	    var templateLogicalUnitPlatform = new sap.ui.core.ListItem();
-//	    templateLogicalUnitPlatform.bindProperty("text", "Id");
-//	    templateLogicalUnitPlatform.bindProperty("additionalText", "Name");
-//	    sap.ui.getCore().byId('dB_LogicalUnitPlatform').bindItems("/PlatformCollection", templateLogicalUnitPlatform);
-//	    
-//	    var templateLogicalUnitSoftwareType = new sap.ui.core.ListItem();
-//	    templateLogicalUnitSoftwareType.bindProperty("text", "Id");
-//	    templateLogicalUnitSoftwareType.bindProperty("additionalText", "Name");
-//	    sap.ui.getCore().byId('dB_LogicalUnitSoftwareType').bindItems("/SoftwareTypeCollection", templateLogicalUnitSoftwareType);
-//
 	    var templateLogicalUnitPerson = new sap.ui.core.ListItem();
 	    templateLogicalUnitPerson.bindProperty("text", "SapUser");
 	    templateLogicalUnitPerson.bindProperty("additionalText", "Role");

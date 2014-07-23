@@ -23,7 +23,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Users", {
 	    title: "Registered Users",
 	    visibleRowCount: 10,
 	    firstVisibleRow: 3,
-	    selectionMode: sap.ui.table.SelectionMode.Single,	    
+	    selectionMode: sap.ui.table.SelectionMode.None,	    
 	  });
 	
 	var columnName = new sap.ui.table.Column({
