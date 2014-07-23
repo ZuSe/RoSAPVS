@@ -13,6 +13,27 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Landing", {
 	* @memberOf zy_ss14_t01_rosapvs.Landing
 	*/ 
 	createContent : function(oController) {
+		var oNotiBar = new sap.ui.ux3.NotificationBar({
+			display : oController.displayListener,
+			visibleStatus : sap.ui.ux3.NotificationBarStatus.Default
+		});
+
+		/*
+		 * Creating the message notifier
+		 */
+		var oMessageNotifier = new sap.ui.ux3.Notifier('oMessageNotifier', {
+			title : "Notifications"
+		});
+		
+		function clickListener(oEvent) {
+			oMessageNotifier.removeMessage(oEvent.getParameter("message"));
+		};
+		
+		oMessageNotifier.attachMessageSelected(clickListener);
+		
+		oNotiBar.setMessageNotifier(oMessageNotifier);
+		oNotiBar.placeAt("content");
+		
 		jQuery.sap.require("sap.ui.core.IconPool");
 	    var loginPanel = new sap.ui.commons.Panel({
 	        title: new sap.ui.core.Title({
@@ -27,6 +48,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Landing", {
 		width: "22em",
 		widths: ["7em","15em"],
 	    });
+	    
 	    matLayout.createRow(null, null);
 	    matLayout.createRow(new sap.ui.commons.Label({text:"User"}),new sap.ui.commons.TextField("tF_LoginUsername",{placeholder: "SAP-User"}));
 	    matLayout.createRow(new sap.ui.commons.Label({text:"Password"}),new sap.ui.commons.PasswordField("tF_LoginPassword",{placeholder:"Password"}));

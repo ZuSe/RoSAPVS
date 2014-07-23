@@ -100,6 +100,7 @@
     });
     sap.ui.getCore().byId("WI_Landing").setVisible(true);
     oShell.setContent(landingView);
+    sap.ui.getCore().byId("oMessageNotifier").removeAllMessages();
   };
 
   var oShell = new sap.ui.ux3.Shell("RoSAPVSShell", {

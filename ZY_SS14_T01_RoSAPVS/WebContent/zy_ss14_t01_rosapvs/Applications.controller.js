@@ -42,6 +42,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
   onExit: function() {
 
   },
+	
   lockInput: function() {
     sap.ui.getCore().byId("tF_ApplicationId").setEditable(false);
     sap.ui.getCore().byId("tF_ApplicationName").setEditable(false);
@@ -70,7 +71,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         sap.ui.getCore().byId("tF_ApplicationPlatform").setValue(success.Platform);
       }, function(error) {
         console.log(error);
-        alert(error);
+      	var oMessage = new sap.ui.core.Message({
+      		text : 'Unable to retrieve data.',
+    		timestamp : (new Date()).toUTCString()
+    	});
+    	oMessage.setLevel(sap.ui.core.MessageType.Error);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       });
     }
   },
@@ -114,7 +120,15 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       console.log(entry);
       var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry);
       console.log(response);
-      alert("New Application was added successfully");
+      var tblApplications = sap.ui.getCore().byId('tblApplications');
+      tblApplications.getModel().refresh(true);
+      tblApplications.setSelectedIndex(tblApplications.getBinding("rows").iLength-1);
+		var oMessage = new sap.ui.core.Message({
+			text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
@@ -129,8 +143,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
   deleteApplication: function() {
     var tblApplications = sap.ui.getCore().byId('tblApplications');
     var context = tblApplications.getContextByIndex(tblApplications.getSelectedIndex());
+    var nameDeleted = sap.ui.getCore().byId("tF_ApplicationName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
-    alert("Application was deleted");
+	var oMessage = new sap.ui.core.Message({
+		text : 'Application ' + nameDeleted + ' was deleted successfully.',
+		timestamp : (new Date()).toUTCString()
+	});
+	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updateApplication: function() {
     sap.ui.getCore().byId("tF_ApplicationName").setEditable(true);
@@ -169,7 +189,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       var context = tblApplications.getContextByIndex(tblApplications.getSelectedIndex());
       var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
       console.log(response);
-      alert("Application was updated successfully");
+		var oMessage = new sap.ui.core.Message({
+			text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was updated successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+    sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();

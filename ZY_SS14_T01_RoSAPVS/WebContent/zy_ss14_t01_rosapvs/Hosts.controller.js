@@ -66,7 +66,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
         sap.ui.getCore().byId("tF_HostsPerson").setValue(success.Person);
       }, function(error) {
         console.log(error);
-        alert(error);
+      	var oMessage = new sap.ui.core.Message({
+      		text : 'Unable to retrieve data.',
+    		timestamp : (new Date()).toUTCString()
+    	});
+    	oMessage.setLevel(sap.ui.core.MessageType.Error);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       });
     }
   },
@@ -99,7 +104,15 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       console.log(entry);
       var response = sap.ui.getCore().getModel().create('/HostCollection', entry);
       console.log(response);
-      alert("New Host was added successfully");
+      var tblHosts = sap.ui.getCore().byId('tblHosts');
+      tblHosts.getModel().refresh(true);
+      tblHosts.setSelectedIndex(tblHosts.getBinding("rows").iLength-1);
+		var oMessage = new sap.ui.core.Message({
+			text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was created successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+    sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
@@ -114,8 +127,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
   deleteHost: function() {
     var tblHosts = sap.ui.getCore().byId('tblHosts');
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
+    var nameDeleted = sap.ui.getCore().byId("tF_HostsName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
-    alert("Host was deleted");
+	var oMessage = new sap.ui.core.Message({
+		text : 'Host ' + nameDeleted + ' was deleted successfully.',
+		timestamp : (new Date()).toUTCString()
+	});
+	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updateHost: function() {
     sap.ui.getCore().byId("tF_HostsName").setEditable(true);
@@ -145,7 +164,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
       var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
       console.log(response);
-      alert("Host was updated successfully");
+		var oMessage = new sap.ui.core.Message({
+			text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was updated successfully.',
+			timestamp : (new Date()).toUTCString()
+		});
+		oMessage.setLevel(sap.ui.core.MessageType.Success);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
