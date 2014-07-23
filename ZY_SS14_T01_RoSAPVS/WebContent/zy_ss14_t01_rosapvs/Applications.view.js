@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     var layoutApplications = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutApplications',
       columns: 3,
-      widths: ['35%', '5%', '60%']
+      widths: ['35%', '2em', '65%']
     });
     layoutApplications.setWidth('100%');
 
@@ -88,7 +88,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     var formApplicationDetails = new sap.ui.commons.form.Form('formApplicationDetails', {
       title: new sap.ui.core.Title({
         text: "Application Details",
-        tooltip: "Todo"
+        tooltip: "Shows the application details"
       }),
       layout: oLayoutfmApplicationDetails,
       formContainers: [new sap.ui.layout.form.FormContainer('formContainerApplicationDetails',{
@@ -98,9 +98,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           }),
           fields: [new sap.ui.commons.TextField("tF_ApplicationId", {
             editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
           }), ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -109,9 +106,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationName", {
             value: "",
             editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
           }), ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -120,9 +114,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqCPU", {
             value: "",
             editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -131,9 +122,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqRAM", {
             value: "",
             editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            }),
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -142,9 +130,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqHDD", {
             value: "",
             editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
           }),
 
           ]
@@ -155,9 +140,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationSoftwareType", {
               value: "",
               editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
             }),    
                    
             new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType", {
@@ -165,9 +147,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
             editable: false,
             displaySecondaryValues: true,
             visible: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
           }),
 
           ]
@@ -179,17 +158,11 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
                    new sap.ui.commons.TextField("tF_ApplicationPlatform", {
               value: "",
               editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
             }),    new sap.ui.commons.DropdownBox("dB_ApplicationPlatform", {
             value: "None",
             editable: false,
             visible: false,
             displaySecondaryValues: true,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
           }),
 
           ]
@@ -200,17 +173,11 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationPerson", {
               value: "",
               editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
             }),    new sap.ui.commons.DropdownBox("dB_ApplicationPerson", {
             value: "None",
             editable: false,
             visible: false,
             displaySecondaryValues: true,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
           }),
 
           ]
@@ -220,6 +187,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
 
     // *** Data Binding and Listeners *** //
 
+    oLayoutfmApplicationDetails.addStyleClass('fancyBox');
+    
     var templateApplicationPlatform = new sap.ui.core.ListItem();
     templateApplicationPlatform.bindProperty("text", "Id");
     templateApplicationPlatform.bindProperty("additionalText", "Name");

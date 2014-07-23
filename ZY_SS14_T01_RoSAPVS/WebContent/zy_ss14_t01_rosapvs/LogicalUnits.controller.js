@@ -116,6 +116,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 		       });
 	       }
 	       
+	       
 	       // Select platforms
 	       var platformIds = JSON.parse("[" + success.PltList + "]");
 	       var lengthPlatformTable = platformTable.getBinding("rows").iLength;

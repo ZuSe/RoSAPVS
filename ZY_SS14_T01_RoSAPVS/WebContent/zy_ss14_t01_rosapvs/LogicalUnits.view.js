@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    var layoutLogicalUnits = new sap.ui.commons.layout.MatrixLayout({
 	      id: 'layoutLogicalUnits',
 	      columns: 3,
-	      widths: ['35%', '5%', '60%']
+	      widths: ['35%', '2em', '65%']
 	    });
 	    layoutLogicalUnits.setWidth('100%');
 
@@ -176,9 +176,9 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    }));
 
 		    tblHostsDetail.bindRows("/HostCollection");
-		    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-		    //  oController.getDetails();
-		    //});
+		    tblHostsDetail.attachRowSelect(function(oEvent) {
+		      //oController.getDetails();
+		    });
 	
 		    tblHostsDetail.setTitle("Hosts");
 		    

@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     var layoutPlatforms = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutPlatforms',
       columns: 3,
-      widths: ['35%', '5%', '60%']
+      widths: ['35%', '2em', '65%']
     });
     layoutPlatforms.setWidth('100%');
 
