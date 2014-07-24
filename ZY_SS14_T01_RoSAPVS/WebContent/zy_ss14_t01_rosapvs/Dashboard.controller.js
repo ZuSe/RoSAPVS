@@ -7,9 +7,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
    * 
    * @memberOf zy_ss14_t01_rosapvs.Dashboard
    */
-  
+
   onInit: function() {
-    console.log(window.role);    
+    console.log(window.role);
   },
 
   /**
@@ -44,132 +44,273 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
 
   },
   addPanels: function() {
-    
+
     jQuery.sap.require("sap.viz.ui5.Bar");
     jQuery.sap.require("sap.viz.ui5.Column");
-    jQuery.sap.require("sap.viz.ui5.Scatter");  
-    jQuery.sap.require("sap.viz.ui5.data.FlattenedDataset");  
-    
-    var modelHosts = new sap.ui.model.json.JSONModel({
-      hostData : [
-              {Id :1, Name:"Hana P750",activePlatforms:2, Platforms:5},
-              {Id :2, Name:"Hasso I3540",activePlatforms:10, Platforms:10},
-              {Id :3, Name:"Billy X510",activePlatforms:1, Platforms:8},
-              {Id :4, Name:"Ely AX32",activePlatforms:3, Platforms:4},
-              {Id :5, Name:"Ginny P870",activePlatforms:0, Platforms:6},
-              {Id :6, Name:"Jobs mac80",activePlatforms:7, Platforms:8},
-      ]
-    });
-    var datasetHosts = new sap.viz.ui5.data.FlattenedDataset({
+    jQuery.sap.require("sap.viz.ui5.Scatter");
+    jQuery.sap.require("sap.viz.ui5.data.FlattenedDataset");
 
-      // a Bar Chart requires exactly one dimension (x-axis) 
-      dimensions : [ 
-        {
-          axis : 1, // must be one for the x-axis, 2 for y-axis
-          name : 'Name', 
-          value : "{Name}"
-        } 
-      ],
+    /*
+     * Datasets for Hosts
+     */
 
-      // it can show multiple measures, each results in a new set of bars in a new color 
-      measures : [           
-        {
-          name : 'Active Platforms', // 'name' is used as label in the Legend 
-          value : '{activePlatforms}' // 'value' defines the binding for the displayed value   
-        },
-        {
-          name : 'Total Platforms', 
-          value : '{Platforms}'
-        } 
-      ],   
-      data : {
-        path : "/hostData"
+    var datasetHostsCPU = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Cores in Use',
+        value: '{UsedCpu}',
+      }, {
+        name: 'Total Cores',
+        value: '{Cpu}',
+      }],
+      data: {
+        path: "/HostStatsCollection"
       }
-      
     });
-    
-    var modelPlatforms = new sap.ui.model.json.JSONModel({
-      platformData : [
-                      {Id :1,Name:"SAP NW 7.40",activeApplications:6, Applications:15},
-                      {Id :2,Name:"Jboss 7",activeApplications:10, Applications:20},
-                      {Id :3,Name:"Glassfish 4",activeApplications:1, Applications:8},
-                      {Id :4,Name:"SAP HANA",activeApplications:3, Applications:4},
-                      {Id :5,Name:"NodeJS",activeApplications:5, Applications:9},
-                      {Id :6,Name:"MACH",activeApplications:0, Applications:8},
-      ]
-    });
-    
-    var datasetPlatforms = new sap.viz.ui5.data.FlattenedDataset({
 
-      // a Bar Chart requires exactly one dimension (x-axis) 
-      dimensions : [ 
-        {
-          axis : 1, // must be one for the x-axis, 2 for y-axis
-          name : 'Name', 
-          value : "{Name}"
-        } 
-      ],
-
-      // it can show multiple measures, each results in a new set of bars in a new color 
-      measures : [           
-        {
-          name : 'Active Applications', // 'name' is used as label in the Legend 
-          value : '{activeApplications}' // 'value' defines the binding for the displayed value   
-        },
-        {
-          name : 'Total Applications', 
-          value : '{Applications}'
-        } 
-      ],   
-      data : {
-        path : "/platformData"
+    var datasetHostsRAM = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Ram in Use [GB]',
+        value: '{UsedRam}',
+      }, {
+        name: 'Total Ram [GB]',
+        value: '{Ram}',
+      }],
+      data: {
+        path: "/HostStatsCollection"
       }
-      
+    });
+
+    var datasetHostsHDD = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Reserved Disk Space [TB]',
+        value: '{UsedHdd}',
+      }, {
+        name: 'Total Disk Space [TB]',
+        value: '{Hdd}',
+      }],
+      data: {
+        path: "/HostStatsCollection"
+      }
+    });
+
+    var datasetHostsPLTS = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Number of Platforms running',
+        value: '{CountPlt}',
+      }, ],
+      data: {
+        path: "/HostStatsCollection"
+      }
+    });
+
+    /*
+     * Datasets for Platforms
+     */
+
+    var datasetPlatformsCPU = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+
+      measures: [{
+        name: 'Cores assigned to Applications',
+        value: '{UsedCpu}',
+      }, {
+        name: 'Total Cores',
+        value: '{Cpu}',
+      }],
+      data: {
+        path: "/PlatformStatsCollection"
+      }
+    });
+
+    var datasetPlatformsRAM = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Ram assigned to Applications [GB]',
+        value: '{UsedRam}',
+      }, {
+        name: 'Total Ram[GB]',
+        value: '{Ram}',
+      }],
+      data: {
+        path: "/PlatformStatsCollection"
+      }
+    });
+
+    var datasetPlatformsHDD = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+
+      measures: [{
+        name: 'Reserved Disk Space by Applications [TB]',
+        value: '{UsedHdd}',
+      }, {
+        name: 'Total Disk Space [TB]',
+        value: '{Hdd}',
+      }],
+      data: {
+        path: "/PlatformStatsCollection"
+      }
+    });
+
+    var datasetPlatformsAPLS = new sap.viz.ui5.data.FlattenedDataset({
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
+      measures: [{
+        name: 'Number of Applications running',
+        value: '{CountApl}',
+      }, ],
+      data: {
+        path: "/PlatformStatsCollection"
+      }
     });
     
-    var modelApplications = new sap.ui.model.json.JSONModel({
-      applicationData : [
-                {Id :1,Name:"SAP CRM 7.1", reqHDD:6, reqRAM:15},
-                {Id :2,Name:"Grade Calculator 5",reHDD:100, reqRAM:20},
-                {Id :3,Name:"RealTime Banking 10",reqHDD:21, reqRAM:8},
-                {Id :4,Name:"RoSAPVS",reqHDD:33, reqRAM:4},
-                {Id :5,Name:"Tengelmann Loyalty App",reqHDD:5, reqRAM:9},
-                {Id :6,Name:"Torrent-Server JA",reqHDD:1, reqRAM:8},
-      ]
-    });
-    
+
     var datasetApplications = new sap.viz.ui5.data.FlattenedDataset({
 
-      // a Bar Chart requires exactly one dimension (x-axis) 
-      dimensions : [ 
-        {
-          axis : 1, // must be one for the x-axis, 2 for y-axis
-          name : 'Name', 
-          value : "{Name}"
-        } 
-      ],
+      // a Bar Chart requires exactly one dimension (x-axis)
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Name',
+        value: "{Name}"
+      }],
 
-      // it can show multiple measures, each results in a new set of bars in a new color 
-      measures : [           
-        {
-          group: 1,
-          name : 'Required DiskSpace', // 'name' is used as label in the Legend 
-          value : '{reqHDD}' // 'value' defines the binding for the displayed value   
-        },
-        {
-          group: 2,
-          name : 'Required Memory', 
-          value : '{reqRAM}'
-        } 
-      ],   
-      data : {
-        path : "/applicationData",
-        factory : function() {
+      // it can show multiple measures, each results in a new set of bars in a
+      // new color
+      measures: [{
+        group: 1,
+        name: 'In Landscape', // 'name' is used as label in the Legend
+        value: '{AplCount}' // 'value' defines the binding for the displayed value
+      },],
+      data: {
+        path: "/ApplicationsStatsCollection",
+        factory: function() {
         }
       }
-      
+
     });
     
+    var datasetCommonHPA= new sap.viz.ui5.data.FlattenedDataset({
+
+      // a Bar Chart requires exactly one dimension (x-axis)
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Components',
+        value: "All"
+      }],
+
+      // it can show multiple measures, each results in a new set of bars in a
+      // new color
+      measures: [{
+        group: 1,
+        name: 'Hosts Activated', // 'name' is used as label in the Legend
+        value: '{SumActHst}' // 'value' defines the binding for the displayed value
+      },
+      {
+        group: 1,
+        name: 'Hosts Total', // 'name' is used as label in the Legend
+        value: '{SumHst}' // 'value' defines the binding for the displayed value
+      },
+      {
+        group: 2,
+        name: 'Platforms Activated', // 'name' is used as label in the Legend
+        value: '{SumActPlt}' // 'value' defines the binding for the displayed value
+      },
+      {
+        group: 2,
+        name: 'Platforms Total', // 'name' is used as label in the Legend
+        value: '{SumPlt}' // 'value' defines the binding for the displayed value
+      },      
+      {
+        group: 2,
+        name: ' Applications Activated', 
+        value: '{SumActApl}' // 'value' defines the binding for the displayed value
+      },
+      {
+        group: 2,
+        name: ' Applications Total', // 'name' is used as label in the Legend
+        value: '{SumApl}' // 'value' defines the binding for the displayed value
+      }, 
+      
+      ],
+      data: {
+        path: "/CommonStatsCollection",
+        factory: function() {
+        }
+      }
+
+    });
+    
+    var datasetCommonRES= new sap.viz.ui5.data.FlattenedDataset({
+
+      // a Bar Chart requires exactly one dimension (x-axis)
+      dimensions: [{
+        axis: 1, // must be one for the x-axis, 2 for y-axis
+        name: 'Ressources',
+        value: "All"
+      }],
+
+      // it can show multiple measures, each results in a new set of bars in a
+      // new color
+      measures: [
+      {
+        group: 2,
+        name: 'Total available Cores', // 'name' is used as label in the Legend
+        value: '{SumCpu}' // 'value' defines the binding for the displayed value
+      },      
+      {
+        group: 1,
+        name: 'Total available Disk Space [TB]', 
+        value: '{SumHdd}' // 'value' defines the binding for the displayed value
+      },
+      {
+        group: 1,
+        name: 'Total available Memory [GB]', // 'name' is used as label in the Legend
+        value: '{SumRam}' // 'value' defines the binding for the displayed value
+      }, 
+      
+      ],
+      data: {
+        path: "/CommonStatsCollection",
+        factory: function() {
+        }
+      }
+
+    });
+
     var mainLayout = sap.ui.getCore().byId("matrixLayoutDashboard");
     mainLayout.destroyRows();
 
@@ -186,12 +327,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
         formElements: [new sap.ui.layout.form.FormElement({
           label: "Account",
           fields: [new sap.ui.commons.TextField({
-            value: $.cookie("Account"),editable: false
+            value: $.cookie("Account"),
+            editable: false
           })]
         }), new sap.ui.layout.form.FormElement({
           label: "Role",
           fields: [new sap.ui.commons.TextField({
-            value: window.role, editable: false
+            value: window.role,
+            editable: false
           })]
         }), ]
       }),
@@ -201,6 +344,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
 
     mainLayout.createRow(panelUserData);
 
+    /*
+     * All UI-Elements for HostAdmin's Stats go here
+     */
     if (window.role == 2 || window.role == 1) // HostAdmin or SuperAdmin
     {
       var panelHosts = new sap.ui.commons.Panel({
@@ -209,38 +355,125 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
           icon: sap.ui.core.IconPool.getIconURI("sys-monitor")
         })
       });
-      var barChartHosts = new sap.viz.ui5.Bar({
-        width : "80%",
-        height : "400px",
-        plotArea : {        
+
+      var tabStripHosts = new sap.ui.commons.TabStrip("tabStripHosts", {
+        width: "100%",
+        height: "450px",
+      });
+
+      var barChartHostsCPU = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'CPU Usage'
         },
-        title : {
-          visible : true,
-          text : 'Active and total platforms per Host'
+        dataset: datasetHostsCPU,
+      });
+
+      var barChartHostsRAM = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Memory Usage'
         },
-        dataset : datasetHosts,
-      }).setModel(modelHosts).placeAt(panelHosts);
-      
-      
-      
+        dataset: datasetHostsRAM,
+      });
+
+      var barChartHostsHDD = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'HardDisk Usage'
+        },
+        dataset: datasetHostsHDD,
+      });
+
+      var columnChartHostsPLTS = new sap.viz.ui5.Column({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Platforms Running per Host'
+        },
+        dataset: datasetHostsPLTS,
+      });
+
+      tabStripHosts.createTab("CPU", barChartHostsCPU);
+      tabStripHosts.createTab("RAM", barChartHostsRAM);
+      tabStripHosts.createTab("HDD", barChartHostsHDD);
+      tabStripHosts.createTab("PLATFORMS", columnChartHostsPLTS);
+      tabStripHosts.placeAt(panelHosts);
+
       var panelPlatforms = new sap.ui.commons.Panel({
         title: new sap.ui.core.Title({
           text: "Platforms",
           icon: sap.ui.core.IconPool.getIconURI("it-system")
         })
       });
-      
-      var columnChartPlatforms = new sap.viz.ui5.Column({
-        width : "80%",
-        height : "400px",
-        plotArea : {        
+
+      var tabStripPlatforms = new sap.ui.commons.TabStrip("tabStripPlatforms",
+              {
+                width: "100%",
+                height: "450px",
+              });
+
+      var barChartPlatformsCPU = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'CPU Usage'
         },
-        title : {
-          visible : true,
-          text : 'Applications per Platform'
+        dataset: datasetPlatformsCPU,
+      });
+
+      var barChartPlatformsRAM = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Memory Usage'
         },
-        dataset : datasetPlatforms,
-      }).setModel(modelPlatforms).placeAt(panelPlatforms);
+        dataset: datasetPlatformsRAM,
+      });
+
+      var barChartPlatformsHDD = new sap.viz.ui5.Bar({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'HardDisk Usage'
+        },
+        dataset: datasetPlatformsHDD,
+      });
+
+      var columnChartPlatformsPLTS = new sap.viz.ui5.Column({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Applications Running per Platform'
+        },
+        dataset: datasetPlatformsAPLS,
+      });
+
+      tabStripPlatforms.createTab("CPU", barChartPlatformsCPU);
+      tabStripPlatforms.createTab("RAM", barChartPlatformsRAM);
+      tabStripPlatforms.createTab("HDD", barChartPlatformsHDD);
+      tabStripPlatforms.createTab("APPLICATIONS", columnChartPlatformsPLTS);
+      tabStripPlatforms.placeAt(panelPlatforms);
+
       var panelApplications = new sap.ui.commons.Panel({
         title: new sap.ui.core.Title({
           text: "Applications",
@@ -248,35 +481,66 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Dashboard", {
         })
       });
 
-      
-      var scatterChartApplications = new sap.viz.ui5.Scatter({
-        width : "80%",
-        height : "400px",
-        plotArea : {
-          //'colorPalette' : d3.scale.category20().range()
-          },
-        title : {
-          visible : true,
-          text : 'DiskSpace vs RAM'
+      var donutChartApplications = new sap.viz.ui5.Donut({
+        width: "80%",
+        height: "400px",
+        plotArea: {
+        // 'colorPalette' : d3.scale.category20().range()
         },
-        
-        dataset : datasetApplications
-      }).setModel(modelApplications).placeAt(panelApplications);
-      
+        title: {
+          visible: true,
+          text: 'Software Types in Landscape'
+        },
+
+        dataset: datasetApplications
+      }).placeAt(panelApplications);
+
       mainLayout.createRow(panelHosts);
       mainLayout.createRow(panelPlatforms);
       mainLayout.createRow(panelApplications);
-    }
-    if (window.role == 3 || window.role == 1) // LandscapeAdmin or SuperAdmin
-    {
-      var panelLogicalUnits = new sap.ui.commons.Panel({
+    }  
+    
+    /*
+     *  Common Stats
+     */
+      var panelCommon = new sap.ui.commons.Panel({
         title: new sap.ui.core.Title({
-          text: "Your Logical Units",
+          text: "Landscape Overview",
           icon: sap.ui.core.IconPool.getIconURI("tree")
         })
       });
-      mainLayout.createRow(panelLogicalUnits);
-    }
+      var tabStripLandscape = new sap.ui.commons.TabStrip({
+        width: "100%",
+        height: "450px",
+      });      
+      
+      var columnChartCommonHPA = new sap.viz.ui5.DualColumn({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Overview Hosts, Platforms and Applications'
+        },
+        dataset: datasetCommonHPA,
+      });
+      
+      var columnChartCommonRES = new sap.viz.ui5.DualColumn({
+        width: "80%",
+        height: "400px",
+        plotArea: {},
+        title: {
+          visible: true,
+          text: 'Overview Ressources'
+        },
+        dataset: datasetCommonRES,
+      });
+      
+      tabStripLandscape.createTab("Components", columnChartCommonHPA);
+      tabStripLandscape.createTab("Ressources", columnChartCommonRES);
+      tabStripLandscape.placeAt(panelCommon);
+      mainLayout.createRow(panelCommon);
+    
   }
 
 });
