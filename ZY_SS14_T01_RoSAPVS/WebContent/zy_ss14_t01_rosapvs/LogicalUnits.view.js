@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    var layoutLogicalUnits = new sap.ui.commons.layout.MatrixLayout({
 	      id: 'layoutLogicalUnits',
 	      columns: 3,
-	      widths: ['35%', '5%', '60%']
+	      widths: ['35%', '2em', '65%']
 	    });
 	    layoutLogicalUnits.setWidth('100%');
 
@@ -77,9 +77,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      oController.getDetails();
 	    });
 
-	    var oLayoutfmLogicalUnitDetails = new sap.ui.layout.form.GridLayout();
-	    
-	    // Create a new Matrix Layout for detail pane
 	    var layoutLogicalUnitsDetails = new sap.ui.commons.layout.MatrixLayout({
 	      id: 'layoutLogicalUnitsDetails',
 	      columns: 1,
@@ -88,12 +85,12 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    
 	    layoutLogicalUnitsDetails.setWidth('100%');
 	    
-	    var formLogicalUnitDetails = new sap.ui.commons.form.Form('formLogicalUnitDetails', {
+	    var formLogicalUnitDetails = new sap.ui.layout.form.Form('formLogicalUnitDetails', {
 	      title: new sap.ui.core.Title({
 	        text: "Logical Unit Details",
-	        tooltip: "Todo"
+	        tooltip: "Shows the logical unit details"
 	      }),
-	      layout: oLayoutfmLogicalUnitDetails,
+	      layout: new sap.ui.layout.form.GridLayout(),
 	      formContainers: [new sap.ui.layout.form.FormContainer('formContainerLogicalUnitDetails',{
 	        formElements: [new sap.ui.layout.form.FormElement({
 	          label: new sap.ui.commons.Label({
@@ -141,6 +138,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      })],
 	    });
 	    
+	    formLogicalUnitDetails.addStyleClass('fancyBox');
+	    
 	    layoutLogicalUnitsDetails.createRow(formLogicalUnitDetails);
 	    
 	    // Layout for Detail Tables
@@ -176,10 +175,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    }));
 
 		    tblHostsDetail.bindRows("/HostCollection");
-		    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-		    //  oController.getDetails();
-		    //});
-	
 		    tblHostsDetail.setTitle("Hosts");
 		    
 		    var tblPlatformsDetail = new sap.ui.table.DataTable("tblPlatformsDetail", {
@@ -204,10 +199,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 			    }));
 
 			    tblPlatformsDetail.bindRows("/PlatformCollection");
-			    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-			    //  oController.getDetails();
-			    //});
-		
 			    tblPlatformsDetail.setTitle("Platforms");
 		    
 			    var tblApplicationsDetail = new sap.ui.table.DataTable("tblApplicationsDetail", {
@@ -232,10 +223,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 				    }));
 
 				    tblApplicationsDetail.bindRows("/ApplicationCollection");
-				    //tblPlatformsDetail.attachRowSelect(function(oEvent) {
-				    //  oController.getDetails();
-				    //});
-			
 				    tblApplicationsDetail.setTitle("Applications");			    
 		    
 		    layoutDetailsTables.createRow(tblHostsDetail, tblPlatformsDetail, tblApplicationsDetail);   
@@ -245,16 +232,6 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    
 	    // *** Data Binding and Listeners *** //
 
-//	    var templateLogicalUnitPlatform = new sap.ui.core.ListItem();
-//	    templateLogicalUnitPlatform.bindProperty("text", "Id");
-//	    templateLogicalUnitPlatform.bindProperty("additionalText", "Name");
-//	    sap.ui.getCore().byId('dB_LogicalUnitPlatform').bindItems("/PlatformCollection", templateLogicalUnitPlatform);
-//	    
-//	    var templateLogicalUnitSoftwareType = new sap.ui.core.ListItem();
-//	    templateLogicalUnitSoftwareType.bindProperty("text", "Id");
-//	    templateLogicalUnitSoftwareType.bindProperty("additionalText", "Name");
-//	    sap.ui.getCore().byId('dB_LogicalUnitSoftwareType').bindItems("/SoftwareTypeCollection", templateLogicalUnitSoftwareType);
-//
 	    var templateLogicalUnitPerson = new sap.ui.core.ListItem();
 	    templateLogicalUnitPerson.bindProperty("text", "SapUser");
 	    templateLogicalUnitPerson.bindProperty("additionalText", "Role");

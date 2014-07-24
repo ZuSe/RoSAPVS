@@ -41,10 +41,10 @@ sap.ui
                			 * Now the application can decide how to display the bar. It can be maximized, default, minimized (please see NotificationBarStatus) 
                			 */
                			var sStatus = sap.ui.ux3.NotificationBarStatus.Default;
-               			oNotiBar2.setVisibleStatus(sStatus);
+               			oNotiBar.setVisibleStatus(sStatus);
                		} else {
                			var sStatus = sap.ui.ux3.NotificationBarStatus.None;
-               			oNotiBar2.setVisibleStatus(sStatus);
+               			oNotiBar.setVisibleStatus(sStatus);
                		}
                	},
                   /**

@@ -26,7 +26,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     var layoutHosts = new sap.ui.commons.layout.MatrixLayout({
       id: 'layoutHosts',
       columns: 3,
-      widths: ['35%', '5%', '60%']
+      widths: ['35%', '2em', '65%']
     });
     layoutHosts.setWidth('100%');
 
@@ -84,13 +84,12 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       oController.getDetails();
     });
 
-    var oLayoutfmHostDetails = new sap.ui.layout.form.GridLayout();
-    var formHostDetails = new sap.ui.commons.form.Form('formHostDetails', {
+    var formHostDetails = new sap.ui.layout.form.Form('formHostDetails', {
       title: new sap.ui.core.Title({
         text: "Host Details",
-        tooltip: "Todo"
+        tooltip: "Shows the host details"
       }),
-      layout: oLayoutfmHostDetails,
+      layout: new sap.ui.layout.form.GridLayout(),
       formContainers: [new sap.ui.layout.form.FormContainer('formContainerHostDetails',{
         formElements: [new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -173,6 +172,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       })],
     });
 
+    formHostDetails.addStyleClass('fancyBox');
+    
     // *** Data Binding and Listeners *** //
 
     var templateHostPerson = new sap.ui.core.ListItem();
