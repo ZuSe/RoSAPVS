@@ -201,6 +201,11 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
         editable: false
       })]
     }));
+    matLayout.createRow(new sap.ui.commons.Label({
+        text: "Is Active"
+      }), new sap.ui.commons.CheckBox("cB_ApplicationIsActive", {
+        editable: false
+      }));
     matLayout.createRow(null, null);
 
     var formApplicationDetails = new sap.ui.layout.form.Form(

@@ -48,7 +48,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     sap.ui.getCore().byId("tF_HostsCpu").setEditable(false);
     sap.ui.getCore().byId("tF_HostsRam").setEditable(false);
     sap.ui.getCore().byId("tF_HostsHdd").setEditable(false);
-    sap.ui.getCore().byId("cB_isActive").setEditable(false);
+    sap.ui.getCore().byId("cB_HostsIsActive").setEditable(false);
     sap.ui.getCore().byId("dB_HostsPerson").setEditable(false)
             .setVisible(false);
     sap.ui.getCore().byId("formContainerHostDetails").rerender();
@@ -95,10 +95,10 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
                 sap.ui.getCore().byId("tF_HostsPerson")
                         .setValue(success.Person);
                 if (success.IsActive == "X") {
-                	sap.ui.getCore().byId("cB_isActive").setChecked(true);
+                	sap.ui.getCore().byId("cB_HostsIsActive").setChecked(true);
                 }
                 else {
-                	sap.ui.getCore().byId("cB_isActive").setChecked(false);
+                	sap.ui.getCore().byId("cB_HostsIsActive").setChecked(false);
                 }
               }, function(error) {
                 console.log(error);
@@ -120,7 +120,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     sap.ui.getCore().byId("tF_HostsHdd").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_HostsPerson").setValue("Please select");
     sap.ui.getCore().byId("dB_HostsPerson").setValue("").setEditable(true).setVisible(true);
-    sap.ui.getCore().byId("cB_isActive").setEditable(true);;
+    sap.ui.getCore().byId("cB_HostsIsActive").setEditable(true);;
     
     var submitButton;
     if (null == sap.ui.getCore().byId("buttonAddHost")) {
@@ -140,7 +140,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     var fnPressHandler = null;
     fnPressHandler = function(oEvent) {
     var isChecked;
-    if (sap.ui.getCore().byId("cB_isActive").getChecked() == true) {
+    if (sap.ui.getCore().byId("cB_HostsIsActive").getChecked() == true) {
     	isChecked = "X";
     }	
     else {
@@ -217,7 +217,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     sap.ui.getCore().byId("tF_HostsRam").setEditable(true);
     sap.ui.getCore().byId("tF_HostsHdd").setEditable(true);
     sap.ui.getCore().byId("dB_HostsPerson").setEditable(true).setVisible(true);
-    sap.ui.getCore().byId("cB_isActive").setEditable(true);
+    sap.ui.getCore().byId("cB_HostsIsActive").setEditable(true);
     var submitButton ;
     if(null == sap.ui.getCore().byId("buttonUpdateHost"))
       {
@@ -237,7 +237,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     var fnPressHandler = null;
     fnPressHandler = function(oEvent) {
         var isChecked;
-        if (sap.ui.getCore().byId("cB_isActive").getChecked() == true) {
+        if (sap.ui.getCore().byId("cB_HostsIsActive").getChecked() == true) {
         	isChecked = "X";
         }	
         else {

@@ -179,7 +179,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     }));
     matLayout.createRow(new sap.ui.commons.Label({
         text: "Is Active"
-      }), new sap.ui.commons.CheckBox("cB_isActive", {
+      }), new sap.ui.commons.CheckBox("cB_HostsIsActive", {
         editable: false
       }));
 

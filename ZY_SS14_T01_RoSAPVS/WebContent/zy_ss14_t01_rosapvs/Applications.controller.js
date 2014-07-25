@@ -86,6 +86,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("dB_ApplicationSoftwareType").setEditable(false).setVisible(false);
     sap.ui.getCore().byId("dB_ApplicationPlatform").setEditable(false).setVisible(false);
     sap.ui.getCore().byId("dB_ApplicationPerson").setEditable(false).setVisible(false);
+    sap.ui.getCore().byId("cB_ApplicationIsActive").setEditable(false);
     sap.ui.getCore().byId("formContainerApplicationDetails").rerender();
   },
   getDetails: function() {
@@ -110,6 +111,12 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         sap.ui.getCore().byId("tF_ApplicationSoftwareType").setValue("("+success.Swt.Id +") "+ success.Swt.Name);
         sap.ui.getCore().byId("tF_ApplicationPerson").setValue(success.Person);
         sap.ui.getCore().byId("tF_ApplicationPlatform").setValue(success.Platform);
+        if (success.IsActive == "X") {
+        	sap.ui.getCore().byId("cB_ApplicationIsActive").setChecked(true);
+        }
+        else {
+        	sap.ui.getCore().byId("cB_ApplicationIsActive").setChecked(false);
+        }
       }, function(error) {
         console.log(error);
       	var oMessage = new sap.ui.core.Message({
@@ -138,6 +145,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("dB_ApplicationSoftwareType").setValue("").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_ApplicationPlatform").setValue("").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_ApplicationPerson").setValue("").setEditable(true).setVisible(true);
+    sap.ui.getCore().byId("cB_ApplicationIsActive").setEditable(true);
     
     if(sap.ui.getCore().byId("createButtonApplications") == null) {
 	    new sap.ui.commons.Button('createButtonApplications', {
@@ -152,7 +160,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     }
     
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {      
+    fnPressHandler = function(oEvent) {
+        var isChecked;
+        if (sap.ui.getCore().byId("cB_ApplicationIsActive").getChecked() == true) {
+        	isChecked = "X";
+        }	
+        else {
+        	isChecked = "";
+        }
       var entry = {
         Name: sap.ui.getCore().byId("tF_ApplicationName").getValue(),
         ReqCpu: 1 * sap.ui.getCore().byId("tF_ApplicationReqCPU").getValue(),
@@ -166,6 +181,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         },
         Platform: 1 * sap.ui.getCore().byId("dB_ApplicationPlatform").getValue(),
         Person: sap.ui.getCore().byId("dB_ApplicationPerson").getValue(),
+        IsActive: isChecked,
       };
       console.log(entry);
       var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry,null,function(success)
@@ -276,7 +292,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
 	    });
     }
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {      
+    fnPressHandler = function(oEvent) {
+        var isChecked;
+        if (sap.ui.getCore().byId("cB_ApplicationIsActive").getChecked() == true) {
+        	isChecked = "X";
+        }	
+        else {
+        	isChecked = "";
+        }
       var entry = {
         Name: sap.ui.getCore().byId("tF_ApplicationName").getValue(),
         ReqCpu: 1 * sap.ui.getCore().byId("tF_ApplicationReqCPU").getValue(),
@@ -290,6 +313,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         },
         Platform: 1 * sap.ui.getCore().byId("dB_ApplicationPlatform").getValue(),
         Person:  sap.ui.getCore().byId("dB_ApplicationPerson").getValue(),
+        IsActive: isChecked,
       };
       console.log(entry);
       var tblApplications = sap.ui.getCore().byId('tblApplications');
