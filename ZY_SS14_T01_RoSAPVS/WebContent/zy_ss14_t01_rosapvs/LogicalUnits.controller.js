@@ -320,7 +320,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      console.log(response);
 	      var tblLogicalUnits = sap.ui.getCore().byId("tblLogicalUnits");
 	      tblLogicalUnits.getModel().refresh(true);
-	      tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
+	      //tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
