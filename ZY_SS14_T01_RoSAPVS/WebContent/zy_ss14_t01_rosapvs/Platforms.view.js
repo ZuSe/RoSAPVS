@@ -30,13 +30,14 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     });
     layoutPlatforms.setWidth('100%');
 
-    var tblPlatforms = new sap.ui.table.DataTable("tblPlatforms", {
-      visibleRowCount: 25,
-      ExpandedVisibleRowCount: 30,
+    var tblPlatforms = new sap.ui.table.Table("tblPlatforms", {
+//    showOverlay: true,
+      visibleRowCount: 10,
+      ExpandedVisibleRowCount: 20,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
         items: [new sap.ui.commons.Button({
-          text: "Create",
+          text: "Create",          
           icon: sap.ui.core.IconPool.getIconURI("create"),
           press: function() {
             oController.createPlatform();
@@ -71,16 +72,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
       template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
       sortProperty: "Name"
     }));
-    tblPlatforms.addColumn(new sap.ui.table.Column({
-      label: new sap.ui.commons.Label({
-        text: "Active"
-      }),
-      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
-      sortProperty: "IsActive"
-    }));
+//    tblPlatforms.addColumn(new sap.ui.table.Column({
+//      label: new sap.ui.commons.Label({
+//        text: "Active"
+//      }),
+//      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
+//      sortProperty: "IsActive"
+//    }));
 
     tblPlatforms.bindRows("/PlatformCollection");
-    tblPlatforms.attachRowSelect(function(oEvent) {
+    tblPlatforms.attachRowSelectionChange(function(oEvent) {
       oController.getDetails();
     });
 
@@ -201,12 +202,12 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     var templatePlatformHost = new sap.ui.core.ListItem();
     templatePlatformHost.bindProperty("text", "Id");
     templatePlatformHost.bindProperty("additionalText", "Name");
-    sap.ui.getCore().byId('dB_PlatformsHost').bindItems("/HostCollection", templatePlatformHost);
+    sap.ui.getCore().byId('dB_PlatformsHost').bindItems("/RestrictedHostCollection", templatePlatformHost);
 
     var templatePlatformPerson = new sap.ui.core.ListItem();
     templatePlatformPerson.bindProperty("text", "SapUser");
     templatePlatformPerson.bindProperty("additionalText", "Role");
-    sap.ui.getCore().byId('dB_PlatformsPerson').bindItems("/PrivilegeCollection", templatePlatformPerson);
+    sap.ui.getCore().byId('dB_PlatformsPerson').bindItems("/PrivilegeCollection", templatePlatformPerson).filter();
     
     layoutPlatforms.createRow(tblPlatforms, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formPlatformDetails}).setVAlign("Top"));
     this.addContent(layoutPlatforms);

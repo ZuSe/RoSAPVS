@@ -30,9 +30,9 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     });
     layoutApplications.setWidth('100%');
 
-    var tblApplications = new sap.ui.table.DataTable("tblApplications", {
-      visibleRowCount: 25,
-      ExpandedVisibleRowCount: 30,
+    var tblApplications = new sap.ui.table.Table("tblApplications", {
+      visibleRowCount: 10,
+      ExpandedVisibleRowCount: 20,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
         items: [new sap.ui.commons.Button({
@@ -71,16 +71,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
       template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
       sortProperty: "Name"
     }));
-    tblApplications.addColumn(new sap.ui.table.Column({
-      label: new sap.ui.commons.Label({
-        text: "Active"
-      }),
-      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
-      sortProperty: "IsActive"
-    }));
+//    tblApplications.addColumn(new sap.ui.table.Column({
+//      label: new sap.ui.commons.Label({
+//        text: "Active"
+//      }),
+//      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
+//      sortProperty: "IsActive"
+//    }));
 
     tblApplications.bindRows("/ApplicationCollection");
-    tblApplications.attachRowSelect(function(oEvent) {
+    tblApplications.attachRowSelectionChange(function(oEvent) {
       oController.getDetails();
     });
     
@@ -191,7 +191,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     var templateApplicationPlatform = new sap.ui.core.ListItem();
     templateApplicationPlatform.bindProperty("text", "Id");
     templateApplicationPlatform.bindProperty("additionalText", "Name");
-    sap.ui.getCore().byId('dB_ApplicationPlatform').bindItems("/PlatformCollection", templateApplicationPlatform);
+    sap.ui.getCore().byId('dB_ApplicationPlatform').bindItems("/RestrictedPlatformCollection", templateApplicationPlatform);
     
     var templateApplicationSoftwareType = new sap.ui.core.ListItem();
     templateApplicationSoftwareType.bindProperty("text", "Id");

@@ -50,6 +50,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsReqHDD").setEditable(false);
     sap.ui.getCore().byId("dB_PlatformsHost").setEditable(false).setVisible(false);
     sap.ui.getCore().byId("dB_PlatformsPerson").setEditable(false).setVisible(false);
+  //  sap.ui.getCore().byId("tblPlatforms").setShowOverlay(false);
     sap.ui.getCore().byId("formContainerPlatformDetails").rerender();
   },
   getDetails: function() {
@@ -78,6 +79,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     }
   },
   createPlatform: function() {
+ //   sap.ui.getCore().byId("tblPlatforms").setShowOverlay(true); 
     sap.ui.getCore().byId("tF_PlatformsId").setValue("Will be calculated");
     sap.ui.getCore().byId("tF_PlatformsName").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_PlatformsReqCPU").setValue("").setEditable(true);
@@ -142,6 +144,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updatePlatform: function() {
+   // sap.ui.getCore().byId("tblPlatforms").setShowOverlay(true);
     sap.ui.getCore().byId("tF_PlatformsName").setEditable(true);
     sap.ui.getCore().byId("tF_PlatformsReqCPU").setEditable(true);
     sap.ui.getCore().byId("tF_PlatformsReqRAM").setEditable(true);

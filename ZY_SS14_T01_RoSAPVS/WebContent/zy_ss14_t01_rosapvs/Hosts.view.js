@@ -30,9 +30,9 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     });
     layoutHosts.setWidth('100%');
 
-    var tblHosts = new sap.ui.table.DataTable("tblHosts", {
-      visibleRowCount: 25,
-      ExpandedVisibleRowCount: 30,
+    var tblHosts = new sap.ui.table.Table("tblHosts", {
+      visibleRowCount: 10,
+      ExpandedVisibleRowCount: 20,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
         items: [new sap.ui.commons.Button({
@@ -71,16 +71,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
       sortProperty: "Name"
     }));
-    tblHosts.addColumn(new sap.ui.table.Column({
-      label: new sap.ui.commons.Label({
-        text: "Active"
-      }),
-      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
-      sortProperty: "IsActive"
-    }));
+//    tblHosts.addColumn(new sap.ui.table.Column({
+//      label: new sap.ui.commons.Label({
+//        text: "Active"
+//      }),
+//      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
+//      sortProperty: "IsActive"
+//    }));
 
     tblHosts.bindRows("/HostCollection");
-    tblHosts.attachRowSelect(function(oEvent) {
+    tblHosts.attachRowSelectionChange(function(oEvent) {
       oController.getDetails();
     });
 
