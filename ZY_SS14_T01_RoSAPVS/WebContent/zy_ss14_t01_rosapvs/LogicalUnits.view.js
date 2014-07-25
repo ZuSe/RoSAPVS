@@ -131,7 +131,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		      sortProperty: "Name"
 		    }));
 
-		    tblHostsDetail.bindRows("/RestrictedHostCollection");
+		    tblHostsDetail.bindRows("/HostCollection");
 		    tblHostsDetail.setTitle("Hosts");
 		    
 		    var tblPlatformsDetail = new sap.ui.table.Table("tblPlatformsDetail", {
@@ -155,7 +155,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 			      sortProperty: "Name"
 			    }));
 
-			    tblPlatformsDetail.bindRows("/RestrictedPlatformCollection");
+			    tblPlatformsDetail.bindRows("/PlatformCollection");
 			    tblPlatformsDetail.setTitle("Platforms");
 		    
 			    var tblApplicationsDetail = new sap.ui.table.Table("tblApplicationsDetail", {
