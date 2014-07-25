@@ -33,7 +33,20 @@ sap.ui
                    */
                   onBeforeRendering: function() {
                   },
-                  
+                  displayListener: function(oEvent) {
+                    var bShow = oEvent.getParameter("show");                    
+                    if (bShow) {
+                      /*
+                       * Now the application can decide how to display the bar.
+                       * It can be maximized, default, minimized (please see
+                       * NotificationBarStatus)
+                       */
+                      var sStatus = sap.ui.ux3.NotificationBarStatus.Default;
+                      oNotiBar.setVisibleStatus(sStatus);
+                    } else {
+                      
+                    }
+                  },
                   /**
                    * Called when the View has been rendered (so its HTML is part
                    * of the document). Post-rendering manipulations of the HTML
