@@ -132,17 +132,28 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         Person: sap.ui.getCore().byId("dB_PlatformsPerson").getValue(),
       };
       console.log(entry);
-      var response = sap.ui.getCore().getModel().create('/PlatformCollection', entry);
+      var response = sap.ui.getCore().getModel().create('/PlatformCollection', entry,0,function(success){
+        var oMessage = new sap.ui.core.Message({
+          text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was created successfully.',
+        timestamp : (new Date()).toUTCString()
+      });
+        oMessage.setLevel(sap.ui.core.MessageType.Success);
+        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+        
+      }, function(error){
+        var oMessage = new sap.ui.core.Message({
+          text : 'Failed to create Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue(),
+        timestamp : (new Date()).toUTCString()
+      });
+        oMessage.setLevel(sap.ui.core.MessageType.Error);
+        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+        
+      });  
       console.log(response);
       var tblPlatforms = sap.ui.getCore().byId("tblPlatforms");
       tblPlatforms.getModel().refresh(true);
       tblPlatforms.setSelectedIndex(tblPlatforms.getBinding("rows").iLength-1);
-  	var oMessage = new sap.ui.core.Message({
-  		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was created successfully.',
-		timestamp : (new Date()).toUTCString()
-	});
-	oMessage.setLevel(sap.ui.core.MessageType.Success);
-  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+  	
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
@@ -197,14 +208,25 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       console.log(entry);
       var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
       var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
-      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
-      console.log(response);
-  	var oMessage = new sap.ui.core.Message({
-  		text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was updated successfully.',
-		timestamp : (new Date()).toUTCString()
-	});
-	oMessage.setLevel(sap.ui.core.MessageType.Success);
-  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0,function(success){
+        var oMessage = new sap.ui.core.Message({
+          text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was updated successfully.',
+        timestamp : (new Date()).toUTCString()
+      });
+        oMessage.setLevel(sap.ui.core.MessageType.Success);
+        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+        
+      }, function(error){
+        var oMessage = new sap.ui.core.Message({
+          text : 'Failed to update Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue(),
+        timestamp : (new Date()).toUTCString()
+      });
+        oMessage.setLevel(sap.ui.core.MessageType.Error);
+        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+        
+      });      
+      console.log(response);      
+	
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
