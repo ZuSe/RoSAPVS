@@ -207,7 +207,8 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     var templatePlatformPerson = new sap.ui.core.ListItem();
     templatePlatformPerson.bindProperty("text", "SapUser");
     templatePlatformPerson.bindProperty("additionalText", "Role");
-    sap.ui.getCore().byId('dB_PlatformsPerson').bindItems("/PrivilegeCollection", templatePlatformPerson).filter();
+    sap.ui.getCore().byId('dB_PlatformsPerson').bindItems("/PrivilegeCollection", templatePlatformPerson);
+    
     
     layoutPlatforms.createRow(tblPlatforms, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formPlatformDetails}).setVAlign("Top"));
     this.addContent(layoutPlatforms);
