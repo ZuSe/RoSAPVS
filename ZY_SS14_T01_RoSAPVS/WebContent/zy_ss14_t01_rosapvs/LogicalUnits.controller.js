@@ -50,7 +50,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	  },
 	  disableTableButtons : function()
 	  {
-	    var btnsOfTable = sap.ui.getCore().byId("toolbarTableLogicalUnit").getItems();
+	    var btnsOfTable = sap.ui.getCore().byId("toolbarTableLogicalUnits").getItems();
 	    console.log(btnsOfTable);
 	      $.each(btnsOfTable, function(index, element)
 	              {
@@ -59,7 +59,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	  },
 	  enableTableButtons: function()
 	  {
-	    $.each(sap.ui.getCore().byId("toolbarTableLogicalUnit").getItems(), function(index, element)
+	    $.each(sap.ui.getCore().byId("toolbarTableLogicalUnits").getItems(), function(index, element)
 	            {
 	                element.setEnabled(true);
 	            });
