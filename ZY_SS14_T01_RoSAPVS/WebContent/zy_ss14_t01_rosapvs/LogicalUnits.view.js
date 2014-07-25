@@ -85,63 +85,21 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    });
 	    
 	    layoutLogicalUnitsDetails.setWidth('100%');
+   
+	    var matLayout = new sap.ui.commons.layout.MatrixLayout({
+			width: "100%",
+			widths: ["15em","100%"],
+		    });
+		    
+		    matLayout.createRow(null, null);
+		    matLayout.createRow(new sap.ui.commons.Label({text:"ID"}),new sap.ui.commons.TextField("tF_LogicalUnitId",{editable: false}));
+		    matLayout.createRow(new sap.ui.commons.Label({text:"Name"}),new sap.ui.commons.TextField("tF_LogicalUnitName",{editable: false}));
+		    matLayout.createRow(new sap.ui.commons.Label({text:"Employee Responsible"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_LogicalUnitPerson",{editable: false}),new sap.ui.commons.DropdownBox("dB_LogicalUnitPerson",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));	    
+		    matLayout.createRow(null, null);
+		    
+	    //matLayout.createRow(null, formLogicalUnitDetails);
 	    
-	    var formLogicalUnitDetails = new sap.ui.layout.form.Form('formLogicalUnitDetails', {
-	      title: new sap.ui.core.Title({
-	        text: "Logical Unit Details",
-	        tooltip: "Shows the logical unit details"
-	      }),
-	      layout: new sap.ui.layout.form.GridLayout(),
-	      formContainers: [new sap.ui.layout.form.FormContainer('formContainerLogicalUnitDetails',{
-	        formElements: [new sap.ui.layout.form.FormElement({
-	          label: new sap.ui.commons.Label({
-	            text: "ID"
-	          }),
-	          fields: [new sap.ui.commons.TextField("tF_LogicalUnitId", {
-	            editable: false,
-	            layoutData: new sap.ui.layout.form.GridElementData({
-	              hCells: "auto"
-	            })
-	          }), ]
-	        }), new sap.ui.layout.form.FormElement({
-	          label: new sap.ui.commons.Label({
-	            text: "Name"
-	          }),
-	          fields: [new sap.ui.commons.TextField("tF_LogicalUnitName", {
-	            value: "",
-	            editable: false,
-	            layoutData: new sap.ui.layout.form.GridElementData({
-	              hCells: "auto"
-	            })
-	          }), ]
-	        }),  new sap.ui.layout.form.FormElement({
-	          label: new sap.ui.commons.Label({
-	            text: "Employee Responsible"
-	          }),
-	          fields: [new sap.ui.commons.TextField("tF_LogicalUnitPerson", {
-	              value: "",
-	              editable: false,
-	              layoutData: new sap.ui.layout.form.GridElementData({
-	                hCells: "3"
-	              })
-	            }),    new sap.ui.commons.DropdownBox("dB_LogicalUnitPerson", {
-	            value: "None",
-	            editable: false,
-	            visible: false,
-	            displaySecondaryValues: true,
-	            layoutData: new sap.ui.layout.form.GridElementData({
-	              hCells: "3"
-	            })
-	          }),
-
-	          ]
-	        }),]
-	      })],
-	    });
-	    
-	    formLogicalUnitDetails.addStyleClass('fancyBox');
-	    
-	    layoutLogicalUnitsDetails.createRow(formLogicalUnitDetails);
+	    layoutLogicalUnitsDetails.createRow(matLayout);
 	    
 	    // Layout for Detail Tables
 	    var layoutDetailsTables = new sap.ui.commons.layout.MatrixLayout({
@@ -224,10 +182,18 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 				    tblApplicationsDetail.bindRows("/ApplicationCollection");
 				    tblApplicationsDetail.setTitle("Applications");			    
 		    
+				    var formLogicalUnitDetails = new sap.ui.layout.form.Form('formLogicalUnitDetails', {
+					      layout: new sap.ui.layout.form.GridLayout(),
+					      formContainers: [new sap.ui.layout.form.FormContainer('formContainerLogicalUnitDetails'
+					      )],
+					    }); 
+				    
 		    layoutDetailsTables.createRow(tblHostsDetail, tblPlatformsDetail, tblApplicationsDetail);   
 		
 		    layoutLogicalUnitsDetails.createRow(new sap.ui.commons.HorizontalDivider("divider", {visible: true}));
 		    layoutLogicalUnitsDetails.createRow(layoutDetailsTables);
+		    layoutLogicalUnitsDetails.createRow(null);
+		    layoutLogicalUnitsDetails.createRow(formLogicalUnitDetails);
 		    
 	    // *** Data Binding and Listeners *** //
 
@@ -236,8 +202,18 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    templateLogicalUnitPerson.bindProperty("additionalText", "Role");
 	    sap.ui.getCore().byId('dB_LogicalUnitPerson').bindItems("/PrivilegeCollection", templateLogicalUnitPerson);
 	    
-	    layoutLogicalUnits.createRow(tblLogicalUnits, null, new sap.ui.commons.layout.MatrixLayoutCell({content: layoutLogicalUnitsDetails}).setVAlign("Top"));
+	    var panelDetails = new sap.ui.commons.Panel({
+	    	applyContentPadding: true,
+	    	title: new sap.ui.core.Title({
+	        text: "Logical Unit Details",
+	      }),
+	      showCollapseIcon: false});
+	    panelDetails.addContent(layoutLogicalUnitsDetails);
+	    panelDetails.addStyleClass('fancyBox');
+	    
+	    layoutLogicalUnits.createRow(tblLogicalUnits, null, new sap.ui.commons.layout.MatrixLayoutCell({content: panelDetails}).setVAlign("Top"));
 	    this.addContent(layoutLogicalUnits);
+	    
 	  }
 
 	});
