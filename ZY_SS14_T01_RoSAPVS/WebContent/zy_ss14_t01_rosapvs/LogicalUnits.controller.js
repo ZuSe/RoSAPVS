@@ -222,7 +222,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
-	        this.enableTableButtons();
+	        sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits").enableTableButtons();
 	      };
 	    };
 
@@ -318,7 +318,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
-	        this.enableTableButtons();
+	        sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits").enableTableButtons();
 	      };      
 	    };
 

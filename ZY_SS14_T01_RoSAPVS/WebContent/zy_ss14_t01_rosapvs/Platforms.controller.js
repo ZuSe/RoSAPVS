@@ -72,6 +72,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   
   
   getDetails: function() {
+    if(null != sap.ui.getCore().byId("btnPlatformsSubmit"))
+      sap.ui.getCore().byId("btnPlatformsSubmit").detroy();
+    
     this.enableTableButtons();
     this.lockInput();
     var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
@@ -143,7 +146,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Platforms").enableTableButtons();
       };
     };
 
@@ -173,7 +176,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsReqHDD").setEditable(true);
     sap.ui.getCore().byId("dB_PlatformsHost").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_PlatformsPerson").setEditable(true).setVisible(true);
-    var submitButton = new sap.ui.commons.Button({
+    var submitButton = new sap.ui.commons.Button("btnPlatformsSubmit",{
       text: "Update",
       tooltip: "Submit Data",
       visible: true,
@@ -205,7 +208,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Platforms").enableTableButtons();
       };      
     };
 

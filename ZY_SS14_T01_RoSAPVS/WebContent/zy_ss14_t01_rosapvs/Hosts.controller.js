@@ -79,7 +79,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     var tblHosts = sap.ui.getCore().byId('tblHosts');
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
     if (null != context) {
-
       sap.ui.getCore().getModel().read(
               context.sPath,
               0,
@@ -156,7 +155,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.setVisible(false);
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").enableTableButtons();
       }
       ;
     };
@@ -229,7 +228,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.setVisible(false);
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Hosts").enableTableButtons();
       }
       ;
     };

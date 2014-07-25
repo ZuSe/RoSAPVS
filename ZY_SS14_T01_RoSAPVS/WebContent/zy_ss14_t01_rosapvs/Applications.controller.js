@@ -189,7 +189,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Applications").enableTableButtons();
       };
     };
 
@@ -285,7 +285,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
-        this.enableTableButtons();
+        sap.ui.controller("zy_ss14_t01_rosapvs.Applications").enableTableButtons();
       };      
     };
 
