@@ -168,7 +168,29 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         Person: sap.ui.getCore().byId("dB_ApplicationPerson").getValue(),
       };
       console.log(entry);
-      var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry);
+      var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry,null,false,function(success)
+              {   var oMessage = new sap.ui.core.Message({
+                text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
+              timestamp : (new Date()).toUTCString(),
+            });
+              oMessage.setLevel(sap.ui.core.MessageType.Sucess);
+              sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);     
+              }, function(error)
+              {
+                var oMessage = new sap.ui.core.Message({
+                  text : 'Failed to create Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue(),
+                timestamp : (new Date()).toUTCString(),
+              });
+                oMessage.setLevel(sap.ui.core.MessageType.Error);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+              }        
+      
+      );
+      
+      
+      
+      
+      
       console.log(response);
       var tblApplications = sap.ui.getCore().byId('tblApplications');
       tblApplications.getModel().refresh(true);
@@ -179,20 +201,6 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       if (null != contextApplications) {
       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
       sap.ui.getCore().byId("tF_ApplicationId").setValue(successApplications.Id);
-      var oMessage = new sap.ui.core.Message({
-        text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
-      timestamp : (new Date()).toUTCString(),
-    });
-      oMessage.setLevel(sap.ui.core.MessageType.Sucess);
-      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);     
-      }, function(error)
-      {
-        var oMessage = new sap.ui.core.Message({
-          text : 'Failed to create Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue(),
-        timestamp : (new Date()).toUTCString(),
-      });
-        oMessage.setLevel(sap.ui.core.MessageType.Error);
-        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       }
       
       );
