@@ -72,37 +72,69 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
       template: new sap.ui.commons.TextField().bindProperty("value", "Name"),
       sortProperty: "Name"
     }));
-//    tblHosts.addColumn(new sap.ui.table.Column({
-//      label: new sap.ui.commons.Label({
-//        text: "Active"
-//      }),
-//      template: new sap.ui.commons.TextField().bindProperty("value", "IsActive"),
-//      sortProperty: "IsActive"
-//    }));
+    // tblHosts.addColumn(new sap.ui.table.Column({
+    // label: new sap.ui.commons.Label({
+    // text: "Active"
+    // }),
+    // template: new sap.ui.commons.TextField().bindProperty("value",
+    // "IsActive"),
+    // sortProperty: "IsActive"
+    // }));
 
     tblHosts.bindRows("/HostCollection");
     tblHosts.attachRowSelectionChange(function(oEvent) {
       oController.getDetails();
     });
-    
+
     var matLayout = new sap.ui.commons.layout.MatrixLayout({
-		width: "100%",
-		widths: ["15em","100%"],
-	    });
-	    
-	    matLayout.createRow(null, null);
-	    matLayout.createRow(new sap.ui.commons.Label({text:"ID"}),new sap.ui.commons.TextField("tF_HostsId",{editable: false}));
-	    matLayout.createRow(new sap.ui.commons.Label({text:"Name"}),new sap.ui.commons.TextField("tF_HostsName",{editable: false}));
-	    matLayout.createRow(new sap.ui.commons.Label({text:"CPU (Cores)"}),new sap.ui.commons.TextField("tF_HostsCpu",{editable: false}));
-	    matLayout.createRow(new sap.ui.commons.Label({text:"RAM (GB)"}),new sap.ui.commons.TextField("tF_HostsRam",{editable: false}));
-	    matLayout.createRow(new sap.ui.commons.Label({text:"HDD (TB)"}),new sap.ui.commons.TextField("tF_HostsHdd",{editable: false})); 
-	    matLayout.createRow(new sap.ui.commons.Label({text:"Employee Responsible"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_HostsPerson",{editable: false}),new sap.ui.commons.DropdownBox("dB_HostsPerson",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));	    
-	    matLayout.createRow(null, null);
-	    
+      width: "100%",
+      widths: ["15em", "100%"],
+    });
+
+    matLayout.createRow(null, null);
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "ID"
+    }), new sap.ui.commons.TextField("tF_HostsId", {
+      editable: false
+    }));
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "Name"
+    }), new sap.ui.commons.TextField("tF_HostsName", {
+      editable: false
+    }));
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "CPU (Cores)"
+    }), new sap.ui.commons.TextField("tF_HostsCpu", {
+      editable: false
+    }));
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "RAM (GB)"
+    }), new sap.ui.commons.TextField("tF_HostsRam", {
+      editable: false
+    }));
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "HDD (TB)"
+    }), new sap.ui.commons.TextField("tF_HostsHdd", {
+      editable: false
+    }));
+    matLayout.createRow(new sap.ui.commons.Label({
+      text: "Employee Responsible"
+    }), new sap.ui.commons.layout.MatrixLayoutCell({
+      content: [new sap.ui.commons.TextField("tF_HostsPerson", {
+        editable: false
+      }), new sap.ui.commons.DropdownBox("dB_HostsPerson", {
+        value: "None",
+        displaySecondaryValues: true,
+        visible: false,
+        editable: false
+      })]
+    }));
+    matLayout.createRow(null, null);
+
     var formHostDetails = new sap.ui.layout.form.Form('formHostDetails', {
       layout: new sap.ui.layout.form.GridLayout(),
-      formContainers: [new sap.ui.layout.form.FormContainer('formContainerHostDetails'
-      )],
+      formContainers: [new sap.ui.layout.form.FormContainer(
+              'formContainerHostDetails')],
     });
 
     matLayout.createRow(null, formHostDetails);
@@ -112,18 +144,23 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     var templateHostPerson = new sap.ui.core.ListItem();
     templateHostPerson.bindProperty("text", "SapUser");
     templateHostPerson.bindProperty("additionalText", "Role");
-    sap.ui.getCore().byId('dB_HostsPerson').bindItems("/PrivilegeCollection", templateHostPerson);
-    
+    sap.ui.getCore().byId('dB_HostsPerson').bindItems("/PrivilegeCollection",
+            templateHostPerson);
+
     var panelDetails = new sap.ui.commons.Panel({
-    	applyContentPadding: true,
-    	title: new sap.ui.core.Title({
+      applyContentPadding: true,
+      title: new sap.ui.core.Title({
         text: "Host Details",
       }),
-      showCollapseIcon: false});
+      showCollapseIcon: false
+    });
     panelDetails.addContent(matLayout);
     panelDetails.addStyleClass('fancyBox');
-    
-    layoutHosts.createRow(tblHosts, null, new sap.ui.commons.layout.MatrixLayoutCell({content: panelDetails}).setVAlign("Top"));
+
+    layoutHosts.createRow(tblHosts, null,
+            new sap.ui.commons.layout.MatrixLayoutCell({
+              content: panelDetails
+            }).setVAlign("Top"));
     this.addContent(layoutHosts);
   }
 
