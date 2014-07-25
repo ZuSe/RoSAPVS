@@ -105,17 +105,65 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     matLayout.createRow(new sap.ui.commons.Label({
       text: "CPU (Cores)"
     }), new sap.ui.commons.TextField("tF_HostsCpu", {
-      editable: false
+      editable: false,
+      change : function(){
+
+        var tfValue = sap.ui.getCore().byId('tF_HostsCpu').getValue();
+
+
+        if( !tfValue.match(numberTemplate) )
+          {
+          var oMessage = new sap.ui.core.Message({
+            text: "Value '" +tfValue + "' is not valid for CPU (Cores)",
+            timestamp: (new Date()).toUTCString()
+          });
+          oMessage.setLevel(sap.ui.core.MessageType.Warning);
+          sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                  oMessage);
+          }
+       }
     }));
     matLayout.createRow(new sap.ui.commons.Label({
       text: "RAM (GB)"
     }), new sap.ui.commons.TextField("tF_HostsRam", {
-      editable: false
+      editable: false,
+      change : function(){
+
+        var tfValue = sap.ui.getCore().byId('tF_HostsRam').getValue();
+
+
+        if( !tfValue.match(numberTemplate) )
+          {
+          var oMessage = new sap.ui.core.Message({
+            text: "Value '" +tfValue + "' is not valid for RAM (GB)",
+            timestamp: (new Date()).toUTCString()
+          });
+          oMessage.setLevel(sap.ui.core.MessageType.Warning);
+          sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                  oMessage);
+          }
+       },
     }));
     matLayout.createRow(new sap.ui.commons.Label({
       text: "HDD (TB)"
     }), new sap.ui.commons.TextField("tF_HostsHdd", {
-      editable: false
+      editable: false,
+      change : function(){
+
+        var tfValue = sap.ui.getCore().byId('tF_HostsHdd').getValue();
+
+
+        if( !tfValue.match(numberTemplate) )
+          {
+          var oMessage = new sap.ui.core.Message({
+            text: "Value '" +tfValue + "' is invalid for HDD (TB)",
+            timestamp: (new Date()).toUTCString()
+          });
+          oMessage.setLevel(sap.ui.core.MessageType.Warning);
+          sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                  oMessage);
+          }
+       },
     }));
     matLayout.createRow(new sap.ui.commons.Label({
       text: "Employee Responsible"
