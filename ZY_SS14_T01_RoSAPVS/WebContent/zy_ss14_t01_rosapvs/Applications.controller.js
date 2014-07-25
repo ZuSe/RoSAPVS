@@ -281,6 +281,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("dB_ApplicationSoftwareType").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_ApplicationPlatform").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_ApplicationPerson").setEditable(true).setVisible(true);
+    sap.ui.getCore().byId("cB_ApplicationIsActive").setEditable(true);
     if(sap.ui.getCore().byId("updateButtonApplications") == null) {
 	    new sap.ui.commons.Button('updateButtonApplications', {
 	      text: "Update",
