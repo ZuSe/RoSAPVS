@@ -235,7 +235,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
                 text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was updated successfully.',
                 timestamp : (new Date()).toUTCString(),
               });
-                oMessage.setLevel(sap.ui.core.MessageType.Sucess);
+                oMessage.setLevel(sap.ui.core.MessageType.Success);
                 sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
                 
               },function(error){

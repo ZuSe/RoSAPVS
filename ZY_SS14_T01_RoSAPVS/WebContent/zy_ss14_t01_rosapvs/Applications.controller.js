@@ -299,7 +299,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
           text : 'Applications ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was updated successfully.',
           timestamp : (new Date()).toUTCString(),
         });
-          oMessage.setLevel(sap.ui.core.MessageType.Sucess);
+          oMessage.setLevel(sap.ui.core.MessageType.Success);
           sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
           
         },function(error){
