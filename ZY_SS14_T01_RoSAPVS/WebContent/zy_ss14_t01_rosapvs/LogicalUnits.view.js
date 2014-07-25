@@ -30,7 +30,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    });
 	    layoutLogicalUnits.setWidth('100%');
 
-	    var tblLogicalUnits = new sap.ui.table.DataTable("tblLogicalUnits", {
+	    var tblLogicalUnits = new sap.ui.table.Table("tblLogicalUnits", {
 	      visibleRowCount: 25,
 	      ExpandedVisibleRowCount: 30,
 	      selectionMode: sap.ui.table.SelectionMode.Single,
@@ -73,7 +73,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    }));
 
 	    tblLogicalUnits.bindRows("/LogicalUnitCollection");
-	    tblLogicalUnits.attachRowSelect(function(oEvent) {
+	    tblLogicalUnits.attachRowSelectionChange(function(oEvent) {
 	      oController.getDetails();
 	    });
 
@@ -150,12 +150,10 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		    });
 		layoutDetailsTables.setWidth('100%');
 	    
-	    var tblHostsDetail = new sap.ui.table.DataTable("tblHostsDetail", {
+	    var tblHostsDetail = new sap.ui.table.Table("tblHostsDetail", {
 		      visibleRowCount: 10,
 		      ExpandedVisibleRowCount: 20,
 		      selectionMode: sap.ui.table.SelectionMode.None,
-		      rowSelectionChange: function(e) {
-		      },
 		      editable: false
 		    });
 	    
@@ -174,10 +172,10 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 		      sortProperty: "Name"
 		    }));
 
-		    tblHostsDetail.bindRows("/HostCollection");
+		    tblHostsDetail.bindRows("/RestrictedHostCollection");
 		    tblHostsDetail.setTitle("Hosts");
 		    
-		    var tblPlatformsDetail = new sap.ui.table.DataTable("tblPlatformsDetail", {
+		    var tblPlatformsDetail = new sap.ui.table.Table("tblPlatformsDetail", {
 			      visibleRowCount: 10,
 			      ExpandedVisibleRowCount: 20,
 			      selectionMode: sap.ui.table.SelectionMode.None,
@@ -198,10 +196,10 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.LogicalUnits", {
 			      sortProperty: "Name"
 			    }));
 
-			    tblPlatformsDetail.bindRows("/PlatformCollection");
+			    tblPlatformsDetail.bindRows("/RestrictedPlatformCollection");
 			    tblPlatformsDetail.setTitle("Platforms");
 		    
-			    var tblApplicationsDetail = new sap.ui.table.DataTable("tblApplicationsDetail", {
+			    var tblApplicationsDetail = new sap.ui.table.Table("tblApplicationsDetail", {
 				      visibleRowCount: 10,
 				      ExpandedVisibleRowCount: 20,
 				      selectionMode: sap.ui.table.SelectionMode.None,
