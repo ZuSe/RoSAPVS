@@ -65,7 +65,11 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	            });
 	  },  	  
 	  getDetails: function() {
+		if (null != sap.ui.getCore().byId("btnLogicalUnitsSubmit")) {
+			sap.ui.getCore().byId("btnLogicalUnitsSubmit").destroy();
+		}
 	    this.enableTableButtons();
+	    this.lockInput();
 	    var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	    var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	    if (null != context) {
@@ -155,7 +159,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 		applicationTable.setSelectedIndex(-1);
 		applicationTable.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
 		
-	    var submitButton = new sap.ui.commons.Button({
+	    var submitButton = new sap.ui.commons.Button('btnLogicalUnitsSubmit',{
 	      text: "Add",
 	      icon: sap.ui.core.IconPool.getIconURI("create"),
 	      tooltip: "Submit Data",
@@ -253,7 +257,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	 	var platformTable = sap.ui.getCore().byId("tblPlatformsDetail");
 	 	var applicationTable = sap.ui.getCore().byId("tblApplicationsDetail");
 	    
-	    var submitButton = new sap.ui.commons.Button({
+	 	var submitButton = new sap.ui.commons.Button("btnLogicalUnitsSubmit",{
 	      text: "Update",
 	      tooltip: "Submit Data",
 	      visible: true,
