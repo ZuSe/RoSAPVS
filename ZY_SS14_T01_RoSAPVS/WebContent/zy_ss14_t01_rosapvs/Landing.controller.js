@@ -19,9 +19,9 @@ sap.ui
                    */
                   onInit: function() {
                     var modCM = new sap.ui.model.odata.ODataModel(
-                            "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/", true, null,
-                            null);
-                    sap.ui.getCore().setModel(modCM);                    
+                            "proxy/http/i67lp1.informatik.tu-muenchen.de:8000/sap/opu/odata/sap/ZY_SS14_T01_ODATA_SRV/",
+                            true, null, null);
+                    sap.ui.getCore().setModel(modCM);
                   },
 
                   /**
@@ -31,22 +31,9 @@ sap.ui
                    * 
                    * @memberOf zy_ss14_t01_rosapvs.Landing
                    */
-                  onBeforeRendering: function() {                    
-                   },
-                   displayListener : function (oEvent) {
-                	 var bShow = oEvent.getParameter("show");
-
-               		if (bShow) {
-               			/*
-               			 * Now the application can decide how to display the bar. It can be maximized, default, minimized (please see NotificationBarStatus) 
-               			 */
-               			var sStatus = sap.ui.ux3.NotificationBarStatus.Default;
-               			oNotiBar.setVisibleStatus(sStatus);
-               		} else {
-               			var sStatus = sap.ui.ux3.NotificationBarStatus.None;
-               			oNotiBar.setVisibleStatus(sStatus);
-               		}
-               	},
+                  onBeforeRendering: function() {
+                  },
+                  
                   /**
                    * Called when the View has been rendered (so its HTML is part
                    * of the document). Post-rendering manipulations of the HTML
@@ -55,27 +42,26 @@ sap.ui
                    * 
                    * @memberOf zy_ss14_t01_rosapvs.Landing
                    */
-                   onAfterRendering: function() {
-                     if(jQuery.cookie("Account") != undefined)
-                     {
-                       this.performLogin(jQuery.cookie("Account"));
-                     
-                     if(jQuery.cookie("workItemSelected") != undefined)
-                     {
-                       var oShell = sap.ui.getCore().byId("RoSAPVSShell");
-                       sap.ui.getCore().byId("WI_Landing").setVisible(false);
-                       oShell.setSelectedWorksetItem(jQuery.cookie("workItemSelected"));
-                       oShell.setContent(sap.ui.getCore().byId(jQuery.cookie("currentView")));
-                       
-                     }
-                     }
-                     else
-                     {
-                       $(sap.ui.getCore().byId("RoSAPVSShell").getWorksetItems()).each(function(index, element) {
-                         element.setVisible(false);
-                       });
-                     }
-                   },
+                  onAfterRendering: function() {
+                    if (jQuery.cookie("Account") != undefined) {
+                      this.performLogin(jQuery.cookie("Account"));
+
+                      if (jQuery.cookie("workItemSelected") != undefined) {
+                        var oShell = sap.ui.getCore().byId("RoSAPVSShell");
+                        sap.ui.getCore().byId("WI_Landing").setVisible(false);
+                        oShell.setSelectedWorksetItem(jQuery
+                                .cookie("workItemSelected"));
+                        oShell.setContent(sap.ui.getCore().byId(
+                                jQuery.cookie("currentView")));
+
+                      }
+                    } else {
+                      $(sap.ui.getCore().byId("RoSAPVSShell").getWorksetItems())
+                              .each(function(index, element) {
+                                element.setVisible(false);
+                              });
+                    }
+                  },
                   /**
                    * Called when the Controller is destroyed. Use this one to
                    * free resources and finalize activities.
@@ -99,83 +85,110 @@ sap.ui
                     OData.request(request, function(data, success) {
                       if (data.Valid == "T") {
                         console.log("Perfom Login");
-                        sap.ui.controller("zy_ss14_t01_rosapvs.Landing").performLogin(data.User.toUpperCase());
+                        sap.ui.controller("zy_ss14_t01_rosapvs.Landing")
+                                .performLogin(data.User.toUpperCase());
                       } else {
-                  		var oMessage = new sap.ui.core.Message({
-                			text : 'Incorrect Login',
-                			timestamp : (new Date()).toUTCString()
-                		});
-                		oMessage.setLevel(sap.ui.core.MessageType.Error);
-                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
-                      //sap.ui.commons.MessageBox.alert("Incorrect Login",'',"Error");
+                        var oMessage = new sap.ui.core.Message({
+                          text: 'Incorrect Login',
+                          timestamp: (new Date()).toUTCString()
+                        });
+                        oMessage.setLevel(sap.ui.core.MessageType.Error);
+                        sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                                oMessage);
+                        // sap.ui.commons.MessageBox.alert("Incorrect
+                        // Login",'',"Error");
                       }
                     }, function(error) {
-                        console.log(error);
-                  		var oMessage = new sap.ui.core.Message({
-                			text : 'Not allowed',
-                			timestamp : (new Date()).toUTCString()
-                		});
-                		oMessage.setLevel(sap.ui.core.MessageType.Error);
-                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
-                    }
-                    );
+                      console.log(error);
+                      var oMessage = new sap.ui.core.Message({
+                        text: 'Not allowed',
+                        timestamp: (new Date()).toUTCString()
+                      });
+                      oMessage.setLevel(sap.ui.core.MessageType.Error);
+                      sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                              oMessage);
+                    });
                   },
 
                   signInButtonListener: function() {
-                    var user = sap.ui.getCore().byId("tF_LoginUsername").getValue().toUpperCase();
-                    var password = sap.ui.getCore().byId("tF_LoginPassword").getValue();
+                    var user = sap.ui.getCore().byId("tF_LoginUsername")
+                            .getValue().toUpperCase();
+                    var password = sap.ui.getCore().byId("tF_LoginPassword")
+                            .getValue();
                     this.signIn(user, password);
                   },
 
                   performLogin: function(username) {
-                    sap.ui.getCore().getModel().read("/PrivilegeCollection(SapUser='" + username + "')", 0, 0, false, function(success) {
-                      console.log(success);
-                		var oMessage = new sap.ui.core.Message({
-                			text : 'Login successful.',
-                			timestamp : (new Date()).toUTCString()
-                		});
-                		oMessage.setLevel(sap.ui.core.MessageType.Success);
-                      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
-                      sap.ui.controller("zy_ss14_t01_rosapvs.Landing").postLogin(success.SapUser, success.Role);
-                    }, function(error) {
+                    sap.ui
+                            .getCore()
+                            .getModel()
+                            .read(
+                                    "/PrivilegeCollection(SapUser='" + username
+                                            + "')",
+                                    0,
+                                    0,
+                                    false,
+                                    function(success) {
+                                      console.log(success);
+                                      var oMessage = new sap.ui.core.Message({
+                                        text: 'Login successful.',
+                                        timestamp: (new Date()).toUTCString()
+                                      });
+                                      oMessage
+                                              .setLevel(sap.ui.core.MessageType.Success);
+                                      sap.ui.getCore().byId("oMessageNotifier")
+                                              .addMessage(oMessage);
+                                      sap.ui.controller(
+                                              "zy_ss14_t01_rosapvs.Landing")
+                                              .postLogin(success.SapUser,
+                                                      success.Role);
+                                    }, function(error) {
 
-                    }
+                                    }
 
-                    );
+                            );
                   },
 
                   postLogin: function(username, role) {
                     console.log(role);
-                    $(sap.ui.getCore().byId("RoSAPVSShell").getWorksetItems()).each(function(index, element) {
-                    	
-                    	// Rights Management
-                    	if (role == 1 || role == 2)
-                    	{
-                    		element.setVisible(true);
-                    	}
-                    	else if (role == 3) {
-                    		if (element.sId == "WI_Dashboard" || element.sId == "WI_LogicalUnits" || element.sId == "WI_Overview" || element.sId == "WI_Users") {
-                    			element.setVisible(true);
-                    		}
-                    	}
-                    	else {
-                    		if (element.sId == "WI_Dashboard" || element.sId == "WI_Users") {
-                    			element.setVisible(true);
-                    		}
-                    	}
-                    });
+                    $(sap.ui.getCore().byId("RoSAPVSShell").getWorksetItems())
+                            .each(
+                                    function(index, element) {
+
+                                      // Rights Management
+                                      if (role == 1 || role == 2) {
+                                        element.setVisible(true);
+                                      } else if (role == 3) {
+                                        if (element.sId == "WI_Dashboard"
+                                                || element.sId == "WI_LogicalUnits"
+                                                || element.sId == "WI_Overview"
+                                                || element.sId == "WI_Users") {
+                                          element.setVisible(true);
+                                        }
+                                      } else {
+                                        if (element.sId == "WI_Dashboard"
+                                                || element.sId == "WI_Users") {
+                                          element.setVisible(true);
+                                        }
+                                      }
+                                    });
                     // Show username and role
                     console.log(sap.ui.getCore().byId("tV_UserName"));
                     window.role = role;
-                    sap.ui.getCore().byId("tV_UserName").setText(username + " ("+ this.roles[role] +")");
+                    sap.ui.getCore().byId("tV_UserName").setText(
+                            username + " (" + this.roles[role] + ")");
                     // Set cookie
-                    jQuery.cookie("Account",username,{ expires: 7, path: '/' });
+                    jQuery.cookie("Account", username, {
+                      expires: 7,
+                      path: '/'
+                    });
                     sap.ui.getCore().byId("WI_Landing").setVisible(false);
-                    
-                    // End of login, render id dependent dashboard elements and show it !
+
+                    // End of login, render id dependent dashboard elements and
+                    // show it !
                     oShell.setSelectedWorksetItem("WI_Dashboard");
                     dashboardView.oController.addPanels();
-                    oShell.setContent(dashboardView);                    
+                    oShell.setContent(dashboardView);
                   },
-                  
+
                 });

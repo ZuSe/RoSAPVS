@@ -108,6 +108,7 @@
     sap.ui.getCore().byId("WI_Landing").setVisible(true);
     oShell.setContent(landingView);
     sap.ui.getCore().byId("oMessageNotifier").removeAllMessages();
+    sap.ui.getCore().byId("tV_UserName").setText("Guest");
   };
 
   var oShell = new sap.ui.ux3.Shell("RoSAPVSShell", {
