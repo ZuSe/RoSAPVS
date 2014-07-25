@@ -66,7 +66,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   {
     $.each(sap.ui.getCore().byId("toolbarTablePlatform").getItems(), function(index, element)
             {
-                element.setEnabled(false);
+                element.setEnabled(true);
             });
   },  
   

@@ -65,7 +65,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
   {
     $.each(sap.ui.getCore().byId("toolbarTableHosts").getItems(), function(index, element)
             {
-                element.setEnabled(false);
+                element.setEnabled(true);
             });
   },  
   getDetails: function() {

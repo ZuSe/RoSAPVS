@@ -73,7 +73,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
   {
     $.each(sap.ui.getCore().byId("toolbarTableApplications").getItems(), function(index, element)
             {
-                element.setEnabled(false);
+                element.setEnabled(true);
             });
   },  
   
