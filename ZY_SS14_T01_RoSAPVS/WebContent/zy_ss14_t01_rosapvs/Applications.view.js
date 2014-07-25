@@ -85,107 +85,29 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
       oController.getDetails();
     });
     
+    var matLayout = new sap.ui.commons.layout.MatrixLayout({
+		width: "100%",
+		widths: ["15em","100%"],
+	    });
+	    
+	    matLayout.createRow(null, null);
+	    matLayout.createRow(new sap.ui.commons.Label({text:"ID"}),new sap.ui.commons.TextField("tF_ApplicationId",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Name"}),new sap.ui.commons.TextField("tF_ApplicationName",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required CPU (Cores)"}),new sap.ui.commons.TextField("tF_ApplicationReqCPU",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required RAM (GB)"}),new sap.ui.commons.TextField("tF_ApplicationReqRAM",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required HDD (TB)"}),new sap.ui.commons.TextField("tF_ApplicationReqHDD",{editable: false})); 
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Software Type"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_ApplicationSoftwareType",{editable: false}),new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType",{value: 0,displaySecondaryValues: true, visible: false, editable: false})]}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Assigned Platform"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_ApplicationPlatform",{editable: false}),new sap.ui.commons.DropdownBox("dB_ApplicationPlatform",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Employee Responsible"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_ApplicationPerson",{editable: false}),new sap.ui.commons.DropdownBox("dB_ApplicationPerson",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));	    
+	    matLayout.createRow(null, null);
+	    
     var formApplicationDetails = new sap.ui.layout.form.Form('formApplicationDetails', {
-      title: new sap.ui.core.Title({
-        text: "Application Details",
-        tooltip: "Shows the application details"
-      }),
       layout: new sap.ui.layout.form.GridLayout(),
-      formContainers: [new sap.ui.layout.form.FormContainer('formContainerApplicationDetails',{
-        formElements: [new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "ID"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationId", {
-            editable: false,
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Name"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationName", {
-            value: "",
-            editable: false,
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required CPU (Cores)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationReqCPU", {
-            value: "",
-            editable: false,
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required RAM (GB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationReqRAM", {
-            value: "",
-            editable: false,
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required HDD (TB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationReqHDD", {
-            value: "",
-            editable: false,
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Software Type"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationSoftwareType", {
-              value: "",
-              editable: false,
-            }),    
-                   
-            new sap.ui.commons.DropdownBox("dB_ApplicationSoftwareType", {
-            value: 0,
-            editable: false,
-            displaySecondaryValues: true,
-            visible: false,
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Assigned Platform"
-          }),
-          fields: [
-                   new sap.ui.commons.TextField("tF_ApplicationPlatform", {
-              value: "",
-              editable: false,
-            }),    new sap.ui.commons.DropdownBox("dB_ApplicationPlatform", {
-            value: "None",
-            editable: false,
-            visible: false,
-            displaySecondaryValues: true,
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Employee Responsible"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_ApplicationPerson", {
-              value: "",
-              editable: false,
-            }),    new sap.ui.commons.DropdownBox("dB_ApplicationPerson", {
-            value: "None",
-            editable: false,
-            visible: false,
-            displaySecondaryValues: true,
-          }),
-
-          ]
-        }),]
-      })],
+      formContainers: [new sap.ui.layout.form.FormContainer('formContainerApplicationDetails'
+      )],
     });
 
-    formApplicationDetails.addStyleClass('fancyBox');
+    matLayout.createRow(null, formApplicationDetails);
     
     // *** Data Binding and Listeners *** //
     
@@ -204,7 +126,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
     templateApplicationPerson.bindProperty("additionalText", "Role");
     sap.ui.getCore().byId('dB_ApplicationPerson').bindItems("/PrivilegeCollection", templateApplicationPerson);
     
-    layoutApplications.createRow(tblApplications, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formApplicationDetails}).setVAlign("Top"));
+    var panelDetails = new sap.ui.commons.Panel({
+    	applyContentPadding: true,
+    	title: new sap.ui.core.Title({
+        text: "Application Details",
+      }),
+      showCollapseIcon: false});
+    panelDetails.addContent(matLayout);
+    panelDetails.addStyleClass('fancyBox');
+    
+    layoutApplications.createRow(tblApplications, null, new sap.ui.commons.layout.MatrixLayoutCell({content: panelDetails}).setVAlign("Top"));
     this.addContent(layoutApplications);
   }
 

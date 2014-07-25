@@ -84,97 +84,29 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     tblHosts.attachRowSelectionChange(function(oEvent) {
       oController.getDetails();
     });
-
+    
+    var matLayout = new sap.ui.commons.layout.MatrixLayout({
+		width: "100%",
+		widths: ["15em","100%"],
+	    });
+	    
+	    matLayout.createRow(null, null);
+	    matLayout.createRow(new sap.ui.commons.Label({text:"ID"}),new sap.ui.commons.TextField("tF_HostsId",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Name"}),new sap.ui.commons.TextField("tF_HostsName",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"CPU (Cores)"}),new sap.ui.commons.TextField("tF_HostsCpu",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"RAM (GB)"}),new sap.ui.commons.TextField("tF_HostsRam",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"HDD (TB)"}),new sap.ui.commons.TextField("tF_HostsHdd",{editable: false})); 
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Employee Responsible"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_HostsPerson",{editable: false}),new sap.ui.commons.DropdownBox("dB_HostsPerson",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));	    
+	    matLayout.createRow(null, null);
+	    
     var formHostDetails = new sap.ui.layout.form.Form('formHostDetails', {
-      title: new sap.ui.core.Title({
-        text: "Host Details",
-        tooltip: "Shows the host details"
-      }),
       layout: new sap.ui.layout.form.GridLayout(),
-      formContainers: [new sap.ui.layout.form.FormContainer('formContainerHostDetails',{
-        formElements: [new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "ID"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsId", {
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Name"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsName", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "CPU (Cores)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsCpu", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "RAM (GB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsRam", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            }),
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "HDD (TB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsHdd", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Employee Responsible"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_HostsPerson", {
-              value: "",
-              editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
-            }),    new sap.ui.commons.DropdownBox("dB_HostsPerson", {
-            value: "None",
-            editable: false,
-            visible: false,
-            displaySecondaryValues: true,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
-          }),
-
-          ]
-        }),]
-      })],
+      formContainers: [new sap.ui.layout.form.FormContainer('formContainerHostDetails'
+      )],
     });
 
-    formHostDetails.addStyleClass('fancyBox');
-    
+    matLayout.createRow(null, formHostDetails);
+
     // *** Data Binding and Listeners *** //
 
     var templateHostPerson = new sap.ui.core.ListItem();
@@ -182,7 +114,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
     templateHostPerson.bindProperty("additionalText", "Role");
     sap.ui.getCore().byId('dB_HostsPerson').bindItems("/PrivilegeCollection", templateHostPerson);
     
-    layoutHosts.createRow(tblHosts, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formHostDetails}).setVAlign("Top"));
+    var panelDetails = new sap.ui.commons.Panel({
+    	applyContentPadding: true,
+    	title: new sap.ui.core.Title({
+        text: "Host Details",
+      }),
+      showCollapseIcon: false});
+    panelDetails.addContent(matLayout);
+    panelDetails.addStyleClass('fancyBox');
+    
+    layoutHosts.createRow(tblHosts, null, new sap.ui.commons.layout.MatrixLayoutCell({content: panelDetails}).setVAlign("Top"));
     this.addContent(layoutHosts);
   }
 

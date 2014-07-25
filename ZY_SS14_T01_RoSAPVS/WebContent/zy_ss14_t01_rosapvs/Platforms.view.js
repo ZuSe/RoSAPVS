@@ -86,117 +86,28 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
       oController.getDetails();
     });
 
+    var matLayout = new sap.ui.commons.layout.MatrixLayout({
+		width: "100%",
+		widths: ["15em","100%"],
+	    });
+	    
+	    matLayout.createRow(null, null);
+	    matLayout.createRow(new sap.ui.commons.Label({text:"ID"}),new sap.ui.commons.TextField("tF_PlatformsId",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Name"}),new sap.ui.commons.TextField("tF_PlatformsName",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required CPU (Cores)"}),new sap.ui.commons.TextField("tF_PlatformsReqCPU",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required RAM (GB)"}),new sap.ui.commons.TextField("tF_PlatformsReqRAM",{editable: false}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Required HDD (TB)"}),new sap.ui.commons.TextField("tF_PlatformsReqHDD",{editable: false})); 
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Assigned Host"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_PlatformsHost",{editable: false}),new sap.ui.commons.DropdownBox("dB_PlatformsHost",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));
+	    matLayout.createRow(new sap.ui.commons.Label({text:"Employee Responsible"}), new sap.ui.commons.layout.MatrixLayoutCell({content: [new sap.ui.commons.TextField("tF_PlatformsPerson",{editable: false}),new sap.ui.commons.DropdownBox("dB_PlatformsPerson",{value: "None",displaySecondaryValues: true, visible: false, editable: false})]}));	    
+	    matLayout.createRow(null, null);
+	    
     var formPlatformDetails = new sap.ui.layout.form.Form('formPlatformDetails', {
-      title: new sap.ui.core.Title({
-        text: "Platform Details",
-        tooltip: "Shows the platform details"
-      }),
       layout: new sap.ui.layout.form.GridLayout(),
-      formContainers: [new sap.ui.layout.form.FormContainer('formContainerPlatformDetails',{
-        formElements: [new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "ID"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsId", {
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Name"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsName", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          }), ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required CPU (Cores)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsReqCPU", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "auto"
-            })
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required RAM (GB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsReqRAM", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            }),
-          })]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Required HDD (TB)"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsReqHDD", {
-            value: "",
-            editable: false,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Assigned Host"
-          }),
-          fields: [
-                   new sap.ui.commons.TextField("tF_PlatformsHost", {
-              value: "",
-              editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
-            }),    new sap.ui.commons.DropdownBox("dB_PlatformsHost", {
-            value: "None",
-            editable: false,
-            visible: false,
-            displaySecondaryValues: true,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
-          }),
-
-          ]
-        }), new sap.ui.layout.form.FormElement({
-          label: new sap.ui.commons.Label({
-            text: "Employee Responsible"
-          }),
-          fields: [new sap.ui.commons.TextField("tF_PlatformsPerson", {
-              value: "",
-              editable: false,
-              layoutData: new sap.ui.layout.form.GridElementData({
-                hCells: "3"
-              })
-            }),    new sap.ui.commons.DropdownBox("dB_PlatformsPerson", {
-            value: "None",
-            editable: false,
-            visible: false,
-            displaySecondaryValues: true,
-            layoutData: new sap.ui.layout.form.GridElementData({
-              hCells: "3"
-            })
-          }),
-
-          ]
-        }),]
-      })],
+      formContainers: [new sap.ui.layout.form.FormContainer('formContainerPlatformDetails'
+      )],
     });
 
-    formPlatformDetails.addStyleClass('fancyBox');
+    matLayout.createRow(null, formPlatformDetails);
     
     // *** Data Binding and Listeners *** //
 
@@ -210,8 +121,16 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     templatePlatformPerson.bindProperty("additionalText", "Role");
     sap.ui.getCore().byId('dB_PlatformsPerson').bindItems("/PrivilegeCollection", templatePlatformPerson);
     
+    var panelDetails = new sap.ui.commons.Panel({
+    	applyContentPadding: true,
+    	title: new sap.ui.core.Title({
+        text: "Platform Details",
+      }),
+      showCollapseIcon: false});
+    panelDetails.addContent(matLayout);
+    panelDetails.addStyleClass('fancyBox');
     
-    layoutPlatforms.createRow(tblPlatforms, null, new sap.ui.commons.layout.MatrixLayoutCell({content: formPlatformDetails}).setVAlign("Top"));
+    layoutPlatforms.createRow(tblPlatforms, null, new sap.ui.commons.layout.MatrixLayoutCell({content: panelDetails}).setVAlign("Top"));
     this.addContent(layoutPlatforms);
   }
 
