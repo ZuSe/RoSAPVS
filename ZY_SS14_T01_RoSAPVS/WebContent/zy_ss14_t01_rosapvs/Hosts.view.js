@@ -122,7 +122,23 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
             editable: false,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "auto"
-            })
+            }),
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_HostsCpu').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is not valid for CPU (Cores)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             }
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -134,6 +150,22 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
             }),
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_HostsRam').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is not valid for RAM (GB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             }
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -144,9 +176,26 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Hosts", {
             editable: false,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
-            })
-          }),
+            }),
+            change : function(){
 
+              var tfValue = sap.ui.getCore().byId('tF_HostsHdd').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for HDD (TB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             }
+          
+          }),
+          
           ]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({

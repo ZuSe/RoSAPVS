@@ -114,7 +114,23 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqCPU", {
             value: "",
             editable: false,
-          })]
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_ApplicationReqCPU').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required CPU (Cores)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },
+          })]          
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
             text: "Required RAM (GB)"
@@ -122,6 +138,22 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqRAM", {
             value: "",
             editable: false,
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_ApplicationReqRAM').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required RAM (GB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -130,6 +162,22 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Applications", {
           fields: [new sap.ui.commons.TextField("tF_ApplicationReqHDD", {
             value: "",
             editable: false,
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_ApplicationReqHDD').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required HDD (TB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },
           }),
 
           ]

@@ -123,7 +123,23 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
             editable: false,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "auto"
-            })
+            }),
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_PlatformsReqCPU').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required CPU (Cores)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },            
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -135,6 +151,22 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
             }),
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_PlatformsReqRAM').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required RAM (GB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },
           })]
         }), new sap.ui.layout.form.FormElement({
           label: new sap.ui.commons.Label({
@@ -145,7 +177,23 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
             editable: false,
             layoutData: new sap.ui.layout.form.GridElementData({
               hCells: "3"
-            })
+            }),
+            change : function(){
+
+              var tfValue = sap.ui.getCore().byId('tF_PlatformsReqHDD').getValue();
+
+
+              if( !tfValue.match(numberTemplate) )
+                {
+                var oMessage = new sap.ui.core.Message({
+                  text: "Value '" +tfValue + "' is invalid for Required HDD (TB)",
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Warning);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(
+                        oMessage);                
+                }                  
+             },
           }),
 
           ]
