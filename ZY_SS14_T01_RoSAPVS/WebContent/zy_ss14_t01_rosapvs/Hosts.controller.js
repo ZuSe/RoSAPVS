@@ -142,7 +142,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
       
       
       var response = sap.ui.getCore().getModel().create('/HostCollection',
-              entry,0, false,
+              entry,null,
       function(success){
       var oMessage = new sap.ui.core.Message({
           text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was created successfully.',

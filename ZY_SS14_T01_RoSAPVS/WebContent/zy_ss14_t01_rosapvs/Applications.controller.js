@@ -168,7 +168,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
         Person: sap.ui.getCore().byId("dB_ApplicationPerson").getValue(),
       };
       console.log(entry);
-      var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry,null,false,function(success)
+      var response = sap.ui.getCore().getModel().create('/ApplicationCollection', entry,null,function(success)
               {   var oMessage = new sap.ui.core.Message({
                 text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
               timestamp : (new Date()).toUTCString(),

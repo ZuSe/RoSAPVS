@@ -132,7 +132,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         Person: sap.ui.getCore().byId("dB_PlatformsPerson").getValue(),
       };
       console.log(entry);
-      var response = sap.ui.getCore().getModel().create('/PlatformCollection', entry,0,false,function(success){
+      var response = sap.ui.getCore().getModel().create('/PlatformCollection', entry,null,function(success){
         var oMessage = new sap.ui.core.Message({
           text : 'Platform ' + sap.ui.getCore().byId("tF_PlatformsName").getValue() + ' was created successfully.',
         timestamp : (new Date()).toUTCString()
