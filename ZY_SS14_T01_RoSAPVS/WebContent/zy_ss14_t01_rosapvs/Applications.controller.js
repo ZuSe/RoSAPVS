@@ -201,26 +201,14 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
                 sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
               }        
       
-      );
-      
-      
-      
-      
+      );      
       
       console.log(response);
       var tblApplications = sap.ui.getCore().byId('tblApplications');
       tblApplications.getModel().refresh(true);
       tblApplications.setSelectedIndex(tblApplications.getBinding("rows").iLength-1);
-      // TODO Refresh ID after creating (instead of showing Will be calculated)
-      // TODO not working context (ID)
       var contextApplications = tblApplications.getContextByIndex(tblApplications.getBinding("rows").iLength-1);
-      if (null != contextApplications) {
-      sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
-      sap.ui.getCore().byId("tF_ApplicationId").setValue(successApplications.Id);
-      }
       
-      );
-      }
 		
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
