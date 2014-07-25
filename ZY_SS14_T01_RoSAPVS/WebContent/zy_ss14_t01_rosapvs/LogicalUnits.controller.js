@@ -96,11 +96,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	       for (var i = 0; i < lengthHostTable; i++) {
 		       var contextHosts = hostTable.getContextByIndex(i);
-		       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-			       if (($.inArray(successHosts.Id, hostIds)) != -1) {
-			    	   hostTable.addSelectionInterval(i,i);
-			       }
-		       });
+		       if (($.inArray(contextHosts.getObject().Id, hostIds)) != -1) {
+		    	   hostTable.addSelectionInterval(i,i);
+		       }
 	       }
 	       
 	       // Select platforms
@@ -109,11 +107,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	       for (var i = 0; i < lengthPlatformTable; i++) {
 		       var contextPlatforms = platformTable.getContextByIndex(i);
-		       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
-			       if (($.inArray(successPlatforms.Id, platformIds)) != -1) {
-			    	   platformTable.addSelectionInterval(i,i);
-			       }
-		       });
+		       if (($.inArray(contextPlatforms.getObject().Id, platformIds)) != -1) {
+		    	   platformTable.addSelectionInterval(i,i);
+		       }
 	       }
 	       
 	       // Select applications
@@ -122,11 +118,9 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	       
 	       for (var i = 0; i < lengthApplicationTable; i++) {
 		       var contextApplications = applicationTable.getContextByIndex(i);
-		       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
-			       if (($.inArray(successApplications.Id, applicationIds)) != -1) {
-			    	   applicationTable.addSelectionInterval(i,i);
-			       }
-		       });
+		       if (($.inArray(contextApplications.getObject().Id, applicationIds)) != -1) {
+		    	   applicationTable.addSelectionInterval(i,i);
+		       }
 	       }
 	       
 	      }, function(error) {
@@ -181,23 +175,17 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    	
 	    	for (var i = 0; i < selectedIndicesHosts.length; i++) {
 	    		var contextHosts = hostTable.getContextByIndex(selectedIndicesHosts[i]);
-			       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-			    	   selectedHosts.push(successHosts.Id);
-			       });
+			    selectedHosts.push(contextHosts.getObject().Id);
 	    	}
 	    	
 	    	for (var i = 0; i < selectedIndicesPlatforms.length; i++) {
 	    		var contextPlatforms = platformTable.getContextByIndex(selectedIndicesPlatforms[i]);
-			       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
-			    	   selectedPlatforms.push(successPlatforms.Id);
-			       });
+			    selectedPlatforms.push(contextPlatforms.getObject().Id);
 	    	}
 	    	
 	    	for (var i = 0; i < selectedIndicesApplications.length; i++) {
 	    		var contextApplications = applicationTable.getContextByIndex(selectedIndicesApplications[i]);
-			       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
-			    	   selectedApplications.push(successApplications.Id);
-			       });
+			    selectedApplications.push(contextApplications.getObject().Id);
 	    	}
 	    	
 	    	console.log(selectedHosts);
@@ -287,23 +275,17 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    	
 	    	for (var i = 0; i < selectedIndicesHosts.length; i++) {
 	    		var contextHosts = hostTable.getContextByIndex(selectedIndicesHosts[i]);
-			       sap.ui.getCore().getModel().read(contextHosts.sPath, 0, 0, false, function(successHosts) {
-			    	   selectedHosts.push(successHosts.Id);
-			       });
+	    		selectedHosts.push(contextHosts.getObject().Id);
 	    	}
 	    	
 	    	for (var i = 0; i < selectedIndicesPlatforms.length; i++) {
 	    		var contextPlatforms = platformTable.getContextByIndex(selectedIndicesPlatforms[i]);
-			       sap.ui.getCore().getModel().read(contextPlatforms.sPath, 0, 0, false, function(successPlatforms) {
-			    	   selectedPlatforms.push(successPlatforms.Id);
-			       });
+	    		selectedPlatforms.push(contextPlatforms.getObject().Id);
 	    	}
 	    	
 	    	for (var i = 0; i < selectedIndicesApplications.length; i++) {
 	    		var contextApplications = applicationTable.getContextByIndex(selectedIndicesApplications[i]);
-			       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
-			    	   selectedApplications.push(successApplications.Id);
-			       });
+	    		selectedApplications.push(contextApplications.getObject().Id);
 	    	}
 	    	
 	    	console.log(selectedHosts);
