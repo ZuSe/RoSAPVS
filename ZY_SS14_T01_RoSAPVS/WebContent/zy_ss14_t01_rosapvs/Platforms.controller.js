@@ -73,7 +73,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   
   getDetails: function() {
     if(null != sap.ui.getCore().byId("btnPlatformsSubmit"))
-      sap.ui.getCore().byId("btnPlatformsSubmit").detroy();
+      sap.ui.getCore().byId("btnPlatformsSubmit").destroy();
     
     this.enableTableButtons();
     this.lockInput();
