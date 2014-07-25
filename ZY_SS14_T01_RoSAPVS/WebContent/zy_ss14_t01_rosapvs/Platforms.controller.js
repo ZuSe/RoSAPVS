@@ -73,6 +73,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   
   getDetails: function() {
     this.enableTableButtons();
+    this.lockInput();
     var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
     var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
     if (null != context) {
