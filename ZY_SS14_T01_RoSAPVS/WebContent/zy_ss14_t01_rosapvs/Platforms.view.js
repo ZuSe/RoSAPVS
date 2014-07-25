@@ -192,7 +192,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
     }));
     matLayout.createRow(new sap.ui.commons.Label({
       text: "Is Active"
-    }), new sap.ui.commons.CheckBox("cB_PlatformIsActive", {
+    }), new sap.ui.commons.CheckBox("cB_isPlatformActiv", {
       editable: false
     }));
     matLayout.createRow(null, null);
