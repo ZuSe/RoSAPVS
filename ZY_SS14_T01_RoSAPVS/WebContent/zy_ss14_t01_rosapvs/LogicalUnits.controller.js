@@ -212,17 +212,26 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	        PltList: selectedPlatforms.toString()
 	      };
 	      console.log(entry);
-	      var response = sap.ui.getCore().getModel().create('/LogicalUnitCollection', entry);
+	      
+	      var response = sap.ui.getCore().getModel().create('/LogicalUnitCollection', entry,0,function(success) {
+	  	  	var oMessage = new sap.ui.core.Message({
+		  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was created successfully.',
+				timestamp : (new Date()).toUTCString()
+			});
+			oMessage.setLevel(sap.ui.core.MessageType.Success);
+		  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);  
+	      }, function (error) {
+	  	  	var oMessage = new sap.ui.core.Message({
+		  		text : 'Failed to create Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue(),
+				timestamp : (new Date()).toUTCString()
+			});
+			oMessage.setLevel(sap.ui.core.MessageType.Error);
+		  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+	      }); 
 	      console.log(response);
 	      var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	      tblLogicalUnits.getModel().refresh(true);
 	      tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
-	  	var oMessage = new sap.ui.core.Message({
-	  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was created successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
-	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
@@ -311,14 +320,25 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      console.log(entry);
 	      var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	      var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
-	      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
+	      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0,function(success){
+	  	  	var oMessage = new sap.ui.core.Message({
+		  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was updated successfully.',
+				timestamp : (new Date()).toUTCString()
+			});
+			oMessage.setLevel(sap.ui.core.MessageType.Success);
+		  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+	      }, function (error){
+	  	  	var oMessage = new sap.ui.core.Message({
+		  		text : 'Failed to update Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue(),
+				timestamp : (new Date()).toUTCString()
+			});
+			oMessage.setLevel(sap.ui.core.MessageType.Error);
+		  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+	      });      
 	      console.log(response);
-	  	var oMessage = new sap.ui.core.Message({
-	  		text : 'Logical Unit ' + sap.ui.getCore().byId("tF_LogicalUnitName").getValue() + ' was updated successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
-	  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+	      var tblLogicalUnits = sap.ui.getCore().byId("tblLogicalUnits");
+	      tblLogicalUnits.getModel().refresh(true);
+	      tblLogicalUnits.setSelectedIndex(tblLogicalUnits.getBinding("rows").iLength-1);
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
