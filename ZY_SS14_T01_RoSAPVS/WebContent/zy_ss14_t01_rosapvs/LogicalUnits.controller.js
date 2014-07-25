@@ -48,7 +48,24 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setEditable(false).setVisible(false);
 	    sap.ui.getCore().byId("formContainerLogicalUnitDetails").rerender();
 	  },
+	  disableTableButtons : function()
+	  {
+	    var btnsOfTable = sap.ui.getCore().byId("toolbarTableLogicalUnit").getItems();
+	    console.log(btnsOfTable);
+	      $.each(btnsOfTable, function(index, element)
+	              {
+	                  element.setEnabled(false);
+	              });
+	  },
+	  enableTableButtons: function()
+	  {
+	    $.each(sap.ui.getCore().byId("toolbarTableLogicalUnit").getItems(), function(index, element)
+	            {
+	                element.setEnabled(true);
+	            });
+	  },  	  
 	  getDetails: function() {
+	    this.enableTableButtons();
 	    var tblLogicalUnits = sap.ui.getCore().byId('tblLogicalUnits');
 	    var context = tblLogicalUnits.getContextByIndex(tblLogicalUnits.getSelectedIndex());
 	    if (null != context) {
@@ -120,6 +137,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	    }
 	  },
 	  createLogicalUnit: function() {
+	    this.disableTableButtons();
 	    sap.ui.getCore().byId("tF_LogicalUnitId").setValue("Will be calculated");
 	    sap.ui.getCore().byId("tF_LogicalUnitName").setValue("").setEditable(true);
 	    sap.ui.getCore().byId("tF_LogicalUnitPerson").setValue("Please select");
@@ -204,6 +222,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
+	        this.enableTableButtons();
 	      };
 	    };
 
@@ -226,6 +245,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	  },
 	  
 	  updateLogicalUnit: function() {
+	    this.disableTableButtons();
 	    sap.ui.getCore().byId("tF_LogicalUnitName").setEditable(true);
 	    sap.ui.getCore().byId("dB_LogicalUnitPerson").setEditable(true).setVisible(true);
 	    
@@ -298,6 +318,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.LogicalUnits", {
 	      if (oEvent.getSource() instanceof sap.ui.commons.Button) {
 	        oEvent.getSource().detachPress(fnPressHandler);
 	        submitButton.destroy();
+	        this.enableTableButtons();
 	      };      
 	    };
 
