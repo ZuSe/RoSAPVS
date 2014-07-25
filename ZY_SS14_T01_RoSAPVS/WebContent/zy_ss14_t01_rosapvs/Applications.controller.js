@@ -179,14 +179,25 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       if (null != contextApplications) {
       sap.ui.getCore().getModel().read(contextApplications.sPath, 0, 0, false, function(successApplications) {
       sap.ui.getCore().byId("tF_ApplicationId").setValue(successApplications.Id);
+      var oMessage = new sap.ui.core.Message({
+        text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
+      timestamp : (new Date()).toUTCString(),
+    });
+      oMessage.setLevel(sap.ui.core.MessageType.Sucess);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);     
+      }, function(error)
+      {
+        var oMessage = new sap.ui.core.Message({
+          text : 'Failed to create Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue(),
+        timestamp : (new Date()).toUTCString(),
       });
+        oMessage.setLevel(sap.ui.core.MessageType.Error);
+        sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       }
-		var oMessage = new sap.ui.core.Message({
-			text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was created successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
-      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+      
+      );
+      }
+		
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         sap.ui.controller("zy_ss14_t01_rosapvs.Applications").enableTableButtons();
@@ -275,14 +286,22 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       console.log(entry);
       var tblApplications = sap.ui.getCore().byId('tblApplications');
       var context = tblApplications.getContextByIndex(tblApplications.getSelectedIndex());
-      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
-      console.log(response);
-		var oMessage = new sap.ui.core.Message({
-			text : 'Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was updated successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
-    sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0,function(success){
+        var oMessage = new sap.ui.core.Message({
+          text : 'Applications ' + sap.ui.getCore().byId("tF_ApplicationName").getValue() + ' was updated successfully.',
+          timestamp : (new Date()).toUTCString(),
+        });
+          oMessage.setLevel(sap.ui.core.MessageType.Sucess);
+          sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+          
+        },function(error){
+          var oMessage = new sap.ui.core.Message({
+            text : 'Failed to update Application ' + sap.ui.getCore().byId("tF_ApplicationName").getValue(),
+          timestamp : (new Date()).toUTCString(),
+        });
+          oMessage.setLevel(sap.ui.core.MessageType.Error);
+          sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+        });
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         sap.ui.controller("zy_ss14_t01_rosapvs.Applications").enableTableButtons();
