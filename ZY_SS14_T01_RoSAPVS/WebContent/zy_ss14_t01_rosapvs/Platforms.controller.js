@@ -112,7 +112,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsHost").setValue("Please select");
     sap.ui.getCore().byId("dB_PlatformsHost").setValue("").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_PlatformsPerson").setValue("").setEditable(true).setVisible(true);
-    var submitButton = new sap.ui.commons.Button({
+    var submitButton = new sap.ui.commons.Button("btnPlatformsSubmit",{
       text: "Add",
       icon: sap.ui.core.IconPool.getIconURI("create"),
       tooltip: "Submit Data",
