@@ -249,7 +249,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
         Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
         Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
         Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
-        isActive: isChecked,
+        IsActive: isChecked,
       };
       console.log(entry);
       var tblHosts = sap.ui.getCore().byId('tblHosts');
