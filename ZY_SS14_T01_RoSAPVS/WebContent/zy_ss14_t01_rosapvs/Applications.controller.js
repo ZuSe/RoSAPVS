@@ -60,6 +60,23 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
 		}
   },
   
+  disableTableButtons : function()
+  {
+    var btnsOfTable = sap.ui.getCore().byId("toolbarTableApplications").getItems();
+    console.log(btnsOfTable);
+      $.each(btnsOfTable, function(index, element)
+              {
+                  element.setEnabled(false);
+              });
+  },
+  enableTableButtons: function()
+  {
+    $.each(sap.ui.getCore().byId("toolbarTableApplications").getItems(), function(index, element)
+            {
+                element.setEnabled(false);
+            });
+  },  
+  
   lockInput: function() {
     sap.ui.getCore().byId("tF_ApplicationId").setEditable(false);
     sap.ui.getCore().byId("tF_ApplicationName").setEditable(false);
@@ -72,6 +89,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("formContainerApplicationDetails").rerender();
   },
   getDetails: function() {
+    this.enableTableButtons();
 	this.lockInput();
 	if (sap.ui.getCore().byId("createButtonApplications") != null) {
 		sap.ui.getCore().byId("createButtonApplications").destroy();
@@ -104,6 +122,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     }
   },
   createApplication: function() {
+    this.disableTableButtons();
 	sap.ui.getCore().byId('tblApplications').setSelectedIndex(-1); 
 	if (sap.ui.getCore().byId("updateButtonApplications") != null) {
 		sap.ui.getCore().byId("updateButtonApplications").destroy();
@@ -170,6 +189,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
       sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
+        this.enableTableButtons();
       };
     };
 
@@ -207,6 +227,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
 	  }
   },
   updateApplication: function() {
+  this.disableTableButtons();
 	if (sap.ui.getCore().byId("tF_ApplicationId").getValue() == "Will be calculated" || sap.ui.getCore().byId("tF_ApplicationId").getValue() == "") {
 		this.lockInput();
 		this.clear();
@@ -264,6 +285,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Applications", {
     sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
+        this.enableTableButtons();
       };      
     };
 

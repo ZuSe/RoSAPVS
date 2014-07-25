@@ -36,6 +36,7 @@ sap.ui.jsview("zy_ss14_t01_rosapvs.Platforms", {
       ExpandedVisibleRowCount: 20,
       selectionMode: sap.ui.table.SelectionMode.Single,
       toolbar: new sap.ui.commons.Toolbar({
+        id: "toolbarTablePlatform",
         items: [new sap.ui.commons.Button({
           text: "Create",          
           icon: sap.ui.core.IconPool.getIconURI("create"),

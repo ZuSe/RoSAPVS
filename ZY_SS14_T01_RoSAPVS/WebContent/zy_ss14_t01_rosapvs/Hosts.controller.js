@@ -48,52 +48,90 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     sap.ui.getCore().byId("tF_HostsCpu").setEditable(false);
     sap.ui.getCore().byId("tF_HostsRam").setEditable(false);
     sap.ui.getCore().byId("tF_HostsHdd").setEditable(false);
-    sap.ui.getCore().byId("dB_HostsPerson").setEditable(false).setVisible(false);
+    sap.ui.getCore().byId("dB_HostsPerson").setEditable(false)
+            .setVisible(false);
     sap.ui.getCore().byId("formContainerHostDetails").rerender();
   },
+  disableTableButtons : function()
+  {
+    var btnsOfTable = sap.ui.getCore().byId("toolbarTableHosts").getItems();
+    console.log(btnsOfTable);
+      $.each(btnsOfTable, function(index, element)
+              {
+                  element.setEnabled(false);
+              });
+  },
+  enableTableButtons: function()
+  {
+    $.each(sap.ui.getCore().byId("toolbarTableHosts").getItems(), function(index, element)
+            {
+                element.setEnabled(false);
+            });
+  },  
   getDetails: function() {
+    this.enableTableButtons();
+    if(null != sap.ui.getCore().byId("buttonAddHost"))
+      sap.ui.getCore().byId("buttonAddHost").setVisible(false);
+    if(null != sap.ui.getCore().byId("buttonUpdateHost"))
+      sap.ui.getCore().byId("buttonUpdateHost").setVisible(false);
+    
+    this.lockInput();
     var tblHosts = sap.ui.getCore().byId('tblHosts');
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
     if (null != context) {
 
-      sap.ui.getCore().getModel().read(context.sPath, 0, 0, false, function(success) {
-        console.log(success);
-        sap.ui.getCore().byId("tF_HostsId").setValue(success.Id);
-        sap.ui.getCore().byId("tF_HostsName").setValue(success.Name);
-        sap.ui.getCore().byId("tF_HostsCpu").setValue(success.Cpu);
-        sap.ui.getCore().byId("tF_HostsRam").setValue(success.Ram);
-        sap.ui.getCore().byId("tF_HostsHdd").setValue(success.Hdd);       
-        sap.ui.getCore().byId("tF_HostsPerson").setValue(success.Person);
-      }, function(error) {
-        console.log(error);
-      	var oMessage = new sap.ui.core.Message({
-      		text : 'Unable to retrieve data.',
-    		timestamp : (new Date()).toUTCString()
-    	});
-    	oMessage.setLevel(sap.ui.core.MessageType.Error);
-      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
-      });
+      sap.ui.getCore().getModel().read(
+              context.sPath,
+              0,
+              0,
+              false,
+              function(success) {
+                console.log(success);
+                sap.ui.getCore().byId("tF_HostsId").setValue(success.Id);
+                sap.ui.getCore().byId("tF_HostsName").setValue(success.Name);
+                sap.ui.getCore().byId("tF_HostsCpu").setValue(success.Cpu);
+                sap.ui.getCore().byId("tF_HostsRam").setValue(success.Ram);
+                sap.ui.getCore().byId("tF_HostsHdd").setValue(success.Hdd);
+                sap.ui.getCore().byId("tF_HostsPerson")
+                        .setValue(success.Person);
+              }, function(error) {
+                console.log(error);
+                var oMessage = new sap.ui.core.Message({
+                  text: 'Unable to retrieve data.',
+                  timestamp: (new Date()).toUTCString()
+                });
+                oMessage.setLevel(sap.ui.core.MessageType.Error);
+                sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+              });
     }
   },
   createHost: function() {
+    this.disableTableButtons();
     sap.ui.getCore().byId("tF_HostsId").setValue("Will be calculated");
     sap.ui.getCore().byId("tF_HostsName").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_HostsCpu").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_HostsRam").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_HostsHdd").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_HostsPerson").setValue("Please select");
-    sap.ui.getCore().byId("dB_HostsPerson").setValue("").setEditable(true).setVisible(true);
-    var submitButton = new sap.ui.commons.Button({
-      text: "Add",
-      icon: sap.ui.core.IconPool.getIconURI("create"),
-      tooltip: "Submit Data",
-      visible: true,
-      layoutData: new sap.ui.layout.form.GridElementData({
-        hCells: "2"
-      })
-    });
+    sap.ui.getCore().byId("dB_HostsPerson").setValue("").setEditable(true).setVisible(true);   ;
+    
+    var submitButton;
+    if (null == sap.ui.getCore().byId("buttonAddHost")) {
+      submitButton = new sap.ui.commons.Button("buttonAddHost", {
+        text: "Add",
+        icon: sap.ui.core.IconPool.getIconURI("create"),
+        tooltip: "Submit Data",
+        layoutData: new sap.ui.layout.form.GridElementData({
+          hCells: "2"
+        })
+      });
+    } else {
+      submitButton = sap.ui.getCore().byId("buttonAddHost");
+      submitButton.setVisible(true);
+    }
+
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {      
+    fnPressHandler = function(oEvent) {
       var entry = {
         Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
         Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
@@ -102,26 +140,33 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
         Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
       };
       console.log(entry);
-      var response = sap.ui.getCore().getModel().create('/HostCollection', entry);
+      var response = sap.ui.getCore().getModel().create('/HostCollection',
+              entry);
       console.log(response);
       var tblHosts = sap.ui.getCore().byId('tblHosts');
       tblHosts.getModel().refresh(true);
-      tblHosts.setSelectedIndex(tblHosts.getBinding("rows").iLength-1);
-		var oMessage = new sap.ui.core.Message({
-			text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was created successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
-    sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+      tblHosts.setSelectedIndex(tblHosts.getBinding("rows").iLength - 1);
+      var oMessage = new sap.ui.core.Message({
+        text: 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue()
+                + ' was created successfully.',
+        timestamp: (new Date()).toUTCString()
+      });
+      oMessage.setLevel(sap.ui.core.MessageType.Success);
+      sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
-        submitButton.destroy();
-      };
+        submitButton.setVisible(false);
+        this.enableTableButtons();
+      }
+      ;
     };
 
-    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
-      fields: [submitButton.attachPress(this.lockInput).attachPress(fnPressHandler), ]
-    }));
+    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(
+            new sap.ui.layout.form.FormElement({
+              fields: [
+                  submitButton.attachPress(this.lockInput).attachPress(
+                          fnPressHandler), ]
+            }));
 
   },
   deleteHost: function() {
@@ -129,20 +174,24 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
     var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
     var nameDeleted = sap.ui.getCore().byId("tF_HostsName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
-	var oMessage = new sap.ui.core.Message({
-		text : 'Host ' + nameDeleted + ' was deleted successfully.',
-		timestamp : (new Date()).toUTCString()
-	});
-	oMessage.setLevel(sap.ui.core.MessageType.Success);
-  sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
+    var oMessage = new sap.ui.core.Message({
+      text: 'Host ' + nameDeleted + ' was deleted successfully.',
+      timestamp: (new Date()).toUTCString()
+    });
+    oMessage.setLevel(sap.ui.core.MessageType.Success);
+    sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updateHost: function() {
+    this.disableTableButtons();
     sap.ui.getCore().byId("tF_HostsName").setEditable(true);
     sap.ui.getCore().byId("tF_HostsCpu").setEditable(true);
     sap.ui.getCore().byId("tF_HostsRam").setEditable(true);
     sap.ui.getCore().byId("tF_HostsHdd").setEditable(true);
     sap.ui.getCore().byId("dB_HostsPerson").setEditable(true).setVisible(true);
-    var submitButton = new sap.ui.commons.Button({
+    var submitButton ;
+    if(null == sap.ui.getCore().byId("buttonUpdateHost"))
+      {
+      submitButton= new sap.ui.commons.Button("buttonUpdateHost",{
       text: "Update",
       tooltip: "Submit Data",
       visible: true,
@@ -150,37 +199,48 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Hosts", {
         hCells: "2"
       })
     });
+  } else {
+    submitButton = sap.ui.getCore().byId("buttonUpdateHost");
+    submitButton.setVisible(true);
+  }
+    
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {      
+    fnPressHandler = function(oEvent) {
       var entry = {
         Name: sap.ui.getCore().byId("tF_HostsName").getValue(),
         Cpu: 1 * sap.ui.getCore().byId("tF_HostsCpu").getValue(),
         Ram: sap.ui.getCore().byId("tF_HostsRam").getValue(),
         Hdd: sap.ui.getCore().byId("tF_HostsHdd").getValue(),
-        Person:  sap.ui.getCore().byId("dB_HostsPerson").getValue(),
+        Person: sap.ui.getCore().byId("dB_HostsPerson").getValue(),
       };
       console.log(entry);
       var tblHosts = sap.ui.getCore().byId('tblHosts');
       var context = tblHosts.getContextByIndex(tblHosts.getSelectedIndex());
-      var response = sap.ui.getCore().getModel().update(context.sPath,entry,0);      
+      var response = sap.ui.getCore().getModel()
+              .update(context.sPath, entry, 0);
       console.log(response);
-		var oMessage = new sap.ui.core.Message({
-			text : 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue() + ' was updated successfully.',
-			timestamp : (new Date()).toUTCString()
-		});
-		oMessage.setLevel(sap.ui.core.MessageType.Success);
+      var oMessage = new sap.ui.core.Message({
+        text: 'Host ' + sap.ui.getCore().byId("tF_HostsName").getValue()
+                + ' was updated successfully.',
+        timestamp: (new Date()).toUTCString()
+      });
+      oMessage.setLevel(sap.ui.core.MessageType.Success);
       sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
-        submitButton.destroy();
-      };      
+        submitButton.setVisible(false);
+        this.enableTableButtons();
+      }
+      ;
     };
 
-    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(new sap.ui.layout.form.FormElement({
-      fields: [submitButton.attachPress(this.lockInput).attachPress(fnPressHandler), ]
-    }));
+    sap.ui.getCore().byId("formContainerHostDetails").addFormElement(
+            new sap.ui.layout.form.FormElement({
+              fields: [
+                  submitButton.attachPress(this.lockInput).attachPress(
+                          fnPressHandler), ]
+            }));
 
   },
-
 
 });

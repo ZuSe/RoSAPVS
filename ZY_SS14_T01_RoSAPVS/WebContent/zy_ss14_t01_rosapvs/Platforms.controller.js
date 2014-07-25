@@ -50,10 +50,29 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsReqHDD").setEditable(false);
     sap.ui.getCore().byId("dB_PlatformsHost").setEditable(false).setVisible(false);
     sap.ui.getCore().byId("dB_PlatformsPerson").setEditable(false).setVisible(false);
-  //  sap.ui.getCore().byId("tblPlatforms").setShowOverlay(false);
+ 
     sap.ui.getCore().byId("formContainerPlatformDetails").rerender();
   },
+  disableTableButtons : function()
+  {
+    var btnsOfTable = sap.ui.getCore().byId("toolbarTablePlatform").getItems();
+    console.log(btnsOfTable);
+      $.each(btnsOfTable, function(index, element)
+              {
+                  element.setEnabled(false);
+              });
+  },
+  enableTableButtons: function()
+  {
+    $.each(sap.ui.getCore().byId("toolbarTablePlatform").getItems(), function(index, element)
+            {
+                element.setEnabled(false);
+            });
+  },  
+  
+  
   getDetails: function() {
+    this.enableTableButtons();
     var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
     var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
     if (null != context) {
@@ -79,7 +98,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     }
   },
   createPlatform: function() {
- //   sap.ui.getCore().byId("tblPlatforms").setShowOverlay(true); 
+ this.disableTableButtons();
     sap.ui.getCore().byId("tF_PlatformsId").setValue("Will be calculated");
     sap.ui.getCore().byId("tF_PlatformsName").setValue("").setEditable(true);
     sap.ui.getCore().byId("tF_PlatformsReqCPU").setValue("").setEditable(true);
@@ -123,6 +142,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
+        this.enableTableButtons();
       };
     };
 
@@ -144,6 +164,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
   sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updatePlatform: function() {
+    this.disableTableButtons();
    // sap.ui.getCore().byId("tblPlatforms").setShowOverlay(true);
     sap.ui.getCore().byId("tF_PlatformsName").setEditable(true);
     sap.ui.getCore().byId("tF_PlatformsReqCPU").setEditable(true);
@@ -183,6 +204,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
+        this.enableTableButtons();
       };      
     };
 
