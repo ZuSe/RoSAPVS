@@ -50,6 +50,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsReqHDD").setEditable(false);
     sap.ui.getCore().byId("dB_PlatformsHost").setEditable(false).setVisible(false);
     sap.ui.getCore().byId("dB_PlatformsPerson").setEditable(false).setVisible(false);
+    sap.ui.getCore().byId("cB_isPlatformActive").setEditable(false);
  
     sap.ui.getCore().byId("formContainerPlatformDetails").rerender();
   },
@@ -90,13 +91,19 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         sap.ui.getCore().byId("tF_PlatformsReqHDD").setValue(success.ReqHdd);       
         sap.ui.getCore().byId("tF_PlatformsPerson").setValue(success.Person);
         sap.ui.getCore().byId("tF_PlatformsHost").setValue(success.Host);
+        if (success.IsActive == "X") {
+          sap.ui.getCore().byId("cB_isPlatformActive").setChecked(true);
+        }
+        else {
+          sap.ui.getCore().byId("cB_isPlatformActive").setChecked(false);
+        }
       }, function(error) {
         console.log(error);
-      	var oMessage = new sap.ui.core.Message({
-      		text : 'Unable to retrieve data.',
-    		timestamp : (new Date()).toUTCString()
-    	});
-    	oMessage.setLevel(sap.ui.core.MessageType.Error);
+        var oMessage = new sap.ui.core.Message({
+          text : 'Unable to retrieve data.',
+        timestamp : (new Date()).toUTCString()
+      });
+      oMessage.setLevel(sap.ui.core.MessageType.Error);
       sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
       });
     }
@@ -130,6 +137,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         ReqHdd: sap.ui.getCore().byId("tF_PlatformsReqHDD").getValue(),
         Host: 1 * sap.ui.getCore().byId("dB_PlatformsHost").getValue(),
         Person: sap.ui.getCore().byId("dB_PlatformsPerson").getValue(),
+        IsActive: "X",
       };
       console.log(entry);
       var response = sap.ui.getCore().getModel().create('/PlatformCollection', entry,null,function(success){
@@ -153,7 +161,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       var tblPlatforms = sap.ui.getCore().byId("tblPlatforms");
       tblPlatforms.getModel().refresh(true);
       tblPlatforms.setSelectedIndex(tblPlatforms.getBinding("rows").iLength-1);
-  	
+    
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
@@ -171,11 +179,11 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     var context = tblPlatforms.getContextByIndex(tblPlatforms.getSelectedIndex());
     var nameDeleted = sap.ui.getCore().byId("tF_PlatformsName").getValue();
     sap.ui.getCore().getModel().remove(context.sPath);
-	var oMessage = new sap.ui.core.Message({
-		text : 'Platform ' + nameDeleted + ' was deleted successfully.',
-		timestamp : (new Date()).toUTCString()
-	});
-	oMessage.setLevel(sap.ui.core.MessageType.Success);
+  var oMessage = new sap.ui.core.Message({
+    text : 'Platform ' + nameDeleted + ' was deleted successfully.',
+    timestamp : (new Date()).toUTCString()
+  });
+  oMessage.setLevel(sap.ui.core.MessageType.Success);
   sap.ui.getCore().byId("oMessageNotifier").addMessage(oMessage);
   },
   updatePlatform: function() {
@@ -187,6 +195,8 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
     sap.ui.getCore().byId("tF_PlatformsReqHDD").setEditable(true);
     sap.ui.getCore().byId("dB_PlatformsHost").setEditable(true).setVisible(true);
     sap.ui.getCore().byId("dB_PlatformsPerson").setEditable(true).setVisible(true);
+    sap.ui.getCore().byId("cB_isPlatformActive").setEditable(true);
+    
     var submitButton = new sap.ui.commons.Button("btnPlatformsSubmit",{
       text: "Update",
       tooltip: "Submit Data",
@@ -196,7 +206,15 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
       })
     });
     var fnPressHandler = null;
-    fnPressHandler = function(oEvent) {      
+    fnPressHandler = function(oEvent) {  
+      var isChecked;
+      if (sap.ui.getCore().byId("cB_isPlatformActive").getChecked() == true) {
+        isChecked = "X";
+      } 
+      else {
+        isChecked = "";
+      }
+      
       var entry = {
         Name: sap.ui.getCore().byId("tF_PlatformsName").getValue(),
         ReqCpu: 1 * sap.ui.getCore().byId("tF_PlatformsReqCPU").getValue(),
@@ -204,6 +222,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         ReqHdd: sap.ui.getCore().byId("tF_PlatformsReqHDD").getValue(),
         Host: 1 * sap.ui.getCore().byId("dB_PlatformsHost").getValue(),
         Person:  sap.ui.getCore().byId("dB_PlatformsPerson").getValue(),
+        IsActive: isChecked,
       };
       console.log(entry);
       var tblPlatforms = sap.ui.getCore().byId('tblPlatforms');
@@ -226,7 +245,7 @@ sap.ui.controller("zy_ss14_t01_rosapvs.Platforms", {
         
       });      
       console.log(response);      
-	
+  
       if (oEvent.getSource() instanceof sap.ui.commons.Button) {
         oEvent.getSource().detachPress(fnPressHandler);
         submitButton.destroy();
